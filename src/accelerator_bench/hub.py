@@ -100,7 +100,7 @@ def execute(manifest_path, device, qairt_version, output_dir, case_filter=None):
     experiment = plan(manifest_path, device, qairt_version, case_filter)
     lookup = {i["case"]["id"]: i for i in manifest["cases"]}
     result = {"schema_version": 1, "source": "qualcomm_ai_hub", "status": "running",
-              "client_version": hub.__version__, "plan": experiment, "records": [],
+              "client_version": str(hub.__version__), "plan": experiment, "records": [],
               "comparison_status": "not approved for cross-device aggregation; inspect actual placement, precision, and timing boundaries"}
     save_result(root / "results.json", result)
     for job_spec in experiment["jobs"]:
