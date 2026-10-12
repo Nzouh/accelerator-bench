@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 from pathlib import Path
 
 import matplotlib
@@ -22,7 +23,7 @@ def case_x(row):
     return row["case"]["shape"][2 if row["case"]["op"] == "conv_relu" else 0]
 
 
-def create_report(source, output_dir):
+def create_report(source, output_dir, profile=None):
     source, output = Path(source), Path(output_dir)
     data = json.loads(source.read_text())
     if data["source"] != "local_cuda_measured":
@@ -138,6 +139,33 @@ def create_report(source, output_dir):
              "The compiled variant can change layout, dispatch, and kernels. A speedup alone does not establish which compiler transformation caused it. The explicit fused implementation only applies to RMSNorm.", ""]
     for filename, title in figures:
         lines += [f"## {title}", "", f"![{title}]({filename}.png)", ""]
+    if profile:
+        profile_path = Path(profile)
+        diagnostics = json.loads(profile_path.read_text())
+        if diagnostics["source"] != "separate_torch_profiler_diagnostic":
+            raise ValueError("Expected separate profiler diagnostics")
+        names = [name for name, value in diagnostics["variants"].items()
+                 if value["status"] == "captured" and value["correctness"]["passed"]]
+        if names:
+            fig, ax = plt.subplots(figsize=(9, 4.5))
+            counts = [diagnostics["variants"][name]["cuda_activities_per_call"] for name in names]
+            ax.barh([LABELS[name] for name in names], counts, color=[COLORS[name] for name in names])
+            ax.invert_yaxis()
+            ax.set_xlim(0, max(counts) * 1.15)
+            for i, count in enumerate(counts):
+                ax.text(count + .15, i, f"{count:g}", va="center", fontweight="bold")
+            ax.set_xlabel("Profiler-observed CUDA activities per call")
+            fig.suptitle("RMSNorm: fewer GPU kernel launches", x=.03, y=.98, ha="left", fontsize=18, fontweight="bold")
+            fig.text(.03, .89, f"{diagnostics['case']['id']} · {diagnostics['dtype']} · {diagnostics['repetitions']} profiled calls", fontsize=9)
+            fig.text(.03, .02, "Separate diagnostic capture; counts support graph/kernel analysis, not a latency or energy estimate.", fontsize=9)
+            fig.tight_layout(rect=[0, .08, 1, .85])
+            fig.savefig(output / "kernel_counts.png", dpi=160)
+            fig.savefig(output / "kernel_counts.svg")
+            plt.close(fig)
+            profile_link = Path(os.path.relpath(profile_path.resolve(), output.resolve())).as_posix()
+            lines += ["## Compiler evidence", "", "![Profiler-observed CUDA activities](kernel_counts.png)", "",
+                      "The separate profiler capture records fewer CUDA activities for the compiled and explicit fused RMSNorm implementations. Kernel names and counts are retained in the diagnostic JSON. These are independent of the noisy speedup magnitudes in the exploratory run.", "",
+                      f"[Raw profiler evidence]({profile_link})", ""]
     lines += ["## Numerical validation", "", "All timed configurations passed both ordinary and captured-graph output checks against a CPU FP64 reference computed from the original seeded FP32 inputs and weights. FP16 error includes input and weight rounding. This is numerical agreement on synthetic tensors, not task accuracy on a dataset.", "",
               "| Operation | Precision | Maximum relative L2 error across shapes/variants |", "|---|---|---:|"]
     for op, name, _ in OPERATIONS:
@@ -146,7 +174,7 @@ def create_report(source, output_dir):
             if errors:
                 lines.append(f"| {name} | {dtype} | {max(errors):.3e} |")
     lines += ["", "## Raw evidence", "", "- [Flat measurement table](measurements.csv)",
-              f"- Raw JSON: `{source.as_posix()}` (raw timing blocks, power samples, environment, checks).",
+              f"- [Raw measurement JSON]({Path(os.path.relpath(source.resolve(), output.resolve())).as_posix()}) (raw timing blocks, power samples, environment, checks).",
               "- `first_call_s` includes initialization, possible cache hits, compilation and execution; it is **not** isolated compiler duration.",
               "", "## Before drawing hardware conclusions", "",
               "Repeat on AC power with GPU-heavy applications closed and fixed documented power settings; repeat whole sessions to quantify variation. Run the same checked workload on a specifically identified Snapdragon device, verify NPU placement, and reconcile precision and timing boundaries. Keep graph-replay timing separate from AI Hub framework-call timing.", ""]

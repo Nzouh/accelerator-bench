@@ -6,6 +6,24 @@ Qualcomm AI Hub integration targets measured Snapdragon Hexagon NPU execution.
 
 The question: **when do compiler optimizations help, and what limits them?**
 
+## First measured report
+
+[RTX 3060 charts and analysis](reports/rtx3060-exploratory/report.md) ·
+[Raw measurements](results/rtx3060-exploratory-2026-10-12.json) ·
+[Profiler evidence](results/rtx3060-rmsnorm-profile.json)
+
+All **56 configurations passed numerical checks**. This first run is exploratory
+because concurrent GPU applications were left running. Its timings and gross
+energy are not isolated hardware measurements.
+
+A separate FP16 RMSNorm diagnostic records **9 CUDA kernel activities per call
+in eager execution versus 1 with `torch.compile` and 1 with the explicit fused
+kernel**, over five profiled calls at shape 32×1024. This directly demonstrates
+the change in execution structure; it does not turn the exploratory speedups
+into controlled performance claims.
+
+![Kernel count evidence](reports/rtx3060-exploratory/kernel_counts.png)
+
 ## Experiments
 
 - Matrix multiplication: shape and precision sensitivity.
@@ -45,6 +63,15 @@ For a short check, add `--case rmsnorm_r32 --dtypes float16 --rounds 2 --blocks 
 --iterations 20 --energy-seconds 2`. Full defaults cover 56 configurations across
 12 shapes, two precisions, eager/compiled execution, and explicit fused RMSNorm.
 Existing run files are never overwritten.
+
+To collect separate profiler evidence and regenerate the committed report:
+
+```bash
+accelerator-bench profile --case rmsnorm_r32_d1024 --dtype float16 \
+  --output results/local/my-profile.json
+accelerator-bench report results/rtx3060-exploratory-2026-10-12.json \
+  --profile results/rtx3060-rmsnorm-profile.json --output-dir reports/rtx3060-exploratory
+```
 
 On another Linux CUDA machine, clone the repo and run `bash scripts/setup_wsl.sh`
 from its root. The script name reflects this project's initial environment; the

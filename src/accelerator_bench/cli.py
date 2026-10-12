@@ -22,6 +22,7 @@ def main():
     report = sub.add_parser("report", help="Generate charts and a report from a completed local run")
     report.add_argument("source")
     report.add_argument("--output-dir", required=True)
+    report.add_argument("--profile", help="Optional separate profiler JSON for a kernel-count chart")
     profile = sub.add_parser("profile", help="Record separate CUDA kernel-count diagnostics")
     profile.add_argument("--config", dest="config_path", default="configs/rtx3060.json")
     profile.add_argument("--case", dest="case_id", required=True)
