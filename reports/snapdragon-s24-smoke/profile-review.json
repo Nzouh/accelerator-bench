@@ -1,0 +1,181 @@
+{
+  "device": "Samsung Galaxy S24",
+  "qairt_version": "2.50",
+  "reviews": [
+    {
+      "variant": "optimized",
+      "case_id": "conv_b1_c32_h32_o64",
+      "inference_job_id": "jprxn1q7p",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.001763935042931486,
+        "relative_l2_error": 0.00036025111194183207,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "reported_compute_units": [
+        "NPU"
+      ],
+      "all_reported_entries_on_npu": true,
+      "reported_entry_count": 6,
+      "reported_entries": [
+        {
+          "name": "Input",
+          "compute_unit": "NPU",
+          "execution_cycles": 4968
+        },
+        {
+          "name": "x_0231",
+          "compute_unit": "NPU",
+          "execution_cycles": 29657
+        },
+        {
+          "name": "/Conv",
+          "compute_unit": "NPU",
+          "execution_cycles": 0
+        },
+        {
+          "name": "/Relu",
+          "compute_unit": "NPU",
+          "execution_cycles": 7741
+        },
+        {
+          "name": "output_0_0231",
+          "compute_unit": "NPU",
+          "execution_cycles": 27758
+        },
+        {
+          "name": "Output",
+          "compute_unit": "NPU",
+          "execution_cycles": 7698
+        }
+      ],
+      "hub_estimated_inference_us": 82,
+      "all_samples_median_us": 94.0,
+      "all_samples_p10_us": 90.0,
+      "all_samples_p90_us": 122.0,
+      "sample_count": 100,
+      "fusion_verified": false,
+      "qualification": "Reported layer placement only. Logical layer names/cycle attribution do not establish physical fusion. Timings include the inference framework boundary."
+    },
+    {
+      "variant": "prepare_fast",
+      "case_id": "conv_b1_c32_h32_o64",
+      "inference_job_id": "jpx0dm98p",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.001763935042931486,
+        "relative_l2_error": 0.00036025111194183207,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "reported_compute_units": [
+        "NPU"
+      ],
+      "all_reported_entries_on_npu": true,
+      "reported_entry_count": 6,
+      "reported_entries": [
+        {
+          "name": "Input",
+          "compute_unit": "NPU",
+          "execution_cycles": 4588
+        },
+        {
+          "name": "x_0231",
+          "compute_unit": "NPU",
+          "execution_cycles": 34007
+        },
+        {
+          "name": "/Conv",
+          "compute_unit": "NPU",
+          "execution_cycles": 0
+        },
+        {
+          "name": "/Relu",
+          "compute_unit": "NPU",
+          "execution_cycles": 8003
+        },
+        {
+          "name": "output_0_0231",
+          "compute_unit": "NPU",
+          "execution_cycles": 27443
+        },
+        {
+          "name": "Output",
+          "compute_unit": "NPU",
+          "execution_cycles": 8414
+        }
+      ],
+      "hub_estimated_inference_us": 86,
+      "all_samples_median_us": 100.5,
+      "all_samples_p10_us": 90.9,
+      "all_samples_p90_us": 128.10000000000002,
+      "sample_count": 100,
+      "fusion_verified": false,
+      "qualification": "Reported layer placement only. Logical layer names/cycle attribution do not establish physical fusion. Timings include the inference framework boundary."
+    },
+    {
+      "variant": "no_conv_relu_fold",
+      "case_id": "conv_b1_c32_h32_o64",
+      "inference_job_id": "j56odven5",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.001763935042931486,
+        "relative_l2_error": 0.00036025111194183207,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "reported_compute_units": [
+        "NPU"
+      ],
+      "all_reported_entries_on_npu": true,
+      "reported_entry_count": 6,
+      "reported_entries": [
+        {
+          "name": "Input",
+          "compute_unit": "NPU",
+          "execution_cycles": 2171
+        },
+        {
+          "name": "x_0231",
+          "compute_unit": "NPU",
+          "execution_cycles": 31276
+        },
+        {
+          "name": "/Conv",
+          "compute_unit": "NPU",
+          "execution_cycles": 0
+        },
+        {
+          "name": "/Relu",
+          "compute_unit": "NPU",
+          "execution_cycles": 8613
+        },
+        {
+          "name": "output_0_0231",
+          "compute_unit": "NPU",
+          "execution_cycles": 27895
+        },
+        {
+          "name": "Output",
+          "compute_unit": "NPU",
+          "execution_cycles": 8648
+        }
+      ],
+      "hub_estimated_inference_us": 92,
+      "all_samples_median_us": 99.0,
+      "all_samples_p10_us": 94.0,
+      "all_samples_p90_us": 141.10000000000002,
+      "sample_count": 100,
+      "fusion_verified": false,
+      "qualification": "Reported layer placement only. Logical layer names/cycle attribution do not establish physical fusion. Timings include the inference framework boundary."
+    }
+  ],
+  "scope": "One job per requested setting; smoke experiment, not a repeated performance study"
+}
