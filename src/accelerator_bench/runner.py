@@ -66,6 +66,24 @@ def timed_block(fn, iterations):
     return {"cuda_stream_ms": start.elapsed_time(end) / iterations, "wall_ms": wall_ms}
 
 
+def capture_replay(fn, operations=100):
+    """A single captured graph contains many calls, amortizing host launch cost."""
+    stream = torch.cuda.Stream()
+    stream.wait_stream(torch.cuda.current_stream())
+    with torch.cuda.stream(stream):
+        for _ in range(5):
+            fn()
+    torch.cuda.current_stream().wait_stream(stream)
+    torch.cuda.synchronize()
+    graph = torch.cuda.CUDAGraph()
+    with torch.cuda.graph(graph):
+        for _ in range(operations):
+            output = fn()
+    torch.cuda.synchronize()
+    # Retain output and graph pool together for the entire replay lifetime.
+    return graph, output
+
+
 def save_result(path, result):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -75,10 +93,10 @@ def save_result(path, result):
 
 
 def run(config_path, output, *, rounds=5, blocks=5, iterations=100, warmup=30,
-        energy_seconds=5.0, case_filter=None, dtypes=None, variants=None):
+        energy_seconds=5.0, case_filter=None, dtypes=None, variants=None, graph_operations=100):
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA PyTorch and a supported NVIDIA GPU are required; CPU timing is never substituted")
-    if min(rounds, blocks, iterations, warmup) < 1 or energy_seconds < 0:
+    if min(rounds, blocks, iterations, warmup, graph_operations) < 1 or energy_seconds < 0:
         raise ValueError("Timing counts must be positive and energy duration nonnegative")
     if Path(output).exists():
         raise FileExistsError(f"Refusing to overwrite {output}; choose a new run path")
@@ -101,8 +119,9 @@ def run(config_path, output, *, rounds=5, blocks=5, iterations=100, warmup=30,
         "schema_version": 1, "source": "local_cuda_measured", "environment": environment(),
         "config": config, "settings": {"rounds": rounds, "blocks": blocks, "iterations": iterations,
         "warmup": warmup, "energy_seconds": energy_seconds, "case_filter": case_filter,
-        "dtypes": selected_dtypes, "variants": selected_variants,
+        "dtypes": selected_dtypes, "variants": selected_variants, "graph_operations": graph_operations,
         "timing_boundary": "Repeated Python dispatch on resident CUDA inputs; CUDA event span includes device idle gaps; synchronized wall includes host dispatch and final wait; no transfer, compilation, or power sampling in timing",
+        "graph_timing_boundary": "100 calls captured per CUDA graph by default; event span per replay divided by calls, reducing host dispatch gaps. Same repeated resident inputs; not application end-to-end latency.",
         "execution_order": "Cases and dtype order fixed; variant order shuffled per paired round using seed"},
         "records": [], "status": "running",
     }
@@ -121,7 +140,7 @@ def run(config_path, output, *, rounds=5, blocks=5, iterations=100, warmup=30,
                     continue
                 row = {"case": case, "dtype": dtype_name, "variant": variant,
                        "input_weight_sha256": fingerprint(source, original_x),
-                       "useful_flops": operation_count(case), "raw_blocks": [], "status": "preparing"}
+                       "useful_flops": operation_count(case), "raw_blocks": [], "raw_graph_blocks": [], "status": "preparing"}
                 result["records"].append(row)
                 try:
                     if variant == "eager":
@@ -145,7 +164,14 @@ def run(config_path, output, *, rounds=5, blocks=5, iterations=100, warmup=30,
                         for _ in range(warmup):
                             fn()
                         torch.cuda.synchronize()
-                    prepared[variant] = (fn, row)
+                    with torch.inference_mode():
+                        graph, graph_output = capture_replay(fn, graph_operations)
+                        graph.replay()
+                        torch.cuda.synchronize()
+                        row["graph_correctness"] = correctness(graph_output, reference, dtype_name)
+                        if not row["graph_correctness"]["passed"]:
+                            raise RuntimeError("CUDA graph output validation failed")
+                    prepared[variant] = (fn, row, graph, graph_output)
                     row["status"] = "ready"
                     print(f"ready {case['id']} {dtype_name} {variant}", flush=True)
                 except Exception as exc:
@@ -158,22 +184,33 @@ def run(config_path, output, *, rounds=5, blocks=5, iterations=100, warmup=30,
                     order = list(prepared)
                     rng.shuffle(order)
                     for position, variant in enumerate(order):
-                        fn, row = prepared[variant]
+                        fn, row, graph, graph_output = prepared[variant]
                         for _ in range(warmup):
                             fn()
                         for _ in range(blocks):
                             measurement = timed_block(fn, iterations)
                             measurement.update(round=round_index, order=position)
                             row["raw_blocks"].append(measurement)
+                            replay = timed_block(graph.replay, max(3, iterations // 10))
+                            replay = {key: value / graph_operations for key, value in replay.items()}
+                            replay.update(round=round_index, order=position)
+                            row["raw_graph_blocks"].append(replay)
                 energy_order = list(prepared)
                 rng.shuffle(energy_order)
                 for variant in energy_order:
-                    fn, row = prepared[variant]
+                    fn, row, graph, graph_output = prepared[variant]
                     row["cuda_stream_ms"] = summarize([b["cuda_stream_ms"] for b in row["raw_blocks"]])
                     row["wall_ms"] = summarize([b["wall_ms"] for b in row["raw_blocks"]])
-                    row["energy"] = energy_measurement(fn, energy_seconds)
+                    row["graph_cuda_ms"] = summarize([b["cuda_stream_ms"] for b in row["raw_graph_blocks"]])
+                    row["graph_wall_ms"] = summarize([b["wall_ms"] for b in row["raw_graph_blocks"]])
+                    row["energy"] = energy_measurement(graph.replay, energy_seconds)
+                    if row["energy"]["status"] == "measured":
+                        row["energy"]["executions"] *= graph_operations
+                        row["energy"]["gpu_energy_mj_per_execution"] /= graph_operations
+                        row["energy"]["wall_ms_per_execution"] /= graph_operations
+                        row["energy"]["workload"] = "CUDA graph replay; executions count original workload calls, not graph launches"
                     row["status"] = "ok"
-                    print(f"done {case['id']} {dtype_name} {variant}: {row['wall_ms']['median']:.5f} ms wall", flush=True)
+                    print(f"done {case['id']} {dtype_name} {variant}: {row['graph_cuda_ms']['median']:.5f} ms graph / {row['wall_ms']['median']:.5f} ms wall", flush=True)
                     save_result(output, result)
             prepared.clear()
             del module, x
