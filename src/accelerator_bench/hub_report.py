@@ -35,6 +35,9 @@ def create_hub_report(source_dir, output_dir):
     data = json.loads((root / "results.json").read_text())
     if data["status"] == "running":
         raise ValueError("Remote run is still in progress")
+    case_ids = sorted({r["case_id"] for r in data["records"]})
+    if len(case_ids) != 1:
+        raise ValueError("This report compares settings for one case; provide a single-case run")
     output.mkdir(parents=True, exist_ok=True)
     reviews = []
     for record in data["records"]:
@@ -50,12 +53,13 @@ def create_hub_report(source_dir, output_dir):
     valid = [r for r in reviews if r["all_reported_entries_on_npu"] and r["sample_count"]]
     lines = ["# Snapdragon NPU: first compiler experiment", "",
              f"Device: **{data['plan']['device']}**. Requested QAIRT: **{data['plan']['qairt_version']}**.", "",
-             "Real AI Hub measurements of the same seeded convolution + ReLU workload as the local suite: batch 1, 32 input channels, 32×32 pixels, 64 output channels, 3×3 kernel. FP32 IO with requested FP16 execution. Requested performance mode: sustained high performance.", "",
+             f"Real AI Hub measurements of the same seeded workload as the local suite: `{case_ids[0]}`. Shapes and input/weight hashes are preserved in the export manifest. FP32 IO with requested FP16 execution. Requested performance mode: sustained high performance.", "",
              "One job per setting. These establish that the pipeline works; they do not establish a statistically reliable optimization benefit. Power is unavailable. No RTX-versus-NPU speedup is calculated because timing boundaries and local background activity differ.", "",
              "| Requested setting | AI Hub estimate (µs) | Median of returned samples (µs) | P10–P90 (µs) | Numerical check | Reported placement |",
              "|---|---:|---:|---:|---|---|"]
     for r in reviews:
-        lines.append(f"| {r['variant']} | {r['hub_estimated_inference_us']} | {r['all_samples_median_us']} | {r['all_samples_p10_us']}–{r['all_samples_p90_us']} | pass | {', '.join(r['reported_compute_units'])} |")
+        fmt = lambda value: "unavailable" if value is None else f"{value:.1f}"
+        lines.append(f"| {r['variant']} | {fmt(r['hub_estimated_inference_us'])} | {fmt(r['all_samples_median_us'])} | {fmt(r['all_samples_p10_us'])}–{fmt(r['all_samples_p90_us'])} | pass | {', '.join(r['reported_compute_units'])} |")
     if valid:
         fig, ax = plt.subplots(figsize=(10, 5))
         med = np.array([r["all_samples_median_us"] for r in valid])

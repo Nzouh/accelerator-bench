@@ -24,6 +24,23 @@ into controlled performance claims.
 
 ![Kernel count evidence](reports/rtx3060-exploratory/kernel_counts.png)
 
+## First real Snapdragon NPU run
+
+[Galaxy S24 NPU report](reports/snapdragon-s24-smoke/report.md) ·
+[Raw remote results and profiles](results/hub-s24-conv-2026-10-12)
+
+Three actual AI Hub jobs ran the shared convolution + ReLU case on the Galaxy S24
+(Snapdragon 8 Gen 3), using QAIRT 2.50. All three passed numerical checks, and all
+reported profile entries were assigned to NPU. The tested settings were O=3,
+O=1, and O=3 with convolution–ReLU folding disabled.
+
+Returned sample medians were 94.0, 100.5, and 99.0 microseconds respectively, with
+overlapping distributions. One job per setting is a working pipeline demonstration,
+not evidence of a reliable compiler-setting advantage. The profile does not prove
+that the requested folding change altered physical fusion. NPU energy is unavailable.
+
+![NPU settings experiment](reports/snapdragon-s24-smoke/npu-ablation.png)
+
 ## Experiments
 
 - Matrix multiplication: shape and precision sensitivity.
@@ -88,6 +105,9 @@ setup also works in a suitable Linux environment with Python venv and GCC.
 
 The first run is **exploratory**, with other GPU applications present by explicit
 choice. It is not an isolated hardware comparison. No NPU numbers are fabricated.
+
+Validation: **23 local tests passed**, including CUDA kernel checks; GitHub Actions
+also runs the CPU/export/orchestration checks (CUDA-only tests skip on CPU runners).
 
 Read [the measurement contract](docs/methodology.md) before interpreting speedups
 or energy. See [AI Hub setup and experiment instructions](docs/ai-hub.md) for the

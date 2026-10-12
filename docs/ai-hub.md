@@ -11,9 +11,13 @@
 - Job IDs are saved as soon as available. Downloaded profiles and numerical checks
   are preserved. Results remain `measured_unverified_placement` until reviewed.
 
-Remote execution is pending account access. Export validation does not prove that
-every operation will compile for every Snapdragon. A compile failure is recorded
-and must be investigated rather than relabeled as a successful NPU measurement.
+Remote execution was validated on 2026-10-12 for `conv_b1_c32_h32_o64` on
+**Samsung Galaxy S24 / Snapdragon 8 Gen 3 / Hexagon v75 / Android 14**, with
+QAIRT 2.50. All three jobs passed numerical checks; all listed profile entries
+report NPU. See [the first measured report](../reports/snapdragon-s24-smoke/report.md).
+This does not prove every exported operation compiles for every Snapdragon.
+Physical fusion changes remain unverified. Compile failures must be investigated
+rather than relabeled as successful NPU measurements.
 
 ## Account setup
 
@@ -89,4 +93,15 @@ power measurement.
 - [Profiling timing and memory boundaries](https://workbench.aihub.qualcomm.com/docs/hub/howitworks-inference.html)
 
 The local adapter was checked against installed `qai-hub==0.56.0` signatures and
-the documentation on 2026-10-12. Live device compilation is a separate validation.
+the documentation on 2026-10-12, followed by the three live device runs above.
+
+To regenerate the remote report from committed evidence:
+
+```bash
+accelerator-bench hub report results/hub-s24-conv-2026-10-12 \
+  --output-dir reports/snapdragon-s24-smoke
+```
+
+The review report evaluates returned placement fields without altering the raw
+result records. Those retain their original `measured_unverified_placement` state;
+the separate `profile-review.json` records the placement evidence examined later.
