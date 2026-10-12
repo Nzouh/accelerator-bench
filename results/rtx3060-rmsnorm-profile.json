@@ -1,0 +1,127 @@
+{
+  "source": "separate_torch_profiler_diagnostic",
+  "environment": {
+    "timestamp_utc": "2026-10-12T21:18:38.564011+00:00",
+    "python": "3.12.3",
+    "os": "Linux",
+    "kernel": "6.6.87.2-microsoft-standard-WSL2",
+    "torch": "2.11.0+cu128",
+    "cuda_runtime": "12.8",
+    "cudnn": 91900,
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "gpu_memory_bytes": 6441926656,
+    "compute_capability": "8.6",
+    "driver": "616.64",
+    "git_commit": "ae129c665be37a72d58bf564b9fabc115b92d18f",
+    "git_dirty": true,
+    "tf32_matmul": false,
+    "tf32_cudnn": false,
+    "fp16_reduced_precision_reduction": false,
+    "cudnn_benchmark": false,
+    "torch_cpu_threads": 1,
+    "power_limit_or_clock_changes": "none requested by this tool"
+  },
+  "case": {
+    "id": "rmsnorm_r32_d1024",
+    "op": "rmsnorm",
+    "shape": [
+      32,
+      1024
+    ]
+  },
+  "dtype": "float16",
+  "repetitions": 5,
+  "note": "Counts are profiler-observed CUDA activities. Profile timings have instrumentation overhead and are not benchmark results.",
+  "variants": {
+    "eager": {
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.002879980350984024,
+        "relative_l2_error": 0.00036929058681256375,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "cuda_activities_per_call": 9.0,
+      "activities": [
+        {
+          "name": "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, 4, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >(int, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1>)",
+          "count": 10,
+          "profile_total_us": 27.52099999999882
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<4, at::native::(anonymous namespace)::pow_tensor_scalar_kernel_impl<float, float>(at::TensorIteratorBase&, float)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::(anonymous namespace)::pow_tensor_scalar_kernel_impl<float, float>(at::TensorIteratorBase&, float)::{lambda(float)#1}, std::array<char*, 2ul>)",
+          "count": 5,
+          "profile_total_us": 7.268999999996595
+        },
+        {
+          "name": "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<float, at::native::MeanOps<float, float, float, float>, unsigned int, float, 4, 4> >(at::native::ReduceOp<float, at::native::MeanOps<float, float, float, float>, unsigned int, float, 4, 4>)",
+          "count": 5,
+          "profile_total_us": 21.20299999999952
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctorOnSelf_add<float>, std::array<char*, 2ul> >(int, at::native::CUDAFunctorOnSelf_add<float>, std::array<char*, 2ul>)",
+          "count": 5,
+          "profile_total_us": 6.462999999999738
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<4, at::native::rsqrt_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::rsqrt_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>)",
+          "count": 5,
+          "profile_total_us": 7.125
+        },
+        {
+          "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1})",
+          "count": 10,
+          "profile_total_us": 22.413000000002285
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<4, at::native::float16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::float16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>)",
+          "count": 5,
+          "profile_total_us": 7.213999999999942
+        }
+      ],
+      "status": "captured"
+    },
+    "compiled": {
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.002879980350984024,
+        "relative_l2_error": 0.0003692905735913588,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "cuda_activities_per_call": 1.0,
+      "activities": [
+        {
+          "name": "triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_0",
+          "count": 5,
+          "profile_total_us": 10.113000000004831
+        }
+      ],
+      "status": "captured"
+    },
+    "fused": {
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.002879980350984024,
+        "relative_l2_error": 0.0003692917558759158,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "cuda_activities_per_call": 1.0,
+      "activities": [
+        {
+          "name": "_rmsnorm",
+          "count": 5,
+          "profile_total_us": 9.536999999999352
+        }
+      ],
+      "status": "captured"
+    }
+  }
+}
