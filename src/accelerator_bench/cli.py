@@ -22,6 +22,11 @@ def main():
     report = sub.add_parser("report", help="Generate charts and a report from a completed local run")
     report.add_argument("source")
     report.add_argument("--output-dir", required=True)
+    profile = sub.add_parser("profile", help="Record separate CUDA kernel-count diagnostics")
+    profile.add_argument("--config", dest="config_path", default="configs/rtx3060.json")
+    profile.add_argument("--case", dest="case_id", required=True)
+    profile.add_argument("--dtype", choices=["float16", "float32"], default="float16")
+    profile.add_argument("--output", required=True)
     hub = sub.add_parser("hub", help="Export and run Qualcomm AI Hub experiments")
     hub_sub = hub.add_subparsers(dest="hub_command", required=True)
     export = hub_sub.add_parser("export", help="Export and check ONNX artifacts locally")
@@ -52,6 +57,9 @@ def main():
     elif command == "report":
         from .report import create_report
         print(create_report(**args))
+    elif command == "profile":
+        from .profiling import profile_case
+        profile_case(**args)
     elif command == "hub":
         from . import hub
         action = args.pop("hub_command")
