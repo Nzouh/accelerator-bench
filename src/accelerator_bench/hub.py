@@ -14,6 +14,7 @@ from .workloads import correctness, fingerprint, load_config, make_workload, ref
 
 def export(config_path, output_dir, case_filter=None):
     import onnx
+    import onnxruntime as ort
     root = Path(output_dir)
     root.mkdir(parents=True, exist_ok=True)
     config = load_config(config_path)
@@ -29,12 +30,22 @@ def export(config_path, output_dir, case_filter=None):
             torch.onnx.export(module, (x,), model_path, input_names=["x"], output_names=["output"],
                               opset_version=17, dynamo=False)
         onnx.checker.check_model(onnx.load(str(model_path)))
+        session_options = ort.SessionOptions()
+        session_options.intra_op_num_threads = 1
+        session_options.inter_op_num_threads = 1
+        session = ort.InferenceSession(str(model_path), sess_options=session_options,
+                                       providers=["CPUExecutionProvider"])
+        reference = reference_output(module, x)
+        export_check = correctness(torch.from_numpy(session.run(None, {"x": x.numpy()})[0]), reference, "float32")
+        if not export_check["passed"]:
+            raise RuntimeError(f"ONNX export differs from reference for {case['id']}")
         arrays_path = root / (case["id"] + ".npz")
-        np.savez_compressed(arrays_path, x=x.numpy(), reference=reference_output(module, x).numpy())
+        np.savez_compressed(arrays_path, x=x.numpy(), reference=reference.numpy())
         manifest["cases"].append({"case": case, "model": model_path.name, "arrays": arrays_path.name,
                                   "input_weight_sha256": fingerprint(module, x),
                                   "onnx_sha256": hashlib.sha256(model_path.read_bytes()).hexdigest(),
-                                  "arrays_sha256": hashlib.sha256(arrays_path.read_bytes()).hexdigest()})
+                                  "arrays_sha256": hashlib.sha256(arrays_path.read_bytes()).hexdigest(),
+                                  "onnx_cpu_correctness": export_check})
     if not manifest["cases"]:
         raise ValueError("No matching cases")
     save_result(root / "manifest.json", manifest)

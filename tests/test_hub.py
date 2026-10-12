@@ -12,6 +12,7 @@ def test_folding_ablation_changes_only_one_option():
 
 def test_hub_export_preserves_weights_and_checks_onnx(tmp_path):
     pytest.importorskip("onnx")
+    pytest.importorskip("onnxruntime")
     config = {"seed": 1729, "dtypes": ["float32"], "cases": [
         {"id": "conv", "op": "conv_relu", "shape": [1, 3, 5, 5, 4, 3]},
         {"id": "norm", "op": "rmsnorm", "shape": [2, 17]},
@@ -20,6 +21,7 @@ def test_hub_export_preserves_weights_and_checks_onnx(tmp_path):
     config_path.write_text(json.dumps(config))
     manifest = export(config_path, tmp_path / "export")
     assert len(manifest["cases"]) == 2
+    assert all(item["onnx_cpu_correctness"]["passed"] for item in manifest["cases"])
     experiment = plan(tmp_path / "export/manifest.json", "test device", "2.42")
     assert len(experiment["jobs"]) == 5
     assert all("--compute_unit npu" in j["compile_options"] for j in experiment["jobs"])
