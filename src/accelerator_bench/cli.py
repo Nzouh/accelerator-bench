@@ -34,6 +34,9 @@ def main():
     export.add_argument("--output-dir", default="artifacts/hub")
     export.add_argument("--case", dest="case_filter")
     hub_sub.add_parser("devices", help="List account-accessible devices (requires configured API token)")
+    hub_report = hub_sub.add_parser("report", help="Review saved placement and create separate NPU charts")
+    hub_report.add_argument("source_dir")
+    hub_report.add_argument("--output-dir", required=True)
     for name in ("plan", "run"):
         p = hub_sub.add_parser(name)
         p.add_argument("--manifest", default="artifacts/hub/manifest.json")
@@ -71,6 +74,9 @@ def main():
             config_path = args.pop("config")
             result = hub.export(config_path, **args)
             print(f"Exported and checked {len(result['cases'])} workloads")
+        elif action == "report":
+            from .hub_report import create_hub_report
+            print(create_hub_report(**args))
         else:
             manifest_path = args.pop("manifest")
             print(json.dumps((hub.plan if action == "plan" else hub.execute)(manifest_path, **args), indent=2))
