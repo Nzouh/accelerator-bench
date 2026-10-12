@@ -93,7 +93,8 @@ def save_result(path, result):
 
 
 def run(config_path, output, *, rounds=5, blocks=5, iterations=100, warmup=30,
-        energy_seconds=5.0, case_filter=None, dtypes=None, variants=None, graph_operations=100):
+        energy_seconds=5.0, case_filter=None, dtypes=None, variants=None, graph_operations=100,
+        context="Uncontrolled desktop session; background activity not verified"):
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA PyTorch and a supported NVIDIA GPU are required; CPU timing is never substituted")
     if min(rounds, blocks, iterations, warmup, graph_operations) < 1 or energy_seconds < 0:
@@ -117,6 +118,7 @@ def run(config_path, output, *, rounds=5, blocks=5, iterations=100, warmup=30,
         raise ValueError("Unknown variant")
     result = {
         "schema_version": 1, "source": "local_cuda_measured", "environment": environment(),
+        "measurement_context": context,
         "config": config, "settings": {"rounds": rounds, "blocks": blocks, "iterations": iterations,
         "warmup": warmup, "energy_seconds": energy_seconds, "case_filter": case_filter,
         "dtypes": selected_dtypes, "variants": selected_variants, "graph_operations": graph_operations,

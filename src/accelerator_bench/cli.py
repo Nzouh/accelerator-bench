@@ -14,6 +14,7 @@ def main():
     bench.add_argument("--warmup", type=int, default=30)
     bench.add_argument("--energy-seconds", type=float, default=5)
     bench.add_argument("--graph-operations", type=int, default=100)
+    bench.add_argument("--context", default="Uncontrolled desktop session; background activity not verified")
     bench.add_argument("--case", dest="case_filter")
     bench.add_argument("--dtypes", nargs="+", choices=["float16", "float32"])
     bench.add_argument("--variants", nargs="+", choices=["eager", "compiled", "fused"])
