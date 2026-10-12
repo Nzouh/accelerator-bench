@@ -19,6 +19,9 @@ def main():
     bench.add_argument("--dtypes", nargs="+", choices=["float16", "float32"])
     bench.add_argument("--variants", nargs="+", choices=["eager", "compiled", "fused"])
     sub.add_parser("doctor", help="Report CUDA environment without running a benchmark")
+    report = sub.add_parser("report", help="Generate charts and a report from a completed local run")
+    report.add_argument("source")
+    report.add_argument("--output-dir", required=True)
     hub = sub.add_parser("hub", help="Export and run Qualcomm AI Hub experiments")
     hub_sub = hub.add_subparsers(dest="hub_command", required=True)
     export = hub_sub.add_parser("export", help="Export and check ONNX artifacts locally")
@@ -46,6 +49,9 @@ def main():
         result = run(config_path, **args)
         if result["status"] != "complete":
             raise SystemExit(1)
+    elif command == "report":
+        from .report import create_report
+        print(create_report(**args))
     elif command == "hub":
         from . import hub
         action = args.pop("hub_command")
