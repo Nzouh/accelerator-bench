@@ -1,0 +1,19 @@
+{
+  "seed": 1729,
+  "dtypes": ["float32", "float16"],
+  "variants": ["eager", "compiled", "fused"],
+  "cases": [
+    {"id": "matmul_m1_k1024_n1024", "op": "matmul", "shape": [1, 1024, 1024]},
+    {"id": "matmul_m32_k1024_n1024", "op": "matmul", "shape": [32, 1024, 1024]},
+    {"id": "matmul_m256_k1024_n1024", "op": "matmul", "shape": [256, 1024, 1024]},
+    {"id": "matmul_m1024_k1024_n1024", "op": "matmul", "shape": [1024, 1024, 1024]},
+    {"id": "conv_b1_c32_h16_o64", "op": "conv_relu", "shape": [1, 32, 16, 16, 64, 3]},
+    {"id": "conv_b1_c32_h32_o64", "op": "conv_relu", "shape": [1, 32, 32, 32, 64, 3]},
+    {"id": "conv_b1_c32_h64_o64", "op": "conv_relu", "shape": [1, 32, 64, 64, 64, 3]},
+    {"id": "conv_b1_c32_h128_o64", "op": "conv_relu", "shape": [1, 32, 128, 128, 64, 3]},
+    {"id": "rmsnorm_r1_d1024", "op": "rmsnorm", "shape": [1, 1024]},
+    {"id": "rmsnorm_r32_d1024", "op": "rmsnorm", "shape": [32, 1024]},
+    {"id": "rmsnorm_r256_d1024", "op": "rmsnorm", "shape": [256, 1024]},
+    {"id": "rmsnorm_r1024_d1024", "op": "rmsnorm", "shape": [1024, 1024]}
+  ]
+}
