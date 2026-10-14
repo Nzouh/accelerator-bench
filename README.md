@@ -9,14 +9,16 @@ Operation and compiler experiments on an **RTX 3060 Laptop GPU** and a
 |---|---|---|
 | GPU/NPU latency | RTX graph latency is lower across all 12 shapes; timing boundaries differ. | [Comparison](reports/snapdragon-comparison/report.md) |
 | NPU layout | 64×64: 207 → 142 µs and 18 → 0 transposes. At 32×32, timing ranges overlap. | [Layout study](reports/snapdragon-comparison/report.md#layout-ablation) |
+| NPU preparation | O1: 47 → 24 HTP nodes, but 80 → 91 µs. Folding-disabled timing overlaps O3. | [Compiler study](reports/npu-preparation/report.md) |
 | GPU layout ablation | Disabling layout optimization makes FP32 convolution 1.54–1.66× faster, but FP16 1.22–1.27× slower. | [Report](reports/gpu-layout/report.md) |
 | GPU operation sweep | 56 configurations validated. FP16 RMSNorm at 32×1024: 9 → 1 kernel/call. | [Report](reports/rtx3060-ac/report.md) · [Findings](reports/rtx3060-ac/findings.md) |
 
 ![GPU/NPU latency](reports/snapdragon-comparison/latency.png)
 
-**96 NPU jobs validated:** 84 in the original sweep and 12 in the NHWC study.
-Each compile request has three independent jobs. The original sweep's HTP flag
-application was unverified; see the [preparation audit](reports/preparation-audit/report.md).
+**108 NPU jobs validated:** 84 original, 12 NHWC, 9 preparation, 3 flag-audit jobs.
+Timing studies use three jobs per setting. A [stage audit](reports/preparation-audit/report.md)
+caught HTP flags applied only at conversion; the corrected compiler study sets
+them explicitly during device preparation.
 
 ## Measurement boundaries
 

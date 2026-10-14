@@ -136,6 +136,27 @@ device-side values were not verified, so those runs do not establish O3/O1 or
 folding effects. Their device/layout timings remain recorded. The dated scripts
 use `--compile-options-only` to reproduce or resume that original plan.
 
+The [stage audit](../reports/preparation-audit/report.md) checks runtime logs and
+HTP graphs. The [corrected study](../reports/npu-preparation/report.md) repeats
+O3, O1 and folding-disabled preparation three times for one convolution shape:
+
+```bash
+accelerator-bench hub export --case conv_b1_c32_h16_o64 --output-dir artifacts/hub-conv16
+accelerator-bench hub sweep --device 'Samsung Galaxy S24' --qairt-version 2.50 \
+  --manifest artifacts/hub-conv16/manifest.json --repeats 3 \
+  --output-dir results/local/s24-preparation
+accelerator-bench hub htp results/local/s24-preparation
+python scripts/report_npu_preparation.py results/local/s24-preparation \
+  --output-dir reports/my-preparation
+```
+
+Regenerate the committed plot without remote jobs:
+
+```bash
+python scripts/report_npu_preparation.py results/hub-s24-preparation-2026-10-14 \
+  --output-dir reports/npu-preparation
+```
+
 ## Layout ablation
 
 NHWC export preserves the original convolution, weights and logical inputs.
