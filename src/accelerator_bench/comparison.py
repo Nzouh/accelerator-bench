@@ -138,7 +138,9 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
     plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 10,
                          'axes.titleweight': 'bold', 'figure.facecolor': 'white'})
     valid = [r for r in remote['rows'] if r['complete']]
-    baseline = sorted([r for r in valid if r['variant'] == 'optimized'], key=lambda r: (r['case']['op'], case_size(r['case'])))
+    op_order = {op: index for index, (op, _, _) in enumerate(OPS)}
+    baseline = sorted([r for r in valid if r['variant'] == 'optimized'],
+                      key=lambda r: (op_order[r['case']['op']], case_size(r['case'])))
     fig, axes = plt.subplots(1, 3, figsize=(13, 4.8))
     for ax, (op, name, xlabel) in zip(axes, OPS):
         rows = [r for r in baseline if r['case']['op'] == op]
@@ -235,6 +237,7 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
         axes[1].set_title('HTP transposes', loc='left')
         axes[1].set_ylabel('Instances / profile')
         axes[1].set_ylim(bottom=0)
+        axes[1].set_yticks(sorted({0} | {r['transpose_instances'] for records in diag.values() for r in records.values()}))
         for ax in axes:
             axes_style(ax, [r['nhwc']['case'] for r in layout_rows], 'H = W')
         finish_plot(fig, axes, 'NPU convolution layout',
@@ -259,11 +262,12 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
             if pairs:
                 unchanged = sum(a['implementation_signature'] == b['implementation_signature'] for a, b in pairs)
                 matches.append(f'{label}: {unchanged}/{len(pairs)} shapes')
-        if matches:
+        if matches and explicit_preparation:
             lines += ['', '**Identical HTP op-type counts:** ' + '; '.join(matches) +
                       '. Counts alone do not establish identical binaries or fusion.']
     lines += ['', '## Evidence', '', '- [Comparison table](comparison.csv)',
               '- [Reviewed measurements](review.json)', f'- [Raw NPU jobs]({rel(root / "results.json")})',
+              f'- [Workload shapes and hashes]({rel(root / "export-manifest.json")})',
               f'- [GPU measurements]({rel(gpu_source)})',
               '- [Timing definition](https://workbench.aihub.qualcomm.com/docs/hub/howitworks-inference.html)',
               '- [HTP diagnostics](https://docs.qualcomm.com/doc/80-63442-10/topic/htp_backend.html#qnn-htp-analysis-summary-qhas)']
@@ -275,6 +279,7 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
             lines.append(f'- [NHWC HTP evidence]({rel(Path(layout_source) / "htp-review.json")})')
     if remote['failures']:
         lines += ['', '## Excluded jobs', ''] + [f"- {r['key']}: {r['reason']}" for r in remote['failures']]
-    save_result(output / 'review.json', {'npu': remote['rows'], 'failures': remote['failures'], 'layout': layout_rows})
+    save_result(output / 'review.json', {'npu': remote['rows'], 'failures': remote['failures'], 'layout': layout_rows,
+                'preparation_flags_explicit_at_inference': explicit_preparation})
     (output / 'report.md').write_text('\n'.join(lines).rstrip() + '\n')
     return output / 'report.md'

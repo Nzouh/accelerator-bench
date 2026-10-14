@@ -7,15 +7,16 @@ Operation and compiler experiments on an **RTX 3060 Laptop GPU** and a
 
 | Experiment | Finding | Evidence |
 |---|---|---|
+| GPU/NPU latency | RTX graph latency is lower across all 12 shapes; timing boundaries differ. | [Comparison](reports/snapdragon-comparison/report.md) |
+| NPU layout | 64×64: 207 → 142 µs and 18 → 0 transposes. At 32×32, timing ranges overlap. | [Layout study](reports/snapdragon-comparison/report.md#layout-ablation) |
 | GPU layout ablation | Disabling layout optimization makes FP32 convolution 1.54–1.66× faster, but FP16 1.22–1.27× slower. | [Report](reports/gpu-layout/report.md) |
-| GPU operation sweep | 56 configurations validated; compiled FP16 RMSNorm uses 1 kernel/call versus 9 eager. | [Report](reports/rtx3060-ac/report.md) · [Findings](reports/rtx3060-ac/findings.md) |
-| NPU pilot | Three Galaxy S24 jobs passed correctness and NPU-placement checks. | [Report](reports/snapdragon-s24-smoke/report.md) |
+| GPU operation sweep | 56 configurations validated. FP16 RMSNorm at 32×1024: 9 → 1 kernel/call. | [Report](reports/rtx3060-ac/report.md) · [Findings](reports/rtx3060-ac/findings.md) |
 
-![GPU layout ablation](reports/gpu-layout/layout.png)
+![GPU/NPU latency](reports/snapdragon-comparison/latency.png)
 
-The repeated NPU sweep covers 28 compile requests, three jobs each.
-A separate NHWC ablation tests four convolution shapes. Reports are generated
-only after their jobs finish.
+**96 NPU jobs validated:** 84 in the original sweep and 12 in the NHWC study.
+Each compile request has three independent jobs. The original sweep's HTP flag
+application was unverified; see the [preparation audit](reports/preparation-audit/report.md).
 
 ## Measurement boundaries
 
@@ -52,4 +53,5 @@ For a short run, add `--case rmsnorm_r32 --dtypes float16 --rounds 2 --blocks 2
 [Recorded dependencies](requirements-wsl-lock.txt) ·
 [Tests](https://github.com/Nzouh/accelerator-bench/actions)
 
-Earlier run: [GPU with background workloads](reports/rtx3060-exploratory/report.md).
+Archive: [GPU with background workloads](reports/rtx3060-exploratory/report.md) ·
+[NPU compile requests](reports/snapdragon-s24-smoke/report.md).
