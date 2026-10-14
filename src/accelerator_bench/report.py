@@ -135,7 +135,7 @@ def create_report(source, output_dir, profile=None):
              "## How to read these results", "",
              "CUDA Graph replay amortizes host dispatch across repeated operations. The separate dispatch chart includes Python and synchronization overhead. Neither includes input transfers or full application work. Graph replay repeatedly uses the same resident inputs and can favor cache reuse.", "",
              "Shaded ranges are P10–P90 across **block-average** timings, not per-request tail latencies or confidence intervals. Variants are shuffled within paired rounds. Input shapes and precision run in a fixed order, so thermal drift and background activity remain possible confounders.", "",
-             "Energy is gross GPU-device telemetry integrated during a separate sustained replay window. It includes unrelated GPU work. It is not attributable energy of this workload, not whole-laptop power, and cannot support an NPU efficiency comparison. Sensor averaging limits the meaning of short intervals.", "",
+             "Energy is gross GPU-device telemetry integrated during a separate sustained replay window. It includes baseline consumption and any unrelated GPU activity. It is not isolated workload-only energy or whole-laptop power, and cannot support an NPU efficiency comparison. Sensor averaging limits the meaning of short intervals.", "",
              "The compiled variant can change layout, dispatch, and kernels. A speedup alone does not establish which compiler transformation caused it. The explicit fused implementation only applies to RMSNorm.", ""]
     for filename, title in figures:
         lines += [f"## {title}", "", f"![{title}]({filename}.png)", ""]
@@ -164,7 +164,7 @@ def create_report(source, output_dir, profile=None):
             plt.close(fig)
             profile_link = Path(os.path.relpath(profile_path.resolve(), output.resolve())).as_posix()
             lines += ["## Compiler evidence", "", "![Profiler-observed CUDA activities](kernel_counts.png)", "",
-                      "The separate profiler capture records fewer CUDA activities for the compiled and explicit fused RMSNorm implementations. Kernel names and counts are retained in the diagnostic JSON. These are independent of the noisy speedup magnitudes in the exploratory run.", "",
+                      "The separate profiler capture records fewer CUDA activities for the compiled and explicit fused RMSNorm implementations. Kernel names and counts are retained in the diagnostic JSON. This is evidence about execution structure; timings come from the separate benchmark run.", "",
                       f"[Raw profiler evidence]({profile_link})", ""]
     lines += ["## Numerical validation", "", "All timed configurations passed both ordinary and captured-graph output checks against a CPU FP64 reference computed from the original seeded FP32 inputs and weights. FP16 error includes input and weight rounding. This is numerical agreement on synthetic tensors, not task accuracy on a dataset.", "",
               "| Operation | Precision | Maximum relative L2 error across shapes/variants |", "|---|---|---:|"]
@@ -177,7 +177,7 @@ def create_report(source, output_dir, profile=None):
               f"- [Raw measurement JSON]({Path(os.path.relpath(source.resolve(), output.resolve())).as_posix()}) (raw timing blocks, power samples, environment, checks).",
               "- `first_call_s` includes initialization, possible cache hits, compilation and execution; it is **not** isolated compiler duration.",
               "", "## Before drawing hardware conclusions", "",
-              "Repeat on AC power with GPU-heavy applications closed and fixed documented power settings; repeat whole sessions to quantify variation. Run the same checked workload on a specifically identified Snapdragon device, verify NPU placement, and reconcile precision and timing boundaries. Keep graph-replay timing separate from AI Hub framework-call timing.", ""]
+              "Repeat whole sessions on AC power with GPU-heavy applications closed and documented power settings to quantify variation. Before any cross-device comparison, verify NPU placement for the same checked workload and reconcile precision and timing boundaries. Keep graph-replay timing separate from AI Hub framework-call timing.", ""]
     failures = [r for r in data["records"] if r["status"] != "ok"]
     if failures:
         lines += ["## Failed configurations", ""] + [f"- {r['case']['id']} / {r['dtype']} / {r['variant']}: {r['status']}" for r in failures]
