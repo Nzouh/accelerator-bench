@@ -12,19 +12,38 @@ from .runner import save_result
 from .workloads import correctness, fingerprint, load_config, make_workload, reference_output
 
 
-def export(config_path, output_dir, case_filter=None):
+class ConvNHWC(torch.nn.Module):
+    def __init__(self, module):
+        super().__init__()
+        self.module = module
+
+    def forward(self, x):
+        return self.module(x.permute(0, 3, 1, 2)).permute(0, 2, 3, 1).contiguous()
+
+
+def export(config_path, output_dir, case_filter=None, io_layout="nchw"):
     import onnx
     import onnxruntime as ort
     root = Path(output_dir)
     root.mkdir(parents=True, exist_ok=True)
     config = load_config(config_path)
-    manifest = {"schema_version": 1, "seed": config["seed"], "cases": [],
+    if io_layout not in ("nchw", "nhwc"):
+        raise ValueError("Unknown IO layout")
+    manifest = {"schema_version": 1, "seed": config["seed"], "cases": [], "io_layout": io_layout,
                 "source_precision": "float32", "requested_execution_precision": "float16",
                 "note": "FP32 IO with explicitly requested NPU FP16 execution; inspect device profile for actual placement and precision"}
     for case in config["cases"]:
         if case_filter and case_filter not in case["id"]:
             continue
         module, x = make_workload(case, config["seed"])
+        input_hash = fingerprint(module, x)
+        reference = reference_output(module, x)
+        if io_layout == "nhwc":
+            if case["op"] != "conv_relu":
+                raise ValueError("NHWC export requires convolution-only selection")
+            module = ConvNHWC(module).eval()
+            x = x.permute(0, 2, 3, 1).contiguous()
+            reference = reference.permute(0, 2, 3, 1).contiguous()
         model_path = root / (case["id"] + ".onnx")
         with torch.inference_mode():
             torch.onnx.export(module, (x,), model_path, input_names=["x"], output_names=["output"],
@@ -35,14 +54,14 @@ def export(config_path, output_dir, case_filter=None):
         session_options.inter_op_num_threads = 1
         session = ort.InferenceSession(str(model_path), sess_options=session_options,
                                        providers=["CPUExecutionProvider"])
-        reference = reference_output(module, x)
         export_check = correctness(torch.from_numpy(session.run(None, {"x": x.numpy()})[0]), reference, "float32")
         if not export_check["passed"]:
             raise RuntimeError(f"ONNX export differs from reference for {case['id']}")
         arrays_path = root / (case["id"] + ".npz")
         np.savez_compressed(arrays_path, x=x.numpy(), reference=reference.numpy())
         manifest["cases"].append({"case": case, "model": model_path.name, "arrays": arrays_path.name,
-                                  "input_weight_sha256": fingerprint(module, x),
+                                  "input_weight_sha256": input_hash,
+                                  "input_shape": list(x.shape), "io_layout": io_layout,
                                   "onnx_sha256": hashlib.sha256(model_path.read_bytes()).hexdigest(),
                                   "arrays_sha256": hashlib.sha256(arrays_path.read_bytes()).hexdigest(),
                                   "onnx_cpu_correctness": export_check})

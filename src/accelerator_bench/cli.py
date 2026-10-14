@@ -34,6 +34,7 @@ def main():
     export.add_argument("--config", default="configs/rtx3060.json")
     export.add_argument("--output-dir", default="artifacts/hub")
     export.add_argument("--case", dest="case_filter")
+    export.add_argument("--io-layout", choices=["nchw", "nhwc"], default="nchw")
     hub_sub.add_parser("devices", help="List account-accessible devices (requires configured API token)")
     hub_report = hub_sub.add_parser("report", help="Review saved placement and create separate NPU charts")
     hub_report.add_argument("source_dir")
@@ -46,6 +47,7 @@ def main():
     sweep.add_argument("--repeats", type=int, default=3)
     sweep.add_argument("--max-active", type=int, default=4)
     sweep.add_argument("--resume", action="store_true")
+    sweep.add_argument("--variants", nargs="+", choices=["optimized", "prepare_fast", "no_conv_relu_fold"])
     for name in ("plan", "run"):
         p = hub_sub.add_parser(name)
         p.add_argument("--manifest", default="artifacts/hub/manifest.json")

@@ -26,3 +26,21 @@ def test_hub_export_preserves_weights_and_checks_onnx(tmp_path):
     assert len(experiment["jobs"]) == 5
     assert all("--compute_unit npu" in j["compile_options"] for j in experiment["jobs"])
     assert all("--qairt_version 2.42" in j["compile_options"] for j in experiment["jobs"])
+
+
+def test_nhwc_export_preserves_logical_values(tmp_path):
+    import numpy as np
+    pytest.importorskip("onnx")
+    pytest.importorskip("onnxruntime")
+    config = {"seed": 1729, "dtypes": ["float32"], "cases": [
+        {"id": "conv", "op": "conv_relu", "shape": [1, 3, 5, 5, 4, 3]}]}
+    path = tmp_path / "config.json"
+    path.write_text(json.dumps(config))
+    nchw = export(path, tmp_path / "nchw")['cases'][0]
+    nhwc = export(path, tmp_path / "nhwc", io_layout="nhwc")['cases'][0]
+    assert nchw['input_weight_sha256'] == nhwc['input_weight_sha256']
+    assert nhwc['input_shape'] == [1, 5, 5, 3]
+    assert nhwc['onnx_cpu_correctness']['passed']
+    with np.load(tmp_path / 'nchw' / nchw['arrays']) as a, np.load(tmp_path / 'nhwc' / nhwc['arrays']) as b:
+        np.testing.assert_array_equal(a['x'].transpose(0, 2, 3, 1), b['x'])
+        np.testing.assert_array_equal(a['reference'].transpose(0, 2, 3, 1), b['reference'])

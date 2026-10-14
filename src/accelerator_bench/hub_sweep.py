@@ -48,7 +48,7 @@ def collect_inference(job, record, item, manifest_path, root):
 
 
 def run_sweep(manifest_path, device, qairt_version, output_dir, repeats=3,
-              max_active=4, poll_seconds=15, resume=False):
+              max_active=4, poll_seconds=15, resume=False, variants=None):
     import qai_hub as hub
     if repeats < 1 or max_active < 1 or poll_seconds < 0:
         raise ValueError('Invalid sweep counts')
@@ -56,6 +56,11 @@ def run_sweep(manifest_path, device, qairt_version, output_dir, repeats=3,
     manifest = json.loads(manifest_path.read_text())
     validate_artifacts(manifest_path, manifest)
     experiment = plan(manifest_path, device, qairt_version)
+    if variants:
+        allowed = {j['variant'] for j in experiment['jobs']}
+        if not set(variants) <= allowed:
+            raise ValueError('Unknown sweep variant')
+        experiment['jobs'] = [j for j in experiment['jobs'] if j['variant'] in variants]
     manifest_hash = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
     matches = [d for d in hub.get_devices(name=device) if d.name == device]
     if len(matches) != 1:
@@ -75,6 +80,8 @@ def run_sweep(manifest_path, device, qairt_version, output_dir, repeats=3,
     else:
         if resume:
             raise FileNotFoundError('No sweep to resume')
+        source_commit = shell_output(['git', 'rev-parse', 'HEAD'])
+        source_dirty = bool(shell_output(['git', 'status', '--porcelain']))
         root.mkdir(parents=True)
         save_result(root / 'export-manifest.json', manifest)
         rng = random.Random(manifest.get('seed', 1729))
@@ -93,8 +100,7 @@ def run_sweep(manifest_path, device, qairt_version, output_dir, repeats=3,
                                 'energy': {'status': 'unavailable'}})
         result = {'schema_version': 2, 'source': 'qualcomm_ai_hub_sweep', 'status': 'running',
                   'started_utc': utc_now(), 'client_version': str(hub.__version__),
-                  'git_commit': shell_output(['git', 'rev-parse', 'HEAD']),
-                  'git_dirty': bool(shell_output(['git', 'status', '--porcelain'])),
+                  'git_commit': source_commit, 'git_dirty': source_dirty,
                   'device': {'name': target.name, 'os': target.os, 'attributes': target.attributes},
                   'manifest_sha256': manifest_hash, 'plan': experiment, 'repeats': repeats,
                   'order_seed': manifest.get('seed', 1729),
