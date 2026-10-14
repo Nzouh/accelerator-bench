@@ -1,0 +1,644 @@
+{
+  "diagnostics": [
+    {
+      "case_id": "conv_b1_c32_h16_o64",
+      "variant": "prepare_fast",
+      "job_id": "jp4e3ve8g",
+      "repeat": 1,
+      "status": "available",
+      "raw_file": "htp/conv_b1_c32_h16_o64_prepare_fast_r1/jp4e3ve8g_main_qhas_summary.json",
+      "raw_sha256": "2542279f70150ef3a669f113858608d92b4ca2f1182f24807f0310ac948b2332",
+      "time_us": 38,
+      "graph_execute_us": 25,
+      "timeline_cycles": 39725,
+      "total_dram_read": 73728,
+      "total_dram_write": 65536,
+      "peak_vtcm_alloc": 131072,
+      "htp_nodes": 24,
+      "qnn_nodes": 7,
+      "resources": [
+        {
+          "type": "HMX",
+          "tid": 256,
+          "start_cycle": 1976356584,
+          "end_cycle": 1976396309,
+          "timeline_cycles": 39725,
+          "cycles_used": 8387,
+          "utilization": 21.112649465072373,
+          "dram_read": 73728,
+          "dram_write": 65536,
+          "vtcm_read": 122880,
+          "vtcm_write": 106496
+        },
+        {
+          "type": "HVX",
+          "tid": 512,
+          "start_cycle": 1976359580,
+          "end_cycle": 1976363618,
+          "timeline_cycles": 4038,
+          "cycles_used": 4038,
+          "utilization": 10.164883574575205,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 32768,
+          "vtcm_write": 32768
+        },
+        {
+          "type": "HVX",
+          "tid": 513,
+          "start_cycle": 1976366290,
+          "end_cycle": 1976384687,
+          "timeline_cycles": 18397,
+          "cycles_used": 7214,
+          "utilization": 18.15984896161108,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 114688,
+          "vtcm_write": 131072
+        },
+        {
+          "type": "HVX",
+          "tid": 514,
+          "start_cycle": 1976363674,
+          "end_cycle": 1976393943,
+          "timeline_cycles": 30269,
+          "cycles_used": 14371,
+          "utilization": 36.17621145374449,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 131072,
+          "vtcm_write": 98304
+        },
+        {
+          "type": "HVX",
+          "tid": 515,
+          "start_cycle": 1976374988,
+          "end_cycle": 1976382037,
+          "timeline_cycles": 7049,
+          "cycles_used": 7049,
+          "utilization": 17.744493392070485,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 32768,
+          "vtcm_write": 65536
+        }
+      ],
+      "implementation_signature": [
+        [
+          "DmaCheckpointSet",
+          3
+        ],
+        [
+          "SyncOp",
+          1
+        ],
+        [
+          "q::*InputSlice",
+          5
+        ],
+        [
+          "q::*OutputSlice",
+          2
+        ],
+        [
+          "q::Cast_fp16_to_fp32",
+          1
+        ],
+        [
+          "q::Cast_fp32_to_fp16.tcm",
+          1
+        ],
+        [
+          "q::Concat",
+          1
+        ],
+        [
+          "q::ConvLayer.fp16.s1.tcm",
+          1
+        ],
+        [
+          "q::ConvLayer.opt.weights_to_vtcm",
+          2
+        ],
+        [
+          "q::ForceFormat_Crouton",
+          1
+        ],
+        [
+          "q::Transpose.2D",
+          4
+        ],
+        [
+          "q::zero_to_vtcm.fp16",
+          2
+        ]
+      ],
+      "transpose_instances": 4,
+      "transpose_dominant_path_percent": 37.41688701768798,
+      "cast_dominant_path_percent": 30.187662054270533,
+      "top_ops": [
+        {
+          "op": "q::Transpose.2D",
+          "cycles": 14575,
+          "percent_active_cycles": 35.497698433960885,
+          "num_dominant_path_cycles_htp_0": 14575,
+          "percent_dominant_path_cycles_htp_0": 37.41688701768798,
+          "instances": 4,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 163840,
+          "vtcm_write": 180224,
+          "format_change": false,
+          "reference_op": false
+        },
+        {
+          "op": "q::Cast_fp16_to_fp32",
+          "cycles": 9201,
+          "percent_active_cycles": 22.40921600623493,
+          "num_dominant_path_cycles_htp_0": 9201,
+          "percent_dominant_path_cycles_htp_0": 23.620773752984366,
+          "instances": 1,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 65536,
+          "vtcm_write": 65536,
+          "format_change": false,
+          "reference_op": false
+        },
+        {
+          "op": "q::Concat",
+          "cycles": 4038,
+          "percent_active_cycles": 9.834628217930295,
+          "num_dominant_path_cycles_htp_0": 4038,
+          "percent_dominant_path_cycles_htp_0": 10.366338921264088,
+          "instances": 1,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 32768,
+          "vtcm_write": 32768,
+          "format_change": false,
+          "reference_op": false
+        },
+        {
+          "op": "q::Cast_fp32_to_fp16.tcm",
+          "cycles": 2558,
+          "percent_active_cycles": 6.230059183126721,
+          "num_dominant_path_cycles_htp_0": 2558,
+          "percent_dominant_path_cycles_htp_0": 6.566888301286165,
+          "instances": 1,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 32768,
+          "vtcm_write": 16384,
+          "format_change": false,
+          "reference_op": false
+        },
+        {
+          "op": "q::ForceFormat_Crouton",
+          "cycles": 2300,
+          "percent_active_cycles": 5.601695121654205,
+          "num_dominant_path_cycles_htp_0": 2300,
+          "percent_dominant_path_cycles_htp_0": 5.904551639154879,
+          "instances": 1,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 16384,
+          "vtcm_write": 32768,
+          "format_change": true,
+          "reference_op": false
+        }
+      ],
+      "reported_dtypes": [
+        "",
+        "Float16",
+        "Float32",
+        "Int32"
+      ],
+      "scope": "Separate optrace diagnostic; not steady-state benchmark latency"
+    },
+    {
+      "case_id": "conv_b1_c32_h16_o64",
+      "variant": "no_conv_relu_fold",
+      "job_id": "jpx0xy03p",
+      "repeat": 1,
+      "status": "available",
+      "raw_file": "htp/conv_b1_c32_h16_o64_no_conv_relu_fold_r1/jpx0xy03p_main_qhas_summary.json",
+      "raw_sha256": "aa42d5573d6c906a85749ab6ae28c7aa34bcb04e9bb004efe75b60ab2671745f",
+      "time_us": 28,
+      "graph_execute_us": 17,
+      "timeline_cycles": 26907,
+      "total_dram_read": 73728,
+      "total_dram_write": 65536,
+      "peak_vtcm_alloc": 131072,
+      "htp_nodes": 47,
+      "qnn_nodes": 6,
+      "resources": [
+        {
+          "type": "HMX",
+          "tid": 256,
+          "start_cycle": 2042302302,
+          "end_cycle": 2042329209,
+          "timeline_cycles": 26907,
+          "cycles_used": 8445,
+          "utilization": 31.38588471401494,
+          "dram_read": 73728,
+          "dram_write": 65536,
+          "vtcm_read": 180224,
+          "vtcm_write": 106496
+        },
+        {
+          "type": "HVX",
+          "tid": 512,
+          "start_cycle": 2042305090,
+          "end_cycle": 2042326420,
+          "timeline_cycles": 21330,
+          "cycles_used": 11419,
+          "utilization": 42.43877058014643,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 65536,
+          "vtcm_write": 81920
+        },
+        {
+          "type": "HVX",
+          "tid": 513,
+          "start_cycle": 2042305225,
+          "end_cycle": 2042326474,
+          "timeline_cycles": 21249,
+          "cycles_used": 5866,
+          "utilization": 21.801018322369643,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 16384,
+          "vtcm_write": 32768
+        },
+        {
+          "type": "HVX",
+          "tid": 514,
+          "start_cycle": 2042305145,
+          "end_cycle": 2042326402,
+          "timeline_cycles": 21257,
+          "cycles_used": 10142,
+          "utilization": 37.69279369680752,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 131072,
+          "vtcm_write": 114688
+        },
+        {
+          "type": "HVX",
+          "tid": 515,
+          "start_cycle": 2042305200,
+          "end_cycle": 2042326438,
+          "timeline_cycles": 21238,
+          "cycles_used": 8430,
+          "utilization": 31.330137139034452,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 65536,
+          "vtcm_write": 65536
+        }
+      ],
+      "implementation_signature": [
+        [
+          "DmaCheckpointSet",
+          4
+        ],
+        [
+          "SyncOp",
+          2
+        ],
+        [
+          "q::*InputSlice",
+          5
+        ],
+        [
+          "q::*OutputSlice",
+          10
+        ],
+        [
+          "q::Cast_fp16_to_fp32",
+          8
+        ],
+        [
+          "q::Cast_fp32_to_fp16.tcm",
+          4
+        ],
+        [
+          "q::ConvLayer.fp16.s1.tcm",
+          2
+        ],
+        [
+          "q::ConvLayer.opt.weights_to_vtcm",
+          2
+        ],
+        [
+          "q::ForceFormat_Crouton",
+          4
+        ],
+        [
+          "q::Transpose.2D",
+          4
+        ],
+        [
+          "q::zero_to_vtcm.fp16",
+          2
+        ]
+      ],
+      "transpose_instances": 4,
+      "transpose_dominant_path_percent": 52.189795055177456,
+      "cast_dominant_path_percent": 21.951782212481255,
+      "top_ops": [
+        {
+          "op": "q::Transpose.2D",
+          "cycles": 13573,
+          "percent_active_cycles": 30.637443004830484,
+          "num_dominant_path_cycles_htp_0": 13573,
+          "percent_dominant_path_cycles_htp_0": 52.189795055177456,
+          "instances": 4,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 163840,
+          "vtcm_write": 180224,
+          "format_change": false,
+          "reference_op": false
+        },
+        {
+          "op": "q::Cast_fp32_to_fp16.tcm",
+          "cycles": 9982,
+          "percent_active_cycles": 22.53171414383098,
+          "num_dominant_path_cycles_htp_0": 2897,
+          "percent_dominant_path_cycles_htp_0": 11.13930864767178,
+          "instances": 4,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 32768,
+          "vtcm_write": 16384,
+          "format_change": false,
+          "reference_op": false
+        },
+        {
+          "op": "q::Cast_fp16_to_fp32",
+          "cycles": 10624,
+          "percent_active_cycles": 23.980858651979595,
+          "num_dominant_path_cycles_htp_0": 2812,
+          "percent_dominant_path_cycles_htp_0": 10.812473564809475,
+          "instances": 8,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 65536,
+          "vtcm_write": 65536,
+          "format_change": false,
+          "reference_op": false
+        },
+        {
+          "op": "q::*OutputSlice",
+          "cycles": 3728,
+          "percent_active_cycles": 8.414969978781995,
+          "num_dominant_path_cycles_htp_0": 2389,
+          "percent_dominant_path_cycles_htp_0": 9.185988387741762,
+          "instances": 10,
+          "dram_read": 0,
+          "dram_write": 65536,
+          "vtcm_read": 65536,
+          "vtcm_write": 0,
+          "format_change": false,
+          "reference_op": false
+        },
+        {
+          "op": "q::*InputSlice",
+          "cycles": 2354,
+          "percent_active_cycles": 5.313529863211594,
+          "num_dominant_path_cycles_htp_0": 2354,
+          "percent_dominant_path_cycles_htp_0": 9.05140923597493,
+          "instances": 5,
+          "dram_read": 32768,
+          "dram_write": 0,
+          "vtcm_read": 0,
+          "vtcm_write": 32768,
+          "format_change": false,
+          "reference_op": false
+        }
+      ],
+      "reported_dtypes": [
+        "",
+        "Float16",
+        "Float32",
+        "Int32"
+      ],
+      "scope": "Separate optrace diagnostic; not steady-state benchmark latency"
+    },
+    {
+      "case_id": "conv_b1_c32_h16_o64",
+      "variant": "optimized",
+      "job_id": "jg9odw2wg",
+      "repeat": 1,
+      "status": "available",
+      "raw_file": "htp/conv_b1_c32_h16_o64_optimized_r1/jg9odw2wg_main_qhas_summary.json",
+      "raw_sha256": "b11c8338c13354620bae061d71caeb2f730f3fd06e300aa10a52d8efc8db0863",
+      "time_us": 34,
+      "graph_execute_us": 21,
+      "timeline_cycles": 33150,
+      "total_dram_read": 73728,
+      "total_dram_write": 65536,
+      "peak_vtcm_alloc": 131072,
+      "htp_nodes": 47,
+      "qnn_nodes": 6,
+      "resources": [
+        {
+          "type": "HMX",
+          "tid": 256,
+          "start_cycle": 1997526348,
+          "end_cycle": 1997559498,
+          "timeline_cycles": 33150,
+          "cycles_used": 10837,
+          "utilization": 32.690799396681754,
+          "dram_read": 73728,
+          "dram_write": 65536,
+          "vtcm_read": 180224,
+          "vtcm_write": 106496
+        },
+        {
+          "type": "HVX",
+          "tid": 512,
+          "start_cycle": 1997529926,
+          "end_cycle": 1997556222,
+          "timeline_cycles": 26296,
+          "cycles_used": 5645,
+          "utilization": 17.02865761689291,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 98304,
+          "vtcm_write": 81920
+        },
+        {
+          "type": "HVX",
+          "tid": 513,
+          "start_cycle": 1997529983,
+          "end_cycle": 1997556283,
+          "timeline_cycles": 26300,
+          "cycles_used": 6083,
+          "utilization": 18.3499245852187,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 0,
+          "vtcm_write": 0
+        },
+        {
+          "type": "HVX",
+          "tid": 514,
+          "start_cycle": 1997530039,
+          "end_cycle": 1997556257,
+          "timeline_cycles": 26218,
+          "cycles_used": 11857,
+          "utilization": 35.76772247360482,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 32768,
+          "vtcm_write": 65536
+        },
+        {
+          "type": "HVX",
+          "tid": 515,
+          "start_cycle": 1997530059,
+          "end_cycle": 1997556322,
+          "timeline_cycles": 26263,
+          "cycles_used": 17736,
+          "utilization": 53.50226244343892,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 147456,
+          "vtcm_write": 147456
+        }
+      ],
+      "implementation_signature": [
+        [
+          "DmaCheckpointSet",
+          4
+        ],
+        [
+          "SyncOp",
+          2
+        ],
+        [
+          "q::*InputSlice",
+          5
+        ],
+        [
+          "q::*OutputSlice",
+          10
+        ],
+        [
+          "q::Cast_fp16_to_fp32",
+          8
+        ],
+        [
+          "q::Cast_fp32_to_fp16.tcm",
+          4
+        ],
+        [
+          "q::ConvLayer.fp16.s1.tcm",
+          2
+        ],
+        [
+          "q::ConvLayer.opt.weights_to_vtcm",
+          2
+        ],
+        [
+          "q::ForceFormat_Crouton",
+          4
+        ],
+        [
+          "q::Transpose.2D",
+          4
+        ],
+        [
+          "q::zero_to_vtcm.fp16",
+          2
+        ]
+      ],
+      "transpose_instances": 4,
+      "transpose_dominant_path_percent": 44.42273699879058,
+      "cast_dominant_path_percent": 28.241386795670916,
+      "top_ops": [
+        {
+          "op": "q::Transpose.2D",
+          "cycles": 14325,
+          "percent_active_cycles": 27.4646267111469,
+          "num_dominant_path_cycles_htp_0": 14325,
+          "percent_dominant_path_cycles_htp_0": 44.42273699879058,
+          "instances": 4,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 163840,
+          "vtcm_write": 180224,
+          "format_change": false,
+          "reference_op": false
+        },
+        {
+          "op": "q::Cast_fp32_to_fp16.tcm",
+          "cycles": 13260,
+          "percent_active_cycles": 25.422753939951686,
+          "num_dominant_path_cycles_htp_0": 6308,
+          "percent_dominant_path_cycles_htp_0": 19.561509597792043,
+          "instances": 4,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 32768,
+          "vtcm_write": 16384,
+          "format_change": false,
+          "reference_op": false
+        },
+        {
+          "op": "q::*InputSlice",
+          "cycles": 3133,
+          "percent_active_cycles": 6.0067487250278,
+          "num_dominant_path_cycles_htp_0": 3133,
+          "percent_dominant_path_cycles_htp_0": 9.715632461934444,
+          "instances": 5,
+          "dram_read": 32768,
+          "dram_write": 0,
+          "vtcm_read": 0,
+          "vtcm_write": 32768,
+          "format_change": false,
+          "reference_op": false
+        },
+        {
+          "op": "q::*OutputSlice",
+          "cycles": 4151,
+          "percent_active_cycles": 7.958510679090455,
+          "num_dominant_path_cycles_htp_0": 2812,
+          "percent_dominant_path_cycles_htp_0": 8.720191025521753,
+          "instances": 10,
+          "dram_read": 0,
+          "dram_write": 65536,
+          "vtcm_read": 65536,
+          "vtcm_write": 0,
+          "format_change": false,
+          "reference_op": false
+        },
+        {
+          "op": "q::Cast_fp16_to_fp32",
+          "cycles": 10439,
+          "percent_active_cycles": 20.014187660569807,
+          "num_dominant_path_cycles_htp_0": 2799,
+          "percent_dominant_path_cycles_htp_0": 8.679877197878874,
+          "instances": 8,
+          "dram_read": 0,
+          "dram_write": 0,
+          "vtcm_read": 65536,
+          "vtcm_write": 65536,
+          "format_change": false,
+          "reference_op": false
+        }
+      ],
+      "reported_dtypes": [
+        "",
+        "Float16",
+        "Float32",
+        "Int32"
+      ],
+      "scope": "Separate optrace diagnostic; not steady-state benchmark latency"
+    }
+  ]
+}

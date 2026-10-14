@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "seed": 1729,
+  "cases": [
+    {
+      "case": {
+        "id": "conv_b1_c32_h16_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          16,
+          16,
+          64,
+          3
+        ]
+      },
+      "model": "conv_b1_c32_h16_o64.onnx",
+      "arrays": "conv_b1_c32_h16_o64.npz",
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "onnx_sha256": "e76c0391381e8d5b512391de24d7c27632067ccdd0a38d4a8d7b07f293449641",
+      "arrays_sha256": "91fdccac21d8afdd59e3ef11c2672320eba3dae7bbe373becf42dd190129b6df",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.33784468193366e-07,
+        "relative_l2_error": 1.530867143114567e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    }
+  ],
+  "source_precision": "float32",
+  "requested_execution_precision": "float16",
+  "note": "FP32 IO with explicitly requested NPU FP16 execution; inspect device profile for actual placement and precision"
+}
