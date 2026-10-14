@@ -48,6 +48,13 @@ def main():
     sweep.add_argument("--max-active", type=int, default=4)
     sweep.add_argument("--resume", action="store_true")
     sweep.add_argument("--variants", nargs="+", choices=["optimized", "prepare_fast", "no_conv_relu_fold"])
+    htp = hub_sub.add_parser("htp", help="Download first-repeat QHAS diagnostics")
+    htp.add_argument("source_dir")
+    compare = hub_sub.add_parser("compare", help="Generate GPU/NPU and layout comparisons")
+    compare.add_argument("source_dir")
+    compare.add_argument("--gpu-source", required=True)
+    compare.add_argument("--layout-source")
+    compare.add_argument("--output-dir", required=True)
     for name in ("plan", "run"):
         p = hub_sub.add_parser(name)
         p.add_argument("--manifest", default="artifacts/hub/manifest.json")
@@ -94,6 +101,12 @@ def main():
             print(result["status"])
             if result["status"] != "complete":
                 raise SystemExit(1)
+        elif action == "htp":
+            from .htp import collect_htp
+            collect_htp(**args)
+        elif action == "compare":
+            from .comparison import create_comparison
+            print(create_comparison(**args))
         else:
             manifest_path = args.pop("manifest")
             print(json.dumps((hub.plan if action == "plan" else hub.execute)(manifest_path, **args), indent=2))

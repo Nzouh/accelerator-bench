@@ -15,6 +15,9 @@ def review_profile(profile):
     units = sorted({str(item.get("compute_unit", "unknown")) for item in details})
     summary = profile.get("execution_summary", {})
     times = summary.get("all_inference_times", [])
+    valid_times = bool(times) and bool(np.isfinite(times).all()) and min(times) > 0
+    if not valid_times:
+        times = []
     return {
         "reported_compute_units": units,
         "all_reported_entries_on_npu": bool(details) and units == ["NPU"],
