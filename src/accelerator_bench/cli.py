@@ -54,6 +54,8 @@ def main():
     sweep.add_argument("--variants", nargs="+", choices=["optimized", "prepare_fast", "no_conv_relu_fold"])
     htp = hub_sub.add_parser("htp", help="Download first-repeat QHAS diagnostics")
     htp.add_argument("source_dir")
+    htp.add_argument("--include-rejected", action="store_true",
+                     help="Retain diagnostics for rejected outputs without accepting their timings")
     compare = hub_sub.add_parser("compare", help="Generate GPU/NPU and layout comparisons")
     compare.add_argument("source_dir")
     compare.add_argument("--gpu-source", required=True)

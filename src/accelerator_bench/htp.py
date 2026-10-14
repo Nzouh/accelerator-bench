@@ -30,7 +30,7 @@ def summarize_htp(raw):
     }
 
 
-def collect_htp(source_dir):
+def collect_htp(source_dir, include_rejected=False):
     import qai_hub as hub
     hub.set_verbose(False)
     root = Path(source_dir).resolve()
@@ -38,7 +38,8 @@ def collect_htp(source_dir):
     diagnostics = []
     # First repeat only; selection is independent of measured performance.
     for record in data['records']:
-        if record['repeat'] != 1 or record['status'] != 'validated':
+        allowed = ('validated', 'rejected') if include_rejected else ('validated',)
+        if record['repeat'] != 1 or record['status'] not in allowed:
             continue
         folder = root / 'htp' / record['key']
         paths = list(folder.glob('*_qhas_summary.json'))
@@ -51,6 +52,7 @@ def collect_htp(source_dir):
         path = paths[0]
         diagnostics.append({'case_id': record['case_id'], 'variant': record['variant'],
             'job_id': record['job_id'], 'repeat': 1, 'status': 'available',
+            'measurement_status': record['status'],
             'raw_file': path.relative_to(root).as_posix(),
             'raw_sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
             **summarize_htp(json.loads(path.read_text()))})
