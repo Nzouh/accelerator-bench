@@ -1,0 +1,2943 @@
+{
+  "source": "local_cuda_layout_ablation",
+  "environment": {
+    "timestamp_utc": "2026-10-14T02:30:18.295009+00:00",
+    "python": "3.12.3",
+    "os": "Linux",
+    "kernel": "6.6.87.2-microsoft-standard-WSL2",
+    "torch": "2.11.0+cu128",
+    "cuda_runtime": "12.8",
+    "cudnn": 91900,
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "gpu_memory_bytes": 6441926656,
+    "compute_capability": "8.6",
+    "driver": "616.64",
+    "git_commit": "c321c641b0796db639a0217057f4835c74348197",
+    "git_dirty": true,
+    "tf32_matmul": false,
+    "tf32_cudnn": false,
+    "fp16_reduced_precision_reduction": false,
+    "cudnn_benchmark": false,
+    "torch_cpu_threads": 1,
+    "power_limit_or_clock_changes": "none requested by this tool"
+  },
+  "status": "complete",
+  "context": "AC verified; GPU idle before run. Desktop apps and AI Hub orchestration clients present. Clocks unlocked.",
+  "settings": {
+    "rounds": 5,
+    "blocks": 5,
+    "replays_per_block": 10,
+    "calls_per_graph": 100,
+    "variants": {
+      "layout_on": true,
+      "layout_off": false
+    },
+    "timing": "CUDA graph replay; resident tensors; no transfers or telemetry"
+  },
+  "records": [
+    {
+      "case": {
+        "id": "conv_b1_c32_h16_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          16,
+          16,
+          64,
+          3
+        ]
+      },
+      "dtype": "float32",
+      "variant": "layout_on",
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.205294403957787e-07,
+        "relative_l2_error": 2.0355216769491228e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.205294403957787e-07,
+        "relative_l2_error": 2.0355216769491228e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.023193599700927735
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.023203840255737306
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.023202816009521485
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.019750816345214844
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.016491519927978517
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.016503807067871093
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.016488447189331054
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.016491519927978517
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.016485376358032225
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.01651299285888672
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.016503616333007814
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.016494367599487306
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.016541696548461916
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.016520032882690428
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.016494239807128906
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.016498527526855468
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.016511743545532226
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.016486400604248046
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.01648534393310547
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.016484352111816408
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.016497535705566405
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.016500736236572267
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.016485376358032225
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.016485376358032225
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.016484352111816408
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.016497535705566405,
+        "p10": 0.016485356903076172,
+        "p90": 0.021816486358642584,
+        "min": 0.016484352111816408,
+        "max": 0.023203840255737306,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 8.0,
+        "kernel_counts": {
+          "triton_poi_fused_convolution_0": 5,
+          "triton_poi_fused_convolution_1": 5,
+          "void cudnn::engines_precompiled::nhwcToNchwKernel<float, float, float, true, false, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nhwc2nchw_params_t<float>, float const*, float*)": 10,
+          "void cudnn::winograd::generateWinogradTilesKernel<0, float, float>(cudnn::winograd::GenerateWinogradTilesParams<float, float>)": 5,
+          "_5x_cudnn_ampere_scudnn_winograd_128x128_ldg1_ldg4_relu_tile148t_nt_v1": 5,
+          "void cudnn::engines_precompiled::nchwToNhwcKernel<float, float, float, false, true, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nchw2nhwc_params_t<float>, float const*, float*)": 5,
+          "triton_poi_fused_relu_2": 5
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h16_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          16,
+          16,
+          64,
+          3
+        ]
+      },
+      "dtype": "float32",
+      "variant": "layout_off",
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.205294403957787e-07,
+        "relative_l2_error": 2.0355216769491228e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.205294403957787e-07,
+        "relative_l2_error": 2.0355216769491228e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.014416895866394044
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.014369791984558105
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.01437388801574707
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.014370816230773926
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.014378944396972657
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.010227487564086915
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.010244832038879395
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.010213376045227051
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.010257408142089842
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.010219519615173341
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.01022771167755127
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.010213376045227051
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.01041203212738037
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.01022156810760498
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.010211327552795411
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.01022771167755127
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.010217472076416016
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.010232831954956055
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.010210304260253907
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.01021615982055664
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.0102194242477417
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.010224479675292967
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.01022156810760498
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.01021945571899414
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.010214207649230957
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.010224479675292967,
+        "p10": 0.010213376045227051,
+        "p90": 0.014372659301757813,
+        "min": 0.010210304260253907,
+        "max": 0.014416895866394044,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 3.0,
+        "kernel_counts": {
+          "void cudnn::winograd::generateWinogradTilesKernel<0, float, float>(cudnn::winograd::GenerateWinogradTilesParams<float, float>)": 5,
+          "_5x_cudnn_ampere_scudnn_winograd_128x128_ldg1_ldg4_relu_tile148t_nt_v1": 5,
+          "triton_poi_fused_relu_0": 5
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h16_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          16,
+          16,
+          64,
+          3
+        ]
+      },
+      "dtype": "float16",
+      "variant": "layout_on",
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.00151891006687066,
+        "relative_l2_error": 0.0003592896726600505,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.00151891006687066,
+        "relative_l2_error": 0.0003592896726600505,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.011175904273986816
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.011123552322387695
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.01116147232055664
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.011156224250793456
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.011146783828735352
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.01117199993133545
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.011178175926208496
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.011179360389709472
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.011138015747070313
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.012338720321655275
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.008398624420166015
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.008321151733398438
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.008299615859985352
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.008332832336425781
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.008338015556335449
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.00839129638671875
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.00837929630279541
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.008334752082824706
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.008320927619934082
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.008297792434692383
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.008384384155273438
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.008326720237731934
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.008375040054321289
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.008331040382385253
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.00829315185546875
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.008384384155273438,
+        "p10": 0.008308140563964844,
+        "p90": 0.011177267265319825,
+        "min": 0.00829315185546875,
+        "max": 0.012338720321655275,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 4.0,
+        "kernel_counts": {
+          "triton_poi_fused_convolution_0": 5,
+          "triton_poi_fused_convolution_1": 5,
+          "sm86_xmma_fprop_implicit_gemm_indexed_f16f16_f16f32_f32_nhwckrsc_nhwc_tilesize64x32x64_stage4_warpsize2x2x1_g1_tensor16x8x16_execute_kernel__5x_cudnn": 5,
+          "triton_poi_fused_relu_2": 5
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h16_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          16,
+          16,
+          64,
+          3
+        ]
+      },
+      "dtype": "float16",
+      "variant": "layout_off",
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.00151891006687066,
+        "relative_l2_error": 0.0003592896726600505,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.00151891006687066,
+        "relative_l2_error": 0.0003592896726600505,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.03307392120361328
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.035278305053710934
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.03529532623291016
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.03529555130004883
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.02936153602600098
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.014099871635437012
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.013995072364807128
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.014028160095214843
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.013386112213134767
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.010398431777954102
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.010459168434143067
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.010397120475769043
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.010401920318603515
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.010476639747619629
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.010502623558044433
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.010513600349426269
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.010479647636413575
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.010485983848571778
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.010441599845886232
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.010416576385498047
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.010426336288452149
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.010525535583496093
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.010496704101562499
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.010467424392700195
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.01051375961303711
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.010502623558044433,
+        "p10": 0.010407782745361327,
+        "p90": 0.03439655151367187,
+        "min": 0.010397120475769043,
+        "max": 0.03529555130004883,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 5.0,
+        "kernel_counts": {
+          "void cudnn::engines_precompiled::nchwToNhwcKernel<__half, __half, float, false, true, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nchw2nhwc_params_t<float>, __half const*, __half*)": 10,
+          "sm86_xmma_fprop_implicit_gemm_indexed_f16f16_f16f32_f32_nhwckrsc_nhwc_tilesize64x32x64_stage4_warpsize2x2x1_g1_tensor16x8x16_execute_kernel__5x_cudnn": 5,
+          "void cudnn::engines_precompiled::nhwcToNchwKernel<__half, __half, float, true, false, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nhwc2nchw_params_t<float>, __half const*, __half*)": 5,
+          "triton_poi_fused_relu_0": 5
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h32_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          32,
+          32,
+          64,
+          3
+        ]
+      },
+      "dtype": "float32",
+      "variant": "layout_on",
+      "input_weight_sha256": "1099469861b1e4946460a643b0161ae3e2985209e07537bba999121a59caf79c",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.865696641853106e-07,
+        "relative_l2_error": 2.0370101616470215e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.865696641853106e-07,
+        "relative_l2_error": 2.0370101616470215e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.017967584609985352
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.017927871704101563
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.017865087509155272
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.017769855499267576
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.01784432029724121
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.017827648162841797
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.01776505661010742
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.017649215698242186
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.01783359909057617
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.01766371154785156
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.018033887863159178
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.017865312576293944
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.01764124870300293
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.017758975982666018
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.017830560684204102
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.017782880783081056
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.017756416320800782
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.01763974380493164
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.017664480209350585
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.017643423080444337
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.017946176528930664
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.017640960693359374
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.017637727737426757
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.0176363525390625
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.01763545608520508
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.01776505661010742,
+        "p10": 0.01763853416442871,
+        "p90": 0.017938854598999025,
+        "min": 0.01763545608520508,
+        "max": 0.018033887863159178,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 8.0,
+        "kernel_counts": {
+          "triton_poi_fused_convolution_0": 5,
+          "triton_poi_fused_convolution_1": 5,
+          "void cudnn::engines_precompiled::nhwcToNchwKernel<float, float, float, true, false, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nhwc2nchw_params_t<float>, float const*, float*)": 10,
+          "void cudnn::winograd::generateWinogradTilesKernel<0, float, float>(cudnn::winograd::GenerateWinogradTilesParams<float, float>)": 5,
+          "_5x_cudnn_ampere_scudnn_winograd_128x128_ldg1_ldg4_relu_tile148t_nt_v1": 5,
+          "void cudnn::engines_precompiled::nchwToNhwcKernel<float, float, float, false, true, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nchw2nhwc_params_t<float>, float const*, float*)": 5,
+          "triton_poi_fused_relu_2": 5
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h32_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          32,
+          32,
+          64,
+          3
+        ]
+      },
+      "dtype": "float32",
+      "variant": "layout_off",
+      "input_weight_sha256": "1099469861b1e4946460a643b0161ae3e2985209e07537bba999121a59caf79c",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.865696641853106e-07,
+        "relative_l2_error": 2.0370101616470215e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.865696641853106e-07,
+        "relative_l2_error": 2.0370101616470215e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.010649312019348146
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.010670720100402833
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.010650239944458009
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.01071078395843506
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.01071382427215576
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.010744095802307129
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.010744704246520995
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.010638815879821777
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.010647808074951172
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.010746912002563476
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.010751584053039552
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.010738656044006346
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.010735424041748048
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.010735424041748048
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.010834431648254395
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.0107389440536499
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.010687775611877441
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.010638815879821777
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.010708064079284667
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.010716447830200196
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.01072201633453369
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.010659647941589356
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.010638943672180178
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.010636128425598143
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.010732959747314452
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.01071382427215576,
+        "p10": 0.010638866996765138,
+        "p90": 0.010746028900146485,
+        "min": 0.010636128425598143,
+        "max": 0.010834431648254395,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 3.0,
+        "kernel_counts": {
+          "void cudnn::winograd::generateWinogradTilesKernel<0, float, float>(cudnn::winograd::GenerateWinogradTilesParams<float, float>)": 5,
+          "_5x_cudnn_ampere_scudnn_winograd_128x128_ldg1_ldg4_relu_tile148t_nt_v1": 5,
+          "triton_poi_fused_relu_0": 5
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h32_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          32,
+          32,
+          64,
+          3
+        ]
+      },
+      "dtype": "float16",
+      "variant": "layout_on",
+      "input_weight_sha256": "1099469861b1e4946460a643b0161ae3e2985209e07537bba999121a59caf79c",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.0017641734615105875,
+        "relative_l2_error": 0.00036042206969191164,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.0017641734615105875,
+        "relative_l2_error": 0.00036042206969191164,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.00876150417327881
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.008685312271118163
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.009076255798339844
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.008688128471374512
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.009144415855407715
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.009013055801391601
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.008711456298828125
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.009055968284606933
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.008921952247619628
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.008862848281860352
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.009213472366333008
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.008805567741394042
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.008679072380065917
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.008904831886291504
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.009031807899475098
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.008809856414794922
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.008723072052001953
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.008681759834289551
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.008702912330627442
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.008683168411254882
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.008791935920715333
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.008757344245910645
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.008674912452697754
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.008687359809875488
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.008677248001098634
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.00876150417327881,
+        "p10": 0.008680147361755371,
+        "p90": 0.00906814079284668,
+        "min": 0.008674912452697754,
+        "max": 0.009213472366333008,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 4.0,
+        "kernel_counts": {
+          "triton_poi_fused_convolution_0": 5,
+          "triton_poi_fused_convolution_1": 5,
+          "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc8_execute_kernel__5x_cudnn": 5,
+          "triton_poi_fused_relu_2": 5
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h32_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          32,
+          32,
+          64,
+          3
+        ]
+      },
+      "dtype": "float16",
+      "variant": "layout_off",
+      "input_weight_sha256": "1099469861b1e4946460a643b0161ae3e2985209e07537bba999121a59caf79c",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.0017641734615105875,
+        "relative_l2_error": 0.00036042206969191164,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.0017641734615105875,
+        "relative_l2_error": 0.00036042206969191164,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.011329824447631835
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.011063136100769042
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.011345760345458984
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.011149503707885741
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.010976127624511717
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.01130742359161377
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.011071647644042969
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.011394783973693846
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.010995776176452636
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.011196895599365235
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.01115552043914795
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.011054911613464356
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.011055904388427734
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.011142016410827637
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.011083935737609862
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.01111788845062256
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.011062623977661133
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.011043487548828126
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.010970175743103027
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.010968064308166502
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.011029439926147461
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.010987135887145996
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.010969280242919922
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.010967647552490235
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.010967519760131836
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.011062623977661133,
+        "p10": 0.01096855068206787,
+        "p90": 0.011320864105224608,
+        "min": 0.010967519760131836,
+        "max": 0.011394783973693846,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 5.0,
+        "kernel_counts": {
+          "void cudnn::engines_precompiled::nchwToNhwcKernel<__half, __half, float, false, true, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nchw2nhwc_params_t<float>, __half const*, __half*)": 10,
+          "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc8_execute_kernel__5x_cudnn": 5,
+          "void cudnn::engines_precompiled::nhwcToNchwKernel<__half, __half, float, true, false, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nhwc2nchw_params_t<float>, __half const*, __half*)": 5,
+          "triton_poi_fused_relu_0": 5
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h64_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          64,
+          64,
+          64,
+          3
+        ]
+      },
+      "dtype": "float32",
+      "variant": "layout_on",
+      "input_weight_sha256": "132bc8e637807eb740347dcb47c33daa5019aebc066629b1ec49a67b5d740960",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 1.2871105250500392e-06,
+        "relative_l2_error": 2.0277501411877417e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 1.2871105250500392e-06,
+        "relative_l2_error": 2.0277501411877417e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.04170764923095703
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.041650463104248046
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.04150979232788086
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.04152297592163086
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.04162793731689453
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.040848159790039064
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.04146963119506836
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.041320030212402346
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.04130665588378906
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.0413519058227539
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.04104457473754883
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.041964160919189454
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.041585056304931645
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.04163155364990234
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.04154534530639649
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.04097174453735351
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.04157654571533203
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.041489086151123046
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.0415973129272461
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.04150889587402344
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.03998796844482422
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.041480415344238276
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.04129420852661132
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.04148732757568359
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.041388065338134765
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.041489086151123046,
+        "p10": 0.04100087661743164,
+        "p90": 0.041642899322509766,
+        "min": 0.03998796844482422,
+        "max": 0.041964160919189454,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 8.0,
+        "kernel_counts": {
+          "triton_poi_fused_convolution_0": 5,
+          "triton_poi_fused_convolution_1": 5,
+          "void cudnn::engines_precompiled::nhwcToNchwKernel<float, float, float, true, false, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nhwc2nchw_params_t<float>, float const*, float*)": 10,
+          "void cudnn::winograd::generateWinogradTilesKernel<0, float, float>(cudnn::winograd::GenerateWinogradTilesParams<float, float>)": 5,
+          "_5x_cudnn_ampere_scudnn_winograd_128x128_ldg1_ldg4_relu_tile148t_nt_v1": 5,
+          "void cudnn::engines_precompiled::nchwToNhwcKernel<float, float, float, false, true, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nchw2nhwc_params_t<float>, float const*, float*)": 5,
+          "triton_poi_fused_relu_2": 5
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h64_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          64,
+          64,
+          64,
+          3
+        ]
+      },
+      "dtype": "float32",
+      "variant": "layout_off",
+      "input_weight_sha256": "132bc8e637807eb740347dcb47c33daa5019aebc066629b1ec49a67b5d740960",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 1.2871105250500392e-06,
+        "relative_l2_error": 2.0277501411877417e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 1.2871105250500392e-06,
+        "relative_l2_error": 2.0277501411877417e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.026874559402465817
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.0267710075378418
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.02703705596923828
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.02726230430603027
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.027148063659667966
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.02675049591064453
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.027058624267578123
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.02714543914794922
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.02704083251953125
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.02702387237548828
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.026322048187255857
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.026499744415283202
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.027180192947387695
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.027132768630981446
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.027451103210449218
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.026793184280395507
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.026642816543579098
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.027070400238037112
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.027011039733886716
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.027025760650634764
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.026420320510864258
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.027184511184692384
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.02700694465637207
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.027012512207031252
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.026945056915283202
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.02702387237548828,
+        "p10": 0.02655697326660156,
+        "p90": 0.02718278388977051,
+        "min": 0.026322048187255857,
+        "max": 0.027451103210449218,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 3.0,
+        "kernel_counts": {
+          "void cudnn::winograd::generateWinogradTilesKernel<0, float, float>(cudnn::winograd::GenerateWinogradTilesParams<float, float>)": 5,
+          "_5x_cudnn_ampere_scudnn_winograd_128x128_ldg1_ldg4_relu_tile148t_nt_v1": 5,
+          "triton_poi_fused_relu_0": 5
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h64_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          64,
+          64,
+          64,
+          3
+        ]
+      },
+      "dtype": "float16",
+      "variant": "layout_on",
+      "input_weight_sha256": "132bc8e637807eb740347dcb47c33daa5019aebc066629b1ec49a67b5d740960",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.0020151633548461945,
+        "relative_l2_error": 0.0003606874719968664,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.0020151633548461945,
+        "relative_l2_error": 0.0003606874719968664,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.014661215782165527
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.014666111946105958
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.015563936233520507
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.015931488037109375
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.015831775665283203
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.015340576171875
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.014943103790283203
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.015750464439392087
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.01575875186920166
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.015694496154785156
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.015465439796447752
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.015078144073486328
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.015702015876770017
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.0157258882522583
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.0156876163482666
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.015453791618347168
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.015382880210876464
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.015642720222473146
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.015811391830444336
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.015730655670166016
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.015111968040466307
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.015017248153686524
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.015245792388916015
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.015712639808654786
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.015689824104309084
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.015642720222473146,
+        "p10": 0.014972761535644532,
+        "p90": 0.015790335845947266,
+        "min": 0.014661215782165527,
+        "max": 0.015931488037109375,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 4.0,
+        "kernel_counts": {
+          "triton_poi_fused_convolution_0": 5,
+          "triton_poi_fused_convolution_1": 5,
+          "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc8_execute_kernel__5x_cudnn": 5,
+          "triton_poi_fused_relu_2": 5
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h64_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          64,
+          64,
+          64,
+          3
+        ]
+      },
+      "dtype": "float16",
+      "variant": "layout_off",
+      "input_weight_sha256": "132bc8e637807eb740347dcb47c33daa5019aebc066629b1ec49a67b5d740960",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.0020151633548461945,
+        "relative_l2_error": 0.0003606874719968664,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.0020151633548461945,
+        "relative_l2_error": 0.0003606874719968664,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.01909516716003418
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.018887840270996093
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.01920569610595703
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.018882335662841795
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.018830495834350588
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.018952671051025393
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.018819263458251953
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.01897769546508789
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.02017980766296387
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.019164064407348632
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.019032352447509768
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.018683616638183593
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.019018720626831055
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.019059648513793947
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.019047040939331055
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.019197311401367188
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.0190296630859375
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.018989248275756834
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.019023071289062502
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.019024671554565428
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.01945772743225098
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.018739967346191405
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.018964319229125975
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.018955615997314452
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.019039552688598634
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.019023071289062502,
+        "p10": 0.018823756408691408,
+        "p90": 0.019202342224121094,
+        "min": 0.018683616638183593,
+        "max": 0.02017980766296387,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 5.0,
+        "kernel_counts": {
+          "void cudnn::engines_precompiled::nchwToNhwcKernel<__half, __half, float, false, true, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nchw2nhwc_params_t<float>, __half const*, __half*)": 10,
+          "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc8_execute_kernel__5x_cudnn": 5,
+          "void cudnn::engines_precompiled::nhwcToNchwKernel<__half, __half, float, true, false, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nhwc2nchw_params_t<float>, __half const*, __half*)": 5,
+          "triton_poi_fused_relu_0": 5
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h128_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          128,
+          128,
+          64,
+          3
+        ]
+      },
+      "dtype": "float32",
+      "variant": "layout_on",
+      "input_weight_sha256": "3cd91f9daad4482e1971b1e3f42123a9a613f0a661845fb28af44e727c9849f8",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 1.3948669658758739e-06,
+        "relative_l2_error": 2.0210273745742984e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 1.3948669658758739e-06,
+        "relative_l2_error": 2.0210273745742984e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.15195465087890625
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.15205453491210938
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.15236679077148438
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.1520123596191406
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.15216268920898438
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.15366400146484374
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.154480224609375
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.15409242248535157
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.15517552185058595
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.15374879455566406
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.15451913452148436
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.15165116882324217
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.1529542694091797
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.1526733703613281
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.15292140197753906
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.15150959777832032
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.15244793701171877
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.15307177734375
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.1530045166015625
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.15295770263671873
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.15506626892089845
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.15366748046875
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.1529656982421875
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.15327401733398438
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.15401974487304687
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.1529656982421875,
+        "p10": 0.151977734375,
+        "p90": 0.1545035705566406,
+        "min": 0.15150959777832032,
+        "max": 0.15517552185058595,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 7.8,
+        "kernel_counts": {
+          "triton_poi_fused_convolution_1": 5,
+          "void cudnn::engines_precompiled::nhwcToNchwKernel<float, float, float, true, false, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nhwc2nchw_params_t<float>, float const*, float*)": 10,
+          "void cudnn::winograd::generateWinogradTilesKernel<0, float, float>(cudnn::winograd::GenerateWinogradTilesParams<float, float>)": 5,
+          "_5x_cudnn_ampere_scudnn_winograd_128x128_ldg1_ldg4_relu_tile148t_nt_v1": 5,
+          "void cudnn::engines_precompiled::nchwToNhwcKernel<float, float, float, false, true, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nchw2nhwc_params_t<float>, float const*, float*)": 5,
+          "triton_poi_fused_relu_2": 5,
+          "triton_poi_fused_convolution_0": 4
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h128_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          128,
+          128,
+          64,
+          3
+        ]
+      },
+      "dtype": "float32",
+      "variant": "layout_off",
+      "input_weight_sha256": "3cd91f9daad4482e1971b1e3f42123a9a613f0a661845fb28af44e727c9849f8",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 1.3948669658758739e-06,
+        "relative_l2_error": 2.0210273745742984e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 1.3948669658758739e-06,
+        "relative_l2_error": 2.0210273745742984e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.09848326110839845
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.10415539550781251
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.100853759765625
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.09922105407714843
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.09843488311767577
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.09850342559814454
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.10031644439697265
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.09937094116210937
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.10031625366210938
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.09884073638916016
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.09833350372314452
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.10069276428222657
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.09933187103271485
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.09895961761474609
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.09895772552490234
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.09872252655029295
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.09993577575683593
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.09935382080078124
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.09937548828125
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.09950697326660157
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.09851888275146484
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.09965586853027343
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.10197798156738282
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.10121318054199219
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.10133609771728516
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.09937094116210937,
+        "p10": 0.09849132690429688,
+        "p90": 0.10128693084716797,
+        "min": 0.09833350372314452,
+        "max": 0.10415539550781251,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 2.8,
+        "kernel_counts": {
+          "_5x_cudnn_ampere_scudnn_winograd_128x128_ldg1_ldg4_relu_tile148t_nt_v1": 5,
+          "triton_poi_fused_relu_0": 5,
+          "void cudnn::winograd::generateWinogradTilesKernel<0, float, float>(cudnn::winograd::GenerateWinogradTilesParams<float, float>)": 4
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h128_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          128,
+          128,
+          64,
+          3
+        ]
+      },
+      "dtype": "float16",
+      "variant": "layout_on",
+      "input_weight_sha256": "3cd91f9daad4482e1971b1e3f42123a9a613f0a661845fb28af44e727c9849f8",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.002470990606284751,
+        "relative_l2_error": 0.00035939856789510706,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.002470990606284751,
+        "relative_l2_error": 0.00035939856789510706,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.051198177337646485
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.05198627090454101
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.05202025604248047
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.05162303924560547
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.05158992004394532
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.050827713012695314
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.05182128143310547
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.05167740631103515
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.051714336395263676
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.051628063201904294
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.050667167663574215
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.05209910583496094
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.051746078491210934
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.05181756973266602
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.0517339859008789
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.05134150314331055
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.052226337432861335
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.052306560516357424
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.05249103927612305
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.05255395126342774
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.05104240036010742
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.05168819046020508
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.051467937469482423
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.05286022567749024
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.0517770881652832
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.0517339859008789,
+        "p10": 0.05110471115112304,
+        "p90": 0.0524172477722168,
+        "min": 0.050667167663574215,
+        "max": 0.05286022567749024,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 3.8,
+        "kernel_counts": {
+          "triton_poi_fused_convolution_1": 5,
+          "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f32_f32_nhwckrsc_nhwc_tilesize128x32x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc8_execute_kernel__5x_cudnn": 5,
+          "triton_poi_fused_relu_2": 5,
+          "triton_poi_fused_convolution_0": 4
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h128_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          128,
+          128,
+          64,
+          3
+        ]
+      },
+      "dtype": "float16",
+      "variant": "layout_off",
+      "input_weight_sha256": "3cd91f9daad4482e1971b1e3f42123a9a613f0a661845fb28af44e727c9849f8",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.002470990606284751,
+        "relative_l2_error": 0.00035939856789510706,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "graph_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.002470990606284751,
+        "relative_l2_error": 0.00035939856789510706,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "raw_blocks": [
+        {
+          "round": 0,
+          "block": 0,
+          "cuda_ms": 0.06349212646484376
+        },
+        {
+          "round": 0,
+          "block": 1,
+          "cuda_ms": 0.06578217315673827
+        },
+        {
+          "round": 0,
+          "block": 2,
+          "cuda_ms": 0.06569395446777344
+        },
+        {
+          "round": 0,
+          "block": 3,
+          "cuda_ms": 0.06548556518554688
+        },
+        {
+          "round": 0,
+          "block": 4,
+          "cuda_ms": 0.06566793823242188
+        },
+        {
+          "round": 1,
+          "block": 0,
+          "cuda_ms": 0.06668521881103516
+        },
+        {
+          "round": 1,
+          "block": 1,
+          "cuda_ms": 0.06629913330078124
+        },
+        {
+          "round": 1,
+          "block": 2,
+          "cuda_ms": 0.06578569793701172
+        },
+        {
+          "round": 1,
+          "block": 3,
+          "cuda_ms": 0.0655863037109375
+        },
+        {
+          "round": 1,
+          "block": 4,
+          "cuda_ms": 0.06544092559814453
+        },
+        {
+          "round": 2,
+          "block": 0,
+          "cuda_ms": 0.06489094543457032
+        },
+        {
+          "round": 2,
+          "block": 1,
+          "cuda_ms": 0.06556671905517578
+        },
+        {
+          "round": 2,
+          "block": 2,
+          "cuda_ms": 0.06523219299316406
+        },
+        {
+          "round": 2,
+          "block": 3,
+          "cuda_ms": 0.0653381118774414
+        },
+        {
+          "round": 2,
+          "block": 4,
+          "cuda_ms": 0.0655316162109375
+        },
+        {
+          "round": 3,
+          "block": 0,
+          "cuda_ms": 0.06503663635253906
+        },
+        {
+          "round": 3,
+          "block": 1,
+          "cuda_ms": 0.06576083374023438
+        },
+        {
+          "round": 3,
+          "block": 2,
+          "cuda_ms": 0.06789247894287109
+        },
+        {
+          "round": 3,
+          "block": 3,
+          "cuda_ms": 0.06652188873291015
+        },
+        {
+          "round": 3,
+          "block": 4,
+          "cuda_ms": 0.06670873260498046
+        },
+        {
+          "round": 4,
+          "block": 0,
+          "cuda_ms": 0.0654466552734375
+        },
+        {
+          "round": 4,
+          "block": 1,
+          "cuda_ms": 0.0654846420288086
+        },
+        {
+          "round": 4,
+          "block": 2,
+          "cuda_ms": 0.0652056655883789
+        },
+        {
+          "round": 4,
+          "block": 3,
+          "cuda_ms": 0.06565570831298828
+        },
+        {
+          "round": 4,
+          "block": 4,
+          "cuda_ms": 0.06592253112792969
+        }
+      ],
+      "graph_cuda_ms": {
+        "median": 0.0655863037109375,
+        "p10": 0.065104248046875,
+        "p90": 0.06661988677978516,
+        "min": 0.06349212646484376,
+        "max": 0.06789247894287109,
+        "n": 25
+      },
+      "diagnostic": {
+        "profiled_calls": 5,
+        "kernels_per_call": 4.8,
+        "kernel_counts": {
+          "void cudnn::engines_precompiled::nchwToNhwcKernel<__half, __half, float, false, true, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nchw2nhwc_params_t<float>, __half const*, __half*)": 9,
+          "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f32_f32_nhwckrsc_nhwc_tilesize128x32x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc8_execute_kernel__5x_cudnn": 5,
+          "void cudnn::engines_precompiled::nhwcToNchwKernel<__half, __half, float, true, false, (cudnnKernelDataType_t)0>(cudnn::engines_precompiled::nhwc2nchw_params_t<float>, __half const*, __half*)": 5,
+          "triton_poi_fused_relu_0": 5
+        }
+      },
+      "status": "ok"
+    }
+  ]
+}
