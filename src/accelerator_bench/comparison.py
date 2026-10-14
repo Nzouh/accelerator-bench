@@ -185,6 +185,14 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
         lines.append(f"| {case_label(local[r['case']]['case'])} | {r['gpu_graph_us']:.2f} | {r['gpu_python_us']:.2f} | {r['npu_qnn_us']:.1f} |")
     lines += ['', '## Compiler settings', '', '![Compiler settings](compiler_settings.png)', '',
               'NPU points: median of job medians. Bands: minimum–maximum job medians, not confidence intervals. Internal fusion must be checked separately.', '']
+    lines += ['## Numerical error', '', '| Operation | GPU max relative L2 | NPU max relative L2 |', '|---|---:|---:|']
+    for op, name, _ in OPS:
+        gpu_errors = [r[field]['relative_l2_error'] for r in local.values()
+                      if r['case']['op'] == op for field in ('correctness', 'graph_correctness')]
+        npu_errors = [j['relative_l2_error'] for r in baseline if r['case']['op'] == op for j in r['jobs']]
+        if gpu_errors and npu_errors:
+            lines.append(f"| {name} | {max(gpu_errors):.3e} | {max(npu_errors):.3e} |")
+    lines += ['', 'CPU FP64 reference; NPU O3 and GPU compiled FP16.', '']
     layout_rows = []
     if layout_source:
         layout = aggregate_sweep(layout_source)
@@ -228,11 +236,27 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
         for r in layout_rows:
             lines.append(f"| {r['size']} | {r['nchw']['median_us']:.1f} | {r['nhwc']['median_us']:.1f} | {r['speedup']:.2f}× |")
     rel = lambda path: Path(os.path.relpath(Path(path).resolve(), output.resolve())).as_posix()
+    htp_path = root / 'htp-review.json'
+    if htp_path.exists():
+        diagnostics = { (r['case_id'], r['variant']): r
+                       for r in json.loads(htp_path.read_text())['diagnostics'] if r['status'] == 'available'}
+        pairs = [(r, diagnostics.get((case_id, 'no_conv_relu_fold')))
+                 for (case_id, variant), r in diagnostics.items() if variant == 'optimized'
+                 and (case_id, 'no_conv_relu_fold') in diagnostics]
+        if pairs:
+            unchanged = sum(a['implementation_signature'] == b['implementation_signature'] for a, b in pairs)
+            lines += ['', f'**Folding check:** O3 and O3/no-fold have identical HTP op-type counts in {unchanged}/{len(pairs)} convolution shapes. This does not establish identical binaries or fusion.']
     lines += ['', '## Evidence', '', '- [Comparison table](comparison.csv)',
               '- [Reviewed measurements](review.json)', f'- [Raw NPU jobs]({rel(root / "results.json")})',
               f'- [GPU measurements]({rel(gpu_source)})',
               '- [Timing definition](https://workbench.aihub.qualcomm.com/docs/hub/howitworks-inference.html)',
               '- [HTP diagnostics](https://docs.qualcomm.com/doc/80-63442-10/topic/htp_backend.html#qnn-htp-analysis-summary-qhas)']
+    if htp_path.exists():
+        lines.append(f'- [NCHW HTP evidence]({rel(htp_path)})')
+    if layout_source:
+        lines.append(f'- [NHWC jobs]({rel(Path(layout_source) / "results.json")})')
+        if (Path(layout_source) / 'htp-review.json').exists():
+            lines.append(f'- [NHWC HTP evidence]({rel(Path(layout_source) / "htp-review.json")})')
     if remote['failures']:
         lines += ['', '## Excluded jobs', ''] + [f"- {r['key']}: {r['reason']}" for r in remote['failures']]
     save_result(output / 'review.json', {'npu': remote['rows'], 'failures': remote['failures'], 'layout': layout_rows})

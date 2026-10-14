@@ -8,8 +8,8 @@
   requires a selected device and QAIRT major.minor version.
 - Matmul/RMSNorm plans compare optimization levels O=3 and O=1. Conv+ReLU also has
   a separate folding-disabled variant. All other requested settings stay fixed.
-- Job IDs are saved as soon as available. Downloaded profiles and numerical checks
-  are preserved. Results remain `measured_unverified_placement` until reviewed.
+- Job IDs are checkpointed. Sweeps mark a job `validated` only after numerical
+  checks and NPU placement pass. The older `run` command requires separate review.
 
 Remote execution was validated on 2026-10-12 for `conv_b1_c32_h32_o64` on
 **Samsung Galaxy S24 / Snapdragon 8 Gen 3 / Hexagon v75 / Android 14**, with
