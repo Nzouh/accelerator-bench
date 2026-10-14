@@ -33,7 +33,7 @@ def summarize_htp(raw):
 def collect_htp(source_dir):
     import qai_hub as hub
     hub.set_verbose(False)
-    root = Path(source_dir)
+    root = Path(source_dir).resolve()
     data = json.loads((root / 'results.json').read_text())
     diagnostics = []
     # First repeat only; selection is independent of measured performance.

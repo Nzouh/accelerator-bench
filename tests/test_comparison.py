@@ -74,3 +74,27 @@ def test_htp_signatures_ignore_timing_noise():
     assert result['transpose_instances'] == 4
     assert result['transpose_dominant_path_percent'] == 50
     assert result['implementation_signature'] == [['q::Conv', 1], ['q::Transpose.2D', 4]]
+
+
+def test_htp_download_accepts_absolute_sdk_paths(tmp_path, monkeypatch):
+    import sys
+    from pathlib import Path
+    from types import SimpleNamespace
+    from accelerator_bench.htp import collect_htp
+    root = tmp_path / 'run'
+    root.mkdir()
+    (root / 'results.json').write_text(json.dumps({'records': [{'repeat': 1, 'status': 'validated',
+        'case_id': 'test', 'variant': 'optimized', 'key': 'test_r1', 'job_id': 'test-job'}]}))
+    raw = {'data': {'htp_overall_summary': {'data': [{}]}, 'htp_op_types': {'data': []},
+                    'htp_op_instances': {'data': []}}}
+    def download(folder, kind):
+        path = Path(folder) / 'test_qhas_summary.json'
+        path.parent.mkdir(parents=True)
+        path.write_text(json.dumps(raw))
+        return [str(path.resolve())]
+    fake = SimpleNamespace(set_verbose=lambda value: None, JobArtifactType=SimpleNamespace(QHAS_SUMMARY=8),
+        get_job=lambda job_id: SimpleNamespace(download_artifacts_for_type=download))
+    monkeypatch.setitem(sys.modules, 'qai_hub', fake)
+    monkeypatch.chdir(tmp_path)
+    records = collect_htp('run')
+    assert records[0]['raw_file'] == 'htp/test_r1/test_qhas_summary.json'

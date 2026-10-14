@@ -25,6 +25,11 @@ def case_size(case):
     return case['shape'][2 if case['op'] == 'conv_relu' else 0]
 
 
+def case_label(case):
+    names = {'matmul': 'Matmul M=', 'conv_relu': 'Conv H=W=', 'rmsnorm': 'RMSNorm rows='}
+    return names[case['op']] + str(case_size(case))
+
+
 def aggregate_sweep(source_dir):
     root = Path(source_dir)
     data = json.loads((root / 'results.json').read_text())
@@ -168,7 +173,7 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
         'Timing boundaries differ: CUDA graph, synchronized Python dispatch, and QNN framework call. No chip-only speedup ratio or NPU energy estimate.', '',
         '![Latency](latency.png)', '', '| Case | GPU graph (µs) | GPU Python (µs) | NPU QNN (µs) |', '|---|---:|---:|---:|']
     for r in table:
-        lines.append(f"| {r['case']} | {r['gpu_graph_us']:.2f} | {r['gpu_python_us']:.2f} | {r['npu_qnn_us']:.1f} |")
+        lines.append(f"| {case_label(local[r['case']]['case'])} | {r['gpu_graph_us']:.2f} | {r['gpu_python_us']:.2f} | {r['npu_qnn_us']:.1f} |")
     lines += ['', '## Compiler settings', '', '![Compiler settings](compiler_settings.png)', '',
               'NPU points: median of job medians. Bands: minimum–maximum job medians, not confidence intervals. Internal fusion must be checked separately.', '']
     layout_rows = []

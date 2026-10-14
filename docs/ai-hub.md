@@ -64,7 +64,7 @@ accelerator-bench hub run \
   --case conv_b1_c32_h32 --output-dir results/local/hub-first-conv
 ```
 
-`plan` is entirely local. `run` uploads generated synthetic graphs/tensors and
+`plan` is entirely local. The legacy `run` command uploads generated synthetic graphs/tensors and
 submits three compile+inference pairs for this convolution case. Start there;
 the whole default suite would submit 28 pairs. Use a new output directory for
 each run. Failed/interrupted jobs retain IDs for inspection; automatic resume is
@@ -105,3 +105,47 @@ accelerator-bench hub report results/hub-s24-conv-2026-10-12 \
 The review report evaluates returned placement fields without altering the raw
 result records. Those retain their original `measured_unverified_placement` state;
 the separate `profile-review.json` records the placement evidence examined later.
+
+## Repeated sweep
+
+Samsung Galaxy S24 / Snapdragon 8 Gen 3 / QAIRT 2.50. The default sweep compiles
+28 configurations and submits three inference jobs each, in seeded shuffled order.
+Job IDs are checkpointed. Each output must pass the FP64 reference check and all
+profile entries must report NPU.
+
+```bash
+accelerator-bench hub export --output-dir artifacts/hub
+accelerator-bench hub sweep --device 'Samsung Galaxy S24' --qairt-version 2.50 \
+  --manifest artifacts/hub/manifest.json --repeats 3 --max-active 4 \
+  --output-dir results/local/s24-sweep
+# After an interruption: repeat the same command with --resume.
+accelerator-bench hub htp results/local/s24-sweep
+```
+
+Resume reuses recorded jobs. An uncertain submission stops for reconciliation
+by saved job name; it is never silently resubmitted.
+
+## Layout ablation
+
+NHWC export preserves the original convolution, weights and logical inputs.
+Only the input/output layout changes; reference tensors are permuted accordingly.
+Layout reordering occurs outside measured inference.
+
+```bash
+accelerator-bench hub export --case conv_ --io-layout nhwc --output-dir artifacts/hub-nhwc
+accelerator-bench hub sweep --device 'Samsung Galaxy S24' --qairt-version 2.50 \
+  --manifest artifacts/hub-nhwc/manifest.json --variants optimized --repeats 3 \
+  --output-dir results/local/s24-nhwc
+accelerator-bench hub htp results/local/s24-nhwc
+accelerator-bench hub compare results/local/s24-sweep \
+  --gpu-source results/rtx3060-ac-2026-10-13.json \
+  --layout-source results/local/s24-nhwc --output-dir reports/s24-comparison
+```
+
+Charts use the median of three job medians, with their minimum–maximum range.
+QHAS diagnostics come from repeat 1; their instrumented times are not benchmark
+latencies. Raw op types, instance counts, precision and memory fields are retained.
+
+GPU/NPU charts label their different timing boundaries. No cross-device energy
+ratio is calculated. Workbench was listed as free in the
+[official FAQ](https://workbench.aihub.qualcomm.com/docs/hub/faq.html) when this sweep was launched.
