@@ -65,6 +65,8 @@ def review(manifest_path, source_dir):
         cases.append({'case_id': case, 'cpu_fp16': summarize(half_output, reference),
                       'jobs': records, 'files_sha256': files})
     output = {'source': 'post_run_precision_diagnostic', 'run_status': results['status'],
+              'results_sha256': hashlib.sha256((root/'results.json').read_bytes()).hexdigest(),
+              'export_manifest_sha256': hashlib.sha256((root/'export-manifest.json').read_bytes()).hexdigest(),
               'torch_version': torch.__version__, 'device': 'CPU', 'cases': cases,
               'acceptance_changed': False,
               'scope': 'CPU FP16 is an independent rounding baseline, not an emulator of HTP arithmetic. No new remote jobs.'}

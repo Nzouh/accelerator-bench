@@ -36,7 +36,8 @@ from IPython.display import Image, Markdown, display
 from accelerator_bench.layout_research import (
     hello_layout, plot_storage, convolution_evidence, plot_convolution,
     transpose_details, preparation_evidence, plot_preparation, plot_boundary,
-    vision_evidence, plot_vision, vision_validation, plot_vision_validation, VISION_CASES,
+    vision_evidence, plot_vision, vision_validation, plot_vision_validation,
+    diagnostics, VISION, VISION_CASES,
 )
 
 ROOT = next(p for p in [Path.cwd(), *Path.cwd().parents]
@@ -233,7 +234,20 @@ network. It should not choose a new threshold merely to accept these outputs.
 [Raw jobs and unchanged checks](../../results/hub-s24-vision-layout-2026-10-14/results.json) ·
 [Precision diagnostic](../../results/hub-s24-vision-layout-2026-10-14/precision-review.json) ·
 [Model and image provenance](../../results/hub-s24-vision-layout-2026-10-14/export-manifest.json).
-HTP diagnostics for rejected runs are retained with their rejection status.''')
+HTP diagnostics for rejected runs are retained with their rejection status.
+They still describe generated operations, even though the outputs failed the
+acceptance rule:''')
+        code('''htp = diagnostics(ROOT, VISION)
+table(['Case', 'HTP nodes', 'Transpose instances', 'Output status'],
+      [[c, htp[(c, 'optimized')]['htp_nodes'], htp[(c, 'optimized')]['transpose_instances'],
+        htp[(c, 'optimized')]['measurement_status']] for c in VISION_CASES])
+same_signature = (htp[('image_nchw_first', 'optimized')]['implementation_signature'] ==
+                  htp[('image_nhwc_first', 'optimized')]['implementation_signature'])
+print('Same operation-type/count signature for image-input pair:', same_signature)''')
+        md('''The counts expose how the compiler handles each interface. Matching
+operation types and counts can support a hypothesis of similar lowering; they
+do not prove identical binaries or identical latency. Rejected outputs stay
+rejected regardless of the operation counts.''')
     else:
         md('''**Remote results pending.** The model exports passed the CPU reference
 check. No model latency is inferred from the convolution experiment. Rebuild with

@@ -289,9 +289,22 @@ def plot_vision(repo, output):
 def vision_validation(repo):
     root = Path(repo)/VISION
     data = json.loads((root/'precision-review.json').read_text())
+    assert hashlib.sha256((root/'results.json').read_bytes()).hexdigest() == data['results_sha256']
+    assert hashlib.sha256((root/'export-manifest.json').read_bytes()).hexdigest() == data['export_manifest_sha256']
+    records = {r['job_id']: r for r in json.loads((root/'results.json').read_text())['records']}
     for case in data['cases']:
         for path, expected in case['files_sha256'].items():
             assert hashlib.sha256((root/path).read_bytes()).hexdigest() == expected
+        reference = np.load(root/'precision'/f"{case['case_id']}_fp64.npy")
+        for job in case['jobs']:
+            record = records[job['job_id']]
+            output = root/record['output_file']
+            assert hashlib.sha256(output.read_bytes()).hexdigest() == record['output_sha256']
+            error = np.abs(np.load(output).astype(np.float64)-reference)
+            allowance = .01 + .01*np.abs(reference)
+            assert int((error > allowance).sum()) == job['logits_outside_tolerance']
+            assert np.isclose(float((error/allowance).max()), job['max_tolerance_ratio'])
+            assert record['status'] == job['status']
     if data['run_status'] not in ('complete', 'complete_with_failures'):
         raise ValueError('Model precision review is not final')
     if any(len(c['jobs']) != 3 for c in data['cases']):
