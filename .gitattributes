@@ -1,2 +1,4 @@
 * text=auto eol=lf
 *.png binary
+# Preserve SDK runtime logs exactly.
+*.log -text -whitespace

@@ -1,0 +1,532 @@
+{
+  "legacy": {
+    "optimized": {
+      "job_id": "jpy8mjylg",
+      "logs": [
+        {
+          "file": "logs/legacy/optimized/jpy8mjylg_runtime.log",
+          "sha256": "3c8ae7dd740bf7b4b2f7468bc9047cbe0f6613e5a743c444039b734a8fc3730a"
+        }
+      ],
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "graph_configuration_counts": [
+        3
+      ],
+      "excerpts": [
+        {
+          "file": "logs/legacy/optimized/jpy8mjylg_runtime.log",
+          "line": 46,
+          "text": "[14/Oct/2026:02:28:38 +00:00: profiler/info] [job_id: jpy8mjylg] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/legacy/optimized/jpy8mjylg_runtime.log",
+          "line": 127,
+          "text": "[14/Oct/2026:02:28:38 +00:00: profiler/debug] [job_id: jpy8mjylg] [model.dlc] Applying 3 configurations to graph graph_fwecelk1."
+        },
+        {
+          "file": "logs/legacy/optimized/jpy8mjylg_runtime.log",
+          "line": 162,
+          "text": "[14/Oct/2026:02:28:39 +00:00: profiler/info] [job_id: jpy8mjylg] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/legacy/optimized/jpy8mjylg_runtime.log",
+          "line": 260,
+          "text": "[14/Oct/2026:02:28:39 +00:00: profiler/info] [job_id: jpy8mjylg] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/legacy/optimized/jpy8mjylg_runtime.log",
+          "line": 366,
+          "text": "[14/Oct/2026:02:28:40 +00:00: profiler/info] [job_id: jpy8mjylg] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        }
+      ],
+      "htp_nodes": 47,
+      "implementation_signature": [
+        [
+          "DmaCheckpointSet",
+          4
+        ],
+        [
+          "SyncOp",
+          2
+        ],
+        [
+          "q::*InputSlice",
+          5
+        ],
+        [
+          "q::*OutputSlice",
+          10
+        ],
+        [
+          "q::Cast_fp16_to_fp32",
+          8
+        ],
+        [
+          "q::Cast_fp32_to_fp16.tcm",
+          4
+        ],
+        [
+          "q::ConvLayer.fp16.s1.tcm",
+          2
+        ],
+        [
+          "q::ConvLayer.opt.weights_to_vtcm",
+          2
+        ],
+        [
+          "q::ForceFormat_Crouton",
+          4
+        ],
+        [
+          "q::Transpose.2D",
+          4
+        ],
+        [
+          "q::zero_to_vtcm.fp16",
+          2
+        ]
+      ]
+    },
+    "no_conv_relu_fold": {
+      "job_id": "jp4e3dz2g",
+      "logs": [
+        {
+          "file": "logs/legacy/no_conv_relu_fold/jp4e3dz2g_runtime.log",
+          "sha256": "93ae59a6f9a473bc138db6edbd3058b179fedd9e61b202141935e8c4517c59fa"
+        }
+      ],
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "graph_configuration_counts": [
+        3
+      ],
+      "excerpts": [
+        {
+          "file": "logs/legacy/no_conv_relu_fold/jp4e3dz2g_runtime.log",
+          "line": 46,
+          "text": "[14/Oct/2026:02:45:01 +00:00: profiler/info] [job_id: jp4e3dz2g] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/legacy/no_conv_relu_fold/jp4e3dz2g_runtime.log",
+          "line": 127,
+          "text": "[14/Oct/2026:02:45:01 +00:00: profiler/debug] [job_id: jp4e3dz2g] [model.dlc] Applying 3 configurations to graph graph_uzrg7tj8."
+        },
+        {
+          "file": "logs/legacy/no_conv_relu_fold/jp4e3dz2g_runtime.log",
+          "line": 162,
+          "text": "[14/Oct/2026:02:45:02 +00:00: profiler/info] [job_id: jp4e3dz2g] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/legacy/no_conv_relu_fold/jp4e3dz2g_runtime.log",
+          "line": 256,
+          "text": "[14/Oct/2026:02:45:02 +00:00: profiler/info] [job_id: jp4e3dz2g] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/legacy/no_conv_relu_fold/jp4e3dz2g_runtime.log",
+          "line": 362,
+          "text": "[14/Oct/2026:02:45:03 +00:00: profiler/info] [job_id: jp4e3dz2g] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        }
+      ],
+      "htp_nodes": 47,
+      "implementation_signature": [
+        [
+          "DmaCheckpointSet",
+          4
+        ],
+        [
+          "SyncOp",
+          2
+        ],
+        [
+          "q::*InputSlice",
+          5
+        ],
+        [
+          "q::*OutputSlice",
+          10
+        ],
+        [
+          "q::Cast_fp16_to_fp32",
+          8
+        ],
+        [
+          "q::Cast_fp32_to_fp16.tcm",
+          4
+        ],
+        [
+          "q::ConvLayer.fp16.s1.tcm",
+          2
+        ],
+        [
+          "q::ConvLayer.opt.weights_to_vtcm",
+          2
+        ],
+        [
+          "q::ForceFormat_Crouton",
+          4
+        ],
+        [
+          "q::Transpose.2D",
+          4
+        ],
+        [
+          "q::zero_to_vtcm.fp16",
+          2
+        ]
+      ]
+    },
+    "prepare_fast": {
+      "job_id": "jp3o6ejxp",
+      "logs": [
+        {
+          "file": "logs/legacy/prepare_fast/jp3o6ejxp_runtime.log",
+          "sha256": "0ac0b786bcf4d8d911750b55f67bac703c87b239e2f56aa9249e7b1aa952c890"
+        }
+      ],
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "graph_configuration_counts": [
+        3
+      ],
+      "excerpts": [
+        {
+          "file": "logs/legacy/prepare_fast/jp3o6ejxp_runtime.log",
+          "line": 46,
+          "text": "[14/Oct/2026:03:01:21 +00:00: profiler/info] [job_id: jp3o6ejxp] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/legacy/prepare_fast/jp3o6ejxp_runtime.log",
+          "line": 127,
+          "text": "[14/Oct/2026:03:01:22 +00:00: profiler/debug] [job_id: jp3o6ejxp] [model.dlc] Applying 3 configurations to graph graph_fn2fqxso."
+        },
+        {
+          "file": "logs/legacy/prepare_fast/jp3o6ejxp_runtime.log",
+          "line": 158,
+          "text": "[14/Oct/2026:03:01:22 +00:00: profiler/info] [job_id: jp3o6ejxp] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/legacy/prepare_fast/jp3o6ejxp_runtime.log",
+          "line": 252,
+          "text": "[14/Oct/2026:03:01:23 +00:00: profiler/info] [job_id: jp3o6ejxp] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/legacy/prepare_fast/jp3o6ejxp_runtime.log",
+          "line": 358,
+          "text": "[14/Oct/2026:03:01:24 +00:00: profiler/info] [job_id: jp3o6ejxp] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        }
+      ],
+      "htp_nodes": 47,
+      "implementation_signature": [
+        [
+          "DmaCheckpointSet",
+          4
+        ],
+        [
+          "SyncOp",
+          2
+        ],
+        [
+          "q::*InputSlice",
+          5
+        ],
+        [
+          "q::*OutputSlice",
+          10
+        ],
+        [
+          "q::Cast_fp16_to_fp32",
+          8
+        ],
+        [
+          "q::Cast_fp32_to_fp16.tcm",
+          4
+        ],
+        [
+          "q::ConvLayer.fp16.s1.tcm",
+          2
+        ],
+        [
+          "q::ConvLayer.opt.weights_to_vtcm",
+          2
+        ],
+        [
+          "q::ForceFormat_Crouton",
+          4
+        ],
+        [
+          "q::Transpose.2D",
+          4
+        ],
+        [
+          "q::zero_to_vtcm.fp16",
+          2
+        ]
+      ]
+    }
+  },
+  "explicit": {
+    "prepare_fast": {
+      "job_id": "jprxwe00p",
+      "logs": [
+        {
+          "file": "logs/explicit/prepare_fast/jprxwe00p_runtime.log",
+          "sha256": "325c4a902e560b97ce4b1dbbca7d9e871bd25e485eafe34e7213e8a958dca089"
+        }
+      ],
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "graph_configuration_counts": [
+        3
+      ],
+      "excerpts": [
+        {
+          "file": "logs/explicit/prepare_fast/jprxwe00p_runtime.log",
+          "line": 46,
+          "text": "[14/Oct/2026:04:19:42 +00:00: profiler/info] [job_id: jprxwe00p] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/explicit/prepare_fast/jprxwe00p_runtime.log",
+          "line": 127,
+          "text": "[14/Oct/2026:04:19:42 +00:00: profiler/debug] [job_id: jprxwe00p] [model.dlc] Applying 3 configurations to graph graph_cvzmqpsz."
+        },
+        {
+          "file": "logs/explicit/prepare_fast/jprxwe00p_runtime.log",
+          "line": 158,
+          "text": "[14/Oct/2026:04:19:43 +00:00: profiler/info] [job_id: jprxwe00p] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/explicit/prepare_fast/jprxwe00p_runtime.log",
+          "line": 252,
+          "text": "[14/Oct/2026:04:19:43 +00:00: profiler/info] [job_id: jprxwe00p] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/explicit/prepare_fast/jprxwe00p_runtime.log",
+          "line": 358,
+          "text": "[14/Oct/2026:04:19:44 +00:00: profiler/info] [job_id: jprxwe00p] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        }
+      ],
+      "htp_nodes": 24,
+      "implementation_signature": [
+        [
+          "DmaCheckpointSet",
+          3
+        ],
+        [
+          "SyncOp",
+          1
+        ],
+        [
+          "q::*InputSlice",
+          5
+        ],
+        [
+          "q::*OutputSlice",
+          2
+        ],
+        [
+          "q::Cast_fp16_to_fp32",
+          1
+        ],
+        [
+          "q::Cast_fp32_to_fp16.tcm",
+          1
+        ],
+        [
+          "q::Concat",
+          1
+        ],
+        [
+          "q::ConvLayer.fp16.s1.tcm",
+          1
+        ],
+        [
+          "q::ConvLayer.opt.weights_to_vtcm",
+          2
+        ],
+        [
+          "q::ForceFormat_Crouton",
+          1
+        ],
+        [
+          "q::Transpose.2D",
+          4
+        ],
+        [
+          "q::zero_to_vtcm.fp16",
+          2
+        ]
+      ]
+    },
+    "no_conv_relu_fold": {
+      "job_id": "jp2oelwrg",
+      "logs": [
+        {
+          "file": "logs/explicit/no_conv_relu_fold/jp2oelwrg_runtime.log",
+          "sha256": "53117b4547331be8c78c2c21d9d5944550b510f2d33ecc03b7ab163379d1462c"
+        }
+      ],
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "graph_configuration_counts": [
+        4
+      ],
+      "excerpts": [
+        {
+          "file": "logs/explicit/no_conv_relu_fold/jp2oelwrg_runtime.log",
+          "line": 46,
+          "text": "[14/Oct/2026:04:20:04 +00:00: profiler/info] [job_id: jp2oelwrg] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/explicit/no_conv_relu_fold/jp2oelwrg_runtime.log",
+          "line": 127,
+          "text": "[14/Oct/2026:04:20:05 +00:00: profiler/debug] [job_id: jp2oelwrg] [model.dlc] Applying 4 configurations to graph graph_af1w3du9."
+        },
+        {
+          "file": "logs/explicit/no_conv_relu_fold/jp2oelwrg_runtime.log",
+          "line": 158,
+          "text": "[14/Oct/2026:04:20:05 +00:00: profiler/info] [job_id: jp2oelwrg] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/explicit/no_conv_relu_fold/jp2oelwrg_runtime.log",
+          "line": 252,
+          "text": "[14/Oct/2026:04:20:06 +00:00: profiler/info] [job_id: jp2oelwrg] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/explicit/no_conv_relu_fold/jp2oelwrg_runtime.log",
+          "line": 358,
+          "text": "[14/Oct/2026:04:20:06 +00:00: profiler/info] [job_id: jp2oelwrg] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        }
+      ],
+      "htp_nodes": 47,
+      "implementation_signature": [
+        [
+          "DmaCheckpointSet",
+          4
+        ],
+        [
+          "SyncOp",
+          2
+        ],
+        [
+          "q::*InputSlice",
+          5
+        ],
+        [
+          "q::*OutputSlice",
+          10
+        ],
+        [
+          "q::Cast_fp16_to_fp32",
+          8
+        ],
+        [
+          "q::Cast_fp32_to_fp16.tcm",
+          4
+        ],
+        [
+          "q::ConvLayer.fp16.s1.tcm",
+          2
+        ],
+        [
+          "q::ConvLayer.opt.weights_to_vtcm",
+          2
+        ],
+        [
+          "q::ForceFormat_Crouton",
+          4
+        ],
+        [
+          "q::Transpose.2D",
+          4
+        ],
+        [
+          "q::zero_to_vtcm.fp16",
+          2
+        ]
+      ]
+    },
+    "optimized": {
+      "job_id": "jgn1k3zkp",
+      "logs": [
+        {
+          "file": "logs/explicit/optimized/jgn1k3zkp_runtime.log",
+          "sha256": "8c6c67b1118e0e4a5b23461c61d078c7fb2c5a08ab84828af8e2afc6442b5d77"
+        }
+      ],
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "graph_configuration_counts": [
+        3
+      ],
+      "excerpts": [
+        {
+          "file": "logs/explicit/optimized/jgn1k3zkp_runtime.log",
+          "line": 46,
+          "text": "[14/Oct/2026:04:27:42 +00:00: profiler/info] [job_id: jgn1k3zkp] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/explicit/optimized/jgn1k3zkp_runtime.log",
+          "line": 127,
+          "text": "[14/Oct/2026:04:27:42 +00:00: profiler/debug] [job_id: jgn1k3zkp] [model.dlc] Applying 3 configurations to graph graph_8f3a4gwb."
+        },
+        {
+          "file": "logs/explicit/optimized/jgn1k3zkp_runtime.log",
+          "line": 162,
+          "text": "[14/Oct/2026:04:27:43 +00:00: profiler/info] [job_id: jgn1k3zkp] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/explicit/optimized/jgn1k3zkp_runtime.log",
+          "line": 256,
+          "text": "[14/Oct/2026:04:27:43 +00:00: profiler/info] [job_id: jgn1k3zkp] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        },
+        {
+          "file": "logs/explicit/optimized/jgn1k3zkp_runtime.log",
+          "line": 362,
+          "text": "[14/Oct/2026:04:27:44 +00:00: profiler/info] [job_id: jgn1k3zkp] [model.dlc] Loaded QNN backend from /data/user/0/ai.tetra.tungsten/cache/tungsten.lib/qnn_sdk/default/2.50.0/aarch64-android/libQnnHtp.so (version 5.50.0; core API 2.39.0; build ID v2.50.0.260828221209)"
+        }
+      ],
+      "htp_nodes": 47,
+      "implementation_signature": [
+        [
+          "DmaCheckpointSet",
+          4
+        ],
+        [
+          "SyncOp",
+          2
+        ],
+        [
+          "q::*InputSlice",
+          5
+        ],
+        [
+          "q::*OutputSlice",
+          10
+        ],
+        [
+          "q::Cast_fp16_to_fp32",
+          8
+        ],
+        [
+          "q::Cast_fp32_to_fp16.tcm",
+          4
+        ],
+        [
+          "q::ConvLayer.fp16.s1.tcm",
+          2
+        ],
+        [
+          "q::ConvLayer.opt.weights_to_vtcm",
+          2
+        ],
+        [
+          "q::ForceFormat_Crouton",
+          4
+        ],
+        [
+          "q::Transpose.2D",
+          4
+        ],
+        [
+          "q::zero_to_vtcm.fp16",
+          2
+        ]
+      ]
+    }
+  }
+}

@@ -62,8 +62,8 @@ def review(original_source, audit_source, output_dir):
     lines = ['# HTP preparation audit', '',
         'Preparation flags are now explicit on inference jobs. The original sweep supplied them only at DLC conversion; effective HTP values were unverified.', '',
         f'Case: `{case_id}`. Same inputs, device and QAIRT. One job/request; no latency claim.', '',
-        '| Request | Legacy graph configs | Explicit graph configs | Same HTP op counts |',
-        '|---|---:|---:|---|']
+        '| Request | Legacy graph configs | Explicit graph configs | HTP nodes, legacy → explicit | Same HTP op counts |',
+        '|---|---:|---:|---:|---|']
     names = {'optimized': 'O3', 'prepare_fast': 'O1', 'no_conv_relu_fold': 'O3 / no fold'}
     for variant in names:
         before = evidence['legacy'][variant]
@@ -73,7 +73,7 @@ def review(original_source, audit_source, output_dir):
         same = before['implementation_signature'] == after['implementation_signature']
         old = ', '.join(map(str, before['graph_configuration_counts'])) or 'unavailable'
         new = ', '.join(map(str, after['graph_configuration_counts'])) or 'unavailable'
-        lines.append(f"| {names[variant]} | {old} | {new} | {'Yes' if same else 'No'} |")
+        lines.append(f"| {names[variant]} | {old} | {new} | {before['htp_nodes']} → {after['htp_nodes']} | {'Yes' if same else 'No'} |")
     evidence_link = Path(os.path.relpath((audit / 'preparation-review.json').resolve(), output.resolve())).as_posix()
     lines += ['', 'Configuration counts show setup differences, not individual option values. HTP op counts do not establish binary identity.', '',
         '[Evidence and log excerpts](' + evidence_link + ') · '

@@ -1,0 +1,774 @@
+{
+  "schema_version": 2,
+  "source": "qualcomm_ai_hub_sweep",
+  "status": "complete",
+  "started_utc": "2026-10-14T04:11:53.245909+00:00",
+  "client_version": "0.56.0",
+  "git_commit": "da1639a3e079319e5635b0920c517c64ba005bfb",
+  "git_dirty": true,
+  "device": {
+    "name": "Samsung Galaxy S24",
+    "os": "14",
+    "attributes": [
+      "os:android",
+      "framework:tflite",
+      "framework:onnx",
+      "abi:aarch64-android",
+      "vendor:samsung",
+      "format:phone",
+      "chipset:qualcomm-snapdragon-8gen3",
+      "chipset:sm8650",
+      "hexagon:v75",
+      "soc-model:57",
+      "htp-supports-fp16:true",
+      "htp-supports-weight-sharing:true",
+      "framework:qnn"
+    ]
+  },
+  "manifest_sha256": "5dacb293a3739de9975e9b4c0bb679336971b080c9c023c5bbb9a7d93737a176",
+  "plan": {
+    "device": "Samsung Galaxy S24",
+    "qairt_version": "2.50",
+    "jobs": [
+      {
+        "case_id": "conv_b1_c32_h16_o64",
+        "variant": "optimized",
+        "compile_options": "--target_runtime qnn_dlc --compute_unit npu --qnn_options default_graph_htp_precision=FLOAT16;default_graph_htp_optimizations=O=3 --qairt_version 2.50",
+        "inference_options": "--compute_unit npu --qairt_version 2.50 --qnn_options default_graph_htp_precision=FLOAT16;default_graph_htp_optimizations=O=3;context_htp_performance_mode=SUSTAINED_HIGH_PERFORMANCE"
+      },
+      {
+        "case_id": "conv_b1_c32_h16_o64",
+        "variant": "prepare_fast",
+        "compile_options": "--target_runtime qnn_dlc --compute_unit npu --qnn_options default_graph_htp_precision=FLOAT16;default_graph_htp_optimizations=O=1 --qairt_version 2.50",
+        "inference_options": "--compute_unit npu --qairt_version 2.50 --qnn_options default_graph_htp_precision=FLOAT16;default_graph_htp_optimizations=O=1;context_htp_performance_mode=SUSTAINED_HIGH_PERFORMANCE"
+      },
+      {
+        "case_id": "conv_b1_c32_h16_o64",
+        "variant": "no_conv_relu_fold",
+        "compile_options": "--target_runtime qnn_dlc --compute_unit npu --qnn_options default_graph_htp_precision=FLOAT16;default_graph_htp_optimizations=O=3;default_graph_htp_disable_fold_relu_activation_into_conv=true --qairt_version 2.50",
+        "inference_options": "--compute_unit npu --qairt_version 2.50 --qnn_options default_graph_htp_precision=FLOAT16;default_graph_htp_optimizations=O=3;default_graph_htp_disable_fold_relu_activation_into_conv=true;context_htp_performance_mode=SUSTAINED_HIGH_PERFORMANCE"
+      }
+    ],
+    "power": "unavailable until independently verified; never inferred from TOPS or TDP",
+    "qualification": "These are requested compiler settings, not proof that a pass changed the graph. Inspect profiles and verify NPU placement."
+  },
+  "repeats": 1,
+  "order_seed": 1729,
+  "order": "Seeded shuffled submission order within repeats; cloud scheduling is uncontrolled",
+  "compilations": [
+    {
+      "case_id": "conv_b1_c32_h16_o64",
+      "variant": "prepare_fast",
+      "compile_options": "--target_runtime qnn_dlc --compute_unit npu --qnn_options default_graph_htp_precision=FLOAT16;default_graph_htp_optimizations=O=1 --qairt_version 2.50",
+      "inference_options": "--compute_unit npu --qairt_version 2.50 --qnn_options default_graph_htp_precision=FLOAT16;default_graph_htp_optimizations=O=1;context_htp_performance_mode=SUSTAINED_HIGH_PERFORMANCE",
+      "key": "conv_b1_c32_h16_o64_prepare_fast",
+      "status": "compiled",
+      "submitted_utc": "2026-10-14T04:11:53.286157+00:00",
+      "job_name": "hub-s24-preparation-audit-2026-10-14_conv_b1_c32_h16_o64_prepare_fast",
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "job_id": "j5wy4q73g",
+      "completed_utc": "2026-10-14T04:12:47.458894+00:00"
+    },
+    {
+      "case_id": "conv_b1_c32_h16_o64",
+      "variant": "optimized",
+      "compile_options": "--target_runtime qnn_dlc --compute_unit npu --qnn_options default_graph_htp_precision=FLOAT16;default_graph_htp_optimizations=O=3 --qairt_version 2.50",
+      "inference_options": "--compute_unit npu --qairt_version 2.50 --qnn_options default_graph_htp_precision=FLOAT16;default_graph_htp_optimizations=O=3;context_htp_performance_mode=SUSTAINED_HIGH_PERFORMANCE",
+      "key": "conv_b1_c32_h16_o64_optimized",
+      "status": "compiled",
+      "submitted_utc": "2026-10-14T04:11:56.930243+00:00",
+      "job_name": "hub-s24-preparation-audit-2026-10-14_conv_b1_c32_h16_o64_optimized",
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "job_id": "jg9odwmwg",
+      "completed_utc": "2026-10-14T04:13:06.797785+00:00"
+    },
+    {
+      "case_id": "conv_b1_c32_h16_o64",
+      "variant": "no_conv_relu_fold",
+      "compile_options": "--target_runtime qnn_dlc --compute_unit npu --qnn_options default_graph_htp_precision=FLOAT16;default_graph_htp_optimizations=O=3;default_graph_htp_disable_fold_relu_activation_into_conv=true --qairt_version 2.50",
+      "inference_options": "--compute_unit npu --qairt_version 2.50 --qnn_options default_graph_htp_precision=FLOAT16;default_graph_htp_optimizations=O=3;default_graph_htp_disable_fold_relu_activation_into_conv=true;context_htp_performance_mode=SUSTAINED_HIGH_PERFORMANCE",
+      "key": "conv_b1_c32_h16_o64_no_conv_relu_fold",
+      "status": "compiled",
+      "submitted_utc": "2026-10-14T04:12:47.904582+00:00",
+      "job_name": "hub-s24-preparation-audit-2026-10-14_conv_b1_c32_h16_o64_no_conv_relu_fold",
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "job_id": "jpx0xy43p",
+      "completed_utc": "2026-10-14T04:13:55.656327+00:00"
+    }
+  ],
+  "records": [
+    {
+      "key": "conv_b1_c32_h16_o64_prepare_fast_r1",
+      "compile_key": "conv_b1_c32_h16_o64_prepare_fast",
+      "case_id": "conv_b1_c32_h16_o64",
+      "variant": "prepare_fast",
+      "repeat": 1,
+      "status": "validated",
+      "profile_file": "conv_b1_c32_h16_o64_prepare_fast_r1_profile.json",
+      "energy": {
+        "status": "unavailable"
+      },
+      "submitted_utc": "2026-10-14T04:13:55.685796+00:00",
+      "job_name": "hub-s24-preparation-audit-2026-10-14_conv_b1_c32_h16_o64_prepare_fast_r1",
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "compile_job_id": "j5wy4q73g",
+      "job_id": "jprxwe00p",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.0015184332297106806,
+        "relative_l2_error": 0.0003593427543430822,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "review": {
+        "reported_compute_units": [
+          "NPU"
+        ],
+        "all_reported_entries_on_npu": true,
+        "reported_entry_count": 6,
+        "reported_entries": [
+          {
+            "name": "Input",
+            "compute_unit": "NPU",
+            "execution_cycles": 6494
+          },
+          {
+            "name": "x_0231",
+            "compute_unit": "NPU",
+            "execution_cycles": 11431
+          },
+          {
+            "name": "/Conv",
+            "compute_unit": "NPU",
+            "execution_cycles": 2913
+          },
+          {
+            "name": "/Relu",
+            "compute_unit": "NPU",
+            "execution_cycles": 2675
+          },
+          {
+            "name": "output_0_0231",
+            "compute_unit": "NPU",
+            "execution_cycles": 18491
+          },
+          {
+            "name": "Output",
+            "compute_unit": "NPU",
+            "execution_cycles": 2323
+          }
+        ],
+        "hub_estimated_inference_us": 79,
+        "all_samples_median_us": 83.0,
+        "all_samples_p10_us": 82.0,
+        "all_samples_p90_us": 84.0,
+        "sample_count": 100,
+        "fusion_verified": false,
+        "qualification": "Reported layer placement only. Logical layer names/cycle attribution do not establish physical fusion. Timings include the inference framework boundary."
+      },
+      "execution_summary": {
+        "estimated_inference_time": 79,
+        "estimated_inference_peak_memory": 122249216,
+        "first_load_time": 294888,
+        "first_load_peak_memory": 101842944,
+        "warm_load_time": 142582,
+        "warm_load_peak_memory": 121630720,
+        "compile_time": 0,
+        "compile_peak_memory": 0,
+        "compile_memory_increase_range": [
+          0,
+          0
+        ],
+        "compile_memory_peak_range": [
+          0,
+          0
+        ],
+        "first_load_memory_increase_range": [
+          20801792,
+          27981872
+        ],
+        "first_load_memory_peak_range": [
+          6467584,
+          13647664
+        ],
+        "warm_load_memory_increase_range": [
+          0,
+          1273216
+        ],
+        "warm_load_memory_peak_range": [
+          425984,
+          30874080
+        ],
+        "inference_memory_increase_range": [
+          0,
+          38160
+        ],
+        "inference_memory_peak_range": [
+          0,
+          29603344
+        ],
+        "all_compile_times": [],
+        "all_first_load_times": [
+          294888
+        ],
+        "all_warm_load_times": [
+          142582
+        ],
+        "all_inference_times": [
+          591,
+          106,
+          82,
+          79,
+          82,
+          81,
+          81,
+          82,
+          82,
+          122,
+          83,
+          248,
+          84,
+          83,
+          82,
+          84,
+          81,
+          84,
+          83,
+          82,
+          83,
+          82,
+          82,
+          84,
+          83,
+          82,
+          83,
+          83,
+          82,
+          85,
+          83,
+          82,
+          83,
+          82,
+          82,
+          82,
+          82,
+          83,
+          83,
+          83,
+          83,
+          84,
+          82,
+          83,
+          83,
+          82,
+          84,
+          84,
+          80,
+          85,
+          81,
+          83,
+          82,
+          84,
+          83,
+          82,
+          82,
+          83,
+          82,
+          83,
+          83,
+          105,
+          89,
+          82,
+          83,
+          82,
+          83,
+          83,
+          82,
+          82,
+          82,
+          82,
+          82,
+          82,
+          83,
+          83,
+          82,
+          86,
+          82,
+          83,
+          82,
+          83,
+          83,
+          83,
+          82,
+          82,
+          84,
+          83,
+          83,
+          84,
+          82,
+          82,
+          83,
+          84,
+          83,
+          83,
+          83,
+          82,
+          83,
+          83
+        ]
+      },
+      "completed_utc": "2026-10-14T04:20:30.754455+00:00"
+    },
+    {
+      "key": "conv_b1_c32_h16_o64_no_conv_relu_fold_r1",
+      "compile_key": "conv_b1_c32_h16_o64_no_conv_relu_fold",
+      "case_id": "conv_b1_c32_h16_o64",
+      "variant": "no_conv_relu_fold",
+      "repeat": 1,
+      "status": "validated",
+      "profile_file": "conv_b1_c32_h16_o64_no_conv_relu_fold_r1_profile.json",
+      "energy": {
+        "status": "unavailable"
+      },
+      "submitted_utc": "2026-10-14T04:13:58.034064+00:00",
+      "job_name": "hub-s24-preparation-audit-2026-10-14_conv_b1_c32_h16_o64_no_conv_relu_fold_r1",
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "compile_job_id": "jpx0xy43p",
+      "job_id": "jp2oelwrg",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.0015184332297106806,
+        "relative_l2_error": 0.0003593427543430822,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "review": {
+        "reported_compute_units": [
+          "NPU"
+        ],
+        "all_reported_entries_on_npu": true,
+        "reported_entry_count": 6,
+        "reported_entries": [
+          {
+            "name": "Input",
+            "compute_unit": "NPU",
+            "execution_cycles": 2418
+          },
+          {
+            "name": "x_0231",
+            "compute_unit": "NPU",
+            "execution_cycles": 13261
+          },
+          {
+            "name": "/Conv",
+            "compute_unit": "NPU",
+            "execution_cycles": 0
+          },
+          {
+            "name": "/Relu",
+            "compute_unit": "NPU",
+            "execution_cycles": 3317
+          },
+          {
+            "name": "output_0_0231",
+            "compute_unit": "NPU",
+            "execution_cycles": 19107
+          },
+          {
+            "name": "Output",
+            "compute_unit": "NPU",
+            "execution_cycles": 3026
+          }
+        ],
+        "hub_estimated_inference_us": 73,
+        "all_samples_median_us": 80.5,
+        "all_samples_p10_us": 77.9,
+        "all_samples_p90_us": 83.0,
+        "sample_count": 100,
+        "fusion_verified": false,
+        "qualification": "Reported layer placement only. Logical layer names/cycle attribution do not establish physical fusion. Timings include the inference framework boundary."
+      },
+      "execution_summary": {
+        "estimated_inference_time": 73,
+        "estimated_inference_peak_memory": 125796352,
+        "first_load_time": 327088,
+        "first_load_peak_memory": 99037184,
+        "warm_load_time": 147068,
+        "warm_load_peak_memory": 123052032,
+        "compile_time": 0,
+        "compile_peak_memory": 0,
+        "compile_memory_increase_range": [
+          0,
+          0
+        ],
+        "compile_memory_peak_range": [
+          0,
+          0
+        ],
+        "first_load_memory_increase_range": [
+          20734224,
+          27822640
+        ],
+        "first_load_memory_peak_range": [
+          2596864,
+          9685280
+        ],
+        "warm_load_memory_increase_range": [
+          0,
+          1081504
+        ],
+        "warm_load_memory_peak_range": [
+          491520,
+          31204816
+        ],
+        "inference_memory_increase_range": [
+          0,
+          20608
+        ],
+        "inference_memory_peak_range": [
+          16384,
+          29610608
+        ],
+        "all_compile_times": [],
+        "all_first_load_times": [
+          327088
+        ],
+        "all_warm_load_times": [
+          147068
+        ],
+        "all_inference_times": [
+          498,
+          106,
+          77,
+          78,
+          77,
+          76,
+          78,
+          76,
+          77,
+          75,
+          77,
+          330,
+          92,
+          74,
+          80,
+          80,
+          82,
+          81,
+          80,
+          81,
+          83,
+          73,
+          81,
+          80,
+          81,
+          80,
+          82,
+          82,
+          80,
+          81,
+          81,
+          81,
+          79,
+          83,
+          82,
+          81,
+          81,
+          79,
+          80,
+          80,
+          80,
+          80,
+          80,
+          81,
+          81,
+          85,
+          80,
+          81,
+          81,
+          80,
+          81,
+          81,
+          81,
+          79,
+          80,
+          80,
+          81,
+          154,
+          94,
+          81,
+          81,
+          80,
+          81,
+          81,
+          80,
+          80,
+          81,
+          79,
+          80,
+          78,
+          82,
+          81,
+          79,
+          80,
+          79,
+          83,
+          81,
+          79,
+          81,
+          81,
+          80,
+          85,
+          81,
+          79,
+          82,
+          80,
+          82,
+          80,
+          80,
+          80,
+          80,
+          80,
+          81,
+          81,
+          80,
+          81,
+          82,
+          80,
+          83,
+          77
+        ]
+      },
+      "completed_utc": "2026-10-14T04:20:50.581630+00:00"
+    },
+    {
+      "key": "conv_b1_c32_h16_o64_optimized_r1",
+      "compile_key": "conv_b1_c32_h16_o64_optimized",
+      "case_id": "conv_b1_c32_h16_o64",
+      "variant": "optimized",
+      "repeat": 1,
+      "status": "validated",
+      "profile_file": "conv_b1_c32_h16_o64_optimized_r1_profile.json",
+      "energy": {
+        "status": "unavailable"
+      },
+      "submitted_utc": "2026-10-14T04:20:31.234157+00:00",
+      "job_name": "hub-s24-preparation-audit-2026-10-14_conv_b1_c32_h16_o64_optimized_r1",
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "compile_job_id": "jg9odwmwg",
+      "job_id": "jgn1k3zkp",
+      "correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.0015184332297106806,
+        "relative_l2_error": 0.0003593427543430822,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "review": {
+        "reported_compute_units": [
+          "NPU"
+        ],
+        "all_reported_entries_on_npu": true,
+        "reported_entry_count": 6,
+        "reported_entries": [
+          {
+            "name": "Input",
+            "compute_unit": "NPU",
+            "execution_cycles": 2356
+          },
+          {
+            "name": "x_0231",
+            "compute_unit": "NPU",
+            "execution_cycles": 15382
+          },
+          {
+            "name": "/Conv",
+            "compute_unit": "NPU",
+            "execution_cycles": 0
+          },
+          {
+            "name": "/Relu",
+            "compute_unit": "NPU",
+            "execution_cycles": 4778
+          },
+          {
+            "name": "output_0_0231",
+            "compute_unit": "NPU",
+            "execution_cycles": 19049
+          },
+          {
+            "name": "Output",
+            "compute_unit": "NPU",
+            "execution_cycles": 4297
+          }
+        ],
+        "hub_estimated_inference_us": 72,
+        "all_samples_median_us": 107.5,
+        "all_samples_p10_us": 76.0,
+        "all_samples_p90_us": 118.0,
+        "sample_count": 100,
+        "fusion_verified": false,
+        "qualification": "Reported layer placement only. Logical layer names/cycle attribution do not establish physical fusion. Timings include the inference framework boundary."
+      },
+      "execution_summary": {
+        "estimated_inference_time": 72,
+        "estimated_inference_peak_memory": 125124608,
+        "first_load_time": 460323,
+        "first_load_peak_memory": 120016896,
+        "warm_load_time": 143142,
+        "warm_load_peak_memory": 124481536,
+        "compile_time": 0,
+        "compile_peak_memory": 0,
+        "compile_memory_increase_range": [
+          0,
+          0
+        ],
+        "compile_memory_peak_range": [
+          0,
+          0
+        ],
+        "first_load_memory_increase_range": [
+          21546544,
+          29025776
+        ],
+        "first_load_memory_peak_range": [
+          24555520,
+          32034752
+        ],
+        "warm_load_memory_increase_range": [
+          0,
+          21660432
+        ],
+        "warm_load_memory_peak_range": [
+          20586496,
+          50677968
+        ],
+        "inference_memory_increase_range": [
+          0,
+          29968
+        ],
+        "inference_memory_peak_range": [
+          0,
+          29294688
+        ],
+        "all_compile_times": [],
+        "all_first_load_times": [
+          460323
+        ],
+        "all_warm_load_times": [
+          143142
+        ],
+        "all_inference_times": [
+          625,
+          95,
+          79,
+          72,
+          75,
+          74,
+          75,
+          75,
+          74,
+          75,
+          76,
+          266,
+          135,
+          110,
+          115,
+          118,
+          102,
+          118,
+          121,
+          117,
+          113,
+          120,
+          113,
+          111,
+          118,
+          102,
+          106,
+          112,
+          112,
+          112,
+          131,
+          130,
+          103,
+          107,
+          114,
+          115,
+          108,
+          111,
+          112,
+          116,
+          101,
+          113,
+          113,
+          110,
+          110,
+          86,
+          113,
+          111,
+          113,
+          109,
+          111,
+          114,
+          114,
+          110,
+          110,
+          110,
+          112,
+          111,
+          112,
+          110,
+          111,
+          85,
+          112,
+          111,
+          112,
+          113,
+          127,
+          113,
+          89,
+          89,
+          96,
+          76,
+          77,
+          77,
+          77,
+          79,
+          76,
+          78,
+          76,
+          80,
+          76,
+          78,
+          77,
+          77,
+          76,
+          78,
+          76,
+          78,
+          78,
+          77,
+          76,
+          79,
+          75,
+          76,
+          77,
+          76,
+          76,
+          75,
+          77,
+          77
+        ]
+      },
+      "completed_utc": "2026-10-14T04:28:42.281294+00:00"
+    }
+  ],
+  "completed_utc": "2026-10-14T04:28:42.316755+00:00"
+}
