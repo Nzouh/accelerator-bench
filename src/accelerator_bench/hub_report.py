@@ -54,10 +54,10 @@ def create_hub_report(source_dir, output_dir):
                 "qairt_version": data["plan"]["qairt_version"], "reviews": reviews,
                 "scope": "One job per requested setting; smoke experiment, not a repeated performance study"})
     valid = [r for r in reviews if r["all_reported_entries_on_npu"] and r["sample_count"]]
-    lines = ["# Snapdragon NPU: first compiler experiment", "",
+    lines = ["# NPU pilot run", "",
              f"Device: **{data['plan']['device']}**. Requested QAIRT: **{data['plan']['qairt_version']}**.", "",
-             f"Real AI Hub measurements of the same seeded workload as the local suite: `{case_ids[0]}`. Shapes and input/weight hashes are preserved in the export manifest. FP32 IO with requested FP16 execution. Requested performance mode: sustained high performance.", "",
-             "One job per setting. These establish that the pipeline works; they do not establish a statistically reliable optimization benefit. Power is unavailable. No RTX-versus-NPU speedup is calculated because timing boundaries and local background activity differ.", "",
+             f"Case: `{case_ids[0]}`. FP32 I/O, requested FP16 execution, sustained high performance.", "",
+             "One job per setting. Power unavailable; fusion changes unverified.", "",
              "| Requested setting | AI Hub estimate (µs) | Median of returned samples (µs) | P10–P90 (µs) | Numerical check | Reported placement |",
              "|---|---:|---:|---:|---|---|"]
     for r in reviews:
@@ -68,30 +68,24 @@ def create_hub_report(source_dir, output_dir):
         med = np.array([r["all_samples_median_us"] for r in valid])
         lo = np.array([r["all_samples_p10_us"] for r in valid])
         hi = np.array([r["all_samples_p90_us"] for r in valid])
-        names = {"optimized": "O=3 / default folding", "prepare_fast": "O=1 / default folding",
-                 "no_conv_relu_fold": "O=3 / folding disabled"}
+        names = {"optimized": "O3", "prepare_fast": "O1", "no_conv_relu_fold": "O3 / no fold"}
         ax.barh([names[r["variant"]] for r in valid], med, xerr=[med - lo, hi - med],
                 color=["#087e8b", "#667085", "#bd4b22"][:len(valid)], capsize=4)
-        ax.set_xlabel("Median of AI Hub returned inference samples (µs); whiskers P10–P90")
+        ax.set_xlabel("Latency (µs)")
         ax.set_xlim(left=0)
         ax.invert_yaxis()
         ax.spines[["top", "right"]].set_visible(False)
-        fig.suptitle("Same NPU, same graph, different compiler settings", x=.03, y=.98, ha="left", fontsize=16, fontweight="bold")
-        fig.text(.03, .865, f"{data['plan']['device']} · QAIRT {data['plan']['qairt_version']} · one job per setting", fontsize=10)
-        fig.text(.03, .025, "SMOKE EXPERIMENT · reported operations on NPU · numerical checks passed · no power measurement", fontsize=9, color="#9a3412")
+        fig.suptitle("NPU compiler settings", x=.03, y=.98, ha="left", fontsize=16, fontweight="bold")
+        fig.text(.03, .865, f"{data['plan']['device']} · QAIRT {data['plan']['qairt_version']}", fontsize=10)
+        fig.text(.03, .025, "Median; whiskers: P10–P90. One job/setting.", fontsize=9)
         fig.tight_layout(rect=[0, .08, 1, .83])
-        fig.savefig(output / "npu-ablation.png", dpi=160)
-        fig.savefig(output / "npu-ablation.svg")
+        from .report import save_figure
+        save_figure(fig, output / "npu-ablation")
         plt.close(fig)
         lines += ["", "![NPU ablation](npu-ablation.png)"]
-    lines += ["", "## Interpretation limits", "",
-              "- All returned samples are included in our median/P10/P90, including startup outliers. The SDK's estimate is a separate metric; we do not assume its aggregation matches our median.",
-              "- All listed profile entries must report NPU before a result appears in the chart. Host framework work is still part of the timing boundary.",
-              "- Disabling folding is a requested ablation. Logical layer names and zero-cycle entries do not prove whether the compiler physically fused the operations; `fusion_verified` remains false.",
-              "- Requested FP16 execution and numerical agreement are documented. Detailed internal accumulation precision is not independently verified.",
-              "- Repeat jobs in randomized order and inspect deeper compiler/runtime evidence before attributing latency differences to one optimization.", "",
+    lines += ["", "All returned samples included. Timing includes the QNN framework call. Chart requires numerical pass and reported NPU placement.", "",
               "## Evidence", "", "- [Machine-readable profile review](profile-review.json)"]
     for r in reviews:
         lines.append(f"- [{r['variant']} inference job](https://workbench.aihub.qualcomm.com/jobs/{r['inference_job_id']}/) (account access may be required)")
-    (output / "report.md").write_text("\n".join(lines) + "\n")
+    (output / "report.md").write_text("\n".join(lines).rstrip() + "\n")
     return output / "report.md"

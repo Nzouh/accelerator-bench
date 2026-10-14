@@ -13,10 +13,10 @@ import numpy as np
 
 
 COLORS = {"eager": "#667085", "compiled": "#087e8b", "fused": "#bd4b22"}
-LABELS = {"eager": "PyTorch eager", "compiled": "torch.compile", "fused": "Explicit fused RMSNorm"}
-OPERATIONS = [("matmul", "Matrix multiplication", "Rows M (K=N=1024)"),
-              ("conv_relu", "Convolution + ReLU", "Image width / height (C=32 → 64)"),
-              ("rmsnorm", "RMSNorm", "Rows (width=1024)")]
+LABELS = {"eager": "Eager", "compiled": "Compiled", "fused": "Fused"}
+OPERATIONS = [("matmul", "Matmul", "Rows M"),
+              ("conv_relu", "Conv + ReLU", "H = W"),
+              ("rmsnorm", "RMSNorm", "Rows")]
 
 
 def case_x(row):
@@ -48,13 +48,13 @@ def create_report(source, output_dir, profile=None):
                          "axes.titleweight": "bold", "figure.facecolor": "white"})
     gpu = data["environment"]["gpu"]
     exploratory = "EXPLORATORY" in data.get("measurement_context", "").upper()
-    banner = "EXPLORATORY · concurrent GPU activity · not an isolated hardware comparison" if exploratory else "Measured local run · see report for environment and controls"
+    banner = " · concurrent GPU workloads" if exploratory else ""
     figures = []
     definitions = [
-        ("graph_latency", "Execution with host dispatch amortized", "CUDA graph time / operation (µs)", "graph_cuda_ms"),
-        ("dispatch_latency", "Execution including Python dispatch", "Synchronized wall time / operation (µs)", "wall_ms"),
-        ("speedup", "Optimization benefit depends on workload size", "Speedup versus eager (×)", None),
-        ("energy", "Gross GPU energy during sustained replay", "NVML energy / operation (mJ)", None),
+        ("graph_latency", "CUDA graph latency", "Latency (µs)", "graph_cuda_ms"),
+        ("dispatch_latency", "Python dispatch latency", "Latency (µs)", "wall_ms"),
+        ("speedup", "Speedup vs eager", "Speedup (×)", None),
+        ("energy", "GPU energy", "Energy (mJ/op)", None),
     ]
     for filename, title, ylabel, metric in definitions:
         if filename == "energy" and not any(r.get("energy", {}).get("status") == "measured" for r in rows):
@@ -114,11 +114,11 @@ def create_report(source, output_dir, profile=None):
                     labels.append(label)
         fig.legend(handles, labels, loc="lower center", ncol=3, frameon=False, bbox_to_anchor=(.5, .04))
         fig.suptitle(title, fontsize=19, fontweight="bold", x=.055, ha="left", y=.99)
-        fig.text(.055, .942, f"{gpu}  |  {banner}", fontsize=10, color="#9a3412" if exploratory else "#475467")
-        note = {"graph_latency": "Median across timing blocks; shading = P10–P90 block averages, not confidence intervals. Resident inputs, 100 operations/graph by default.",
-                "dispatch_latency": "Median synchronized block average. Includes Python dispatch and final wait; excludes transfer, compilation, and telemetry.",
-                "speedup": "Ratio of median CUDA-graph times. Above 1× = faster than eager. This does not attribute all changes to a single compiler pass.",
-                "energy": "Integrated NVML device telemetry / completed operations. Includes baseline and unrelated activity. One sustained window/configuration."}[filename]
+        fig.text(.055, .942, f"{gpu}{banner}", fontsize=10, color="#9a3412" if exploratory else "#475467")
+        note = {"graph_latency": f"{data['settings']['graph_operations']} ops/graph. Median; band: P10–P90 block means.",
+                "dispatch_latency": "Median; band: P10–P90 block means. Includes Python and synchronization.",
+                "speedup": "CUDA graph timing.",
+                "energy": "Gross NVML energy. One window per configuration."}[filename]
         fig.text(.055, .015, note, fontsize=8, color="#667085")
         fig.tight_layout(rect=[.025, .10, .99, .92], h_pad=2, w_pad=2)
         save_figure(fig, output / filename)
@@ -138,19 +138,17 @@ def create_report(source, output_dir, profile=None):
                              "relative_l2_error": row["correctness"]["relative_l2_error"],
                              "max_abs_error": row["correctness"]["max_abs_error"], "first_call_s": row["first_call_s"]})
     env = data["environment"]
-    lines = ["# RTX 3060 operation benchmark report", "", "> " + data.get("measurement_context", "Uncontrolled run"), "",
-             "This report is generated from real measurements. No Snapdragon NPU numbers have been inferred or added.", "",
-             f"- Validated configurations: **{len(rows)}** / {len(data['records'])} attempted.",
-             f"- GPU: {gpu}; {env['gpu_memory_bytes'] / 1024**3:.0f} GiB VRAM.",
-             f"- PyTorch {env['torch']}; CUDA {env['cuda_runtime']}; driver {env['driver']}; {env['kernel']}.",
-             f"- Measurement source commit: `{env['git_commit']}`; dirty at start: `{env['git_dirty']}`.",
-             f"- Run time (UTC): {env['timestamp_utc']}.",
-             "- TF32 disabled; FP16 matmul reduced-precision reductions disabled; cuDNN benchmarking disabled.", "",
-             "## How to read these results", "",
-             "CUDA Graph replay amortizes host dispatch across repeated operations. The separate dispatch chart includes Python and synchronization overhead. Neither includes input transfers or full application work. Graph replay repeatedly uses the same resident inputs and can favor cache reuse.", "",
-             "Shaded ranges are P10–P90 across **block-average** timings, not per-request tail latencies or confidence intervals. Variants are shuffled within paired rounds. Input shapes and precision run in a fixed order, so thermal drift and background activity remain possible confounders.", "",
-             "Energy is gross GPU-device telemetry integrated during a separate sustained replay window. It includes baseline consumption and any unrelated GPU activity. It is not isolated workload-only energy or whole-laptop power, and cannot support an NPU efficiency comparison. Sensor averaging limits the meaning of short intervals.", "",
-             "The compiled variant can change layout, dispatch, and kernels. A speedup alone does not establish which compiler transformation caused it. The explicit fused implementation only applies to RMSNorm.", ""]
+    lines = ["# RTX 3060", "",
+             f"**{len(rows)}/{len(data['records'])} configurations passed.** {gpu}, {env['gpu_memory_bytes'] / 1024**3:.0f} GiB.", "",
+             f"PyTorch {env['torch']} · CUDA {env['cuda_runtime']} · driver {env['driver']}.", "",
+             "| Metric | Boundary |", "|---|---|",
+             f"| Graph latency | Resident inputs; {data['settings']['graph_operations']} calls per graph |",
+             "| Dispatch latency | Python calls + synchronization; no transfers |",
+             "| Energy | Separate sustained replay; gross NVML device energy |", "",
+             "Bands: P10–P90 block means, not confidence intervals. One session; clocks unlocked.", "",
+             "Matmul K=N=1024; convolution C=32→64, kernel=3; RMSNorm width=1024. TF32 off.", ""]
+    if exploratory:
+        lines += ["**Exploratory: concurrent GPU workloads.**", ""]
     for filename, title in figures:
         lines += [f"## {title}", "", f"![{title}]({filename}.png)", ""]
     if profile:
@@ -168,29 +166,29 @@ def create_report(source, output_dir, profile=None):
             ax.set_xlim(0, max(counts) * 1.15)
             for i, count in enumerate(counts):
                 ax.text(count + .15, i, f"{count:g}", va="center", fontweight="bold")
-            ax.set_xlabel("Profiler-observed CUDA activities per call")
-            fig.suptitle("RMSNorm: fewer GPU kernel launches", x=.03, y=.98, ha="left", fontsize=18, fontweight="bold")
-            fig.text(.03, .89, f"{diagnostics['case']['id']} · {diagnostics['dtype']} · {diagnostics['repetitions']} profiled calls", fontsize=9)
-            fig.text(.03, .02, "Separate diagnostic capture; counts support graph/kernel analysis, not a latency or energy estimate.", fontsize=9)
+            ax.set_xlabel("Kernels / call")
+            fig.suptitle("RMSNorm kernel count", x=.03, y=.98, ha="left", fontsize=18, fontweight="bold")
+            shape_text = '×'.join(str(d) for d in diagnostics['case']['shape'])
+            fig.text(.03, .89, f"{diagnostics['dtype'].replace('float', 'FP')} · {shape_text}", fontsize=9)
+            fig.text(.03, .02, f"{diagnostics['repetitions']} profiled calls.", fontsize=9)
             fig.tight_layout(rect=[0, .08, 1, .85])
             save_figure(fig, output / "kernel_counts")
             plt.close(fig)
             profile_link = Path(os.path.relpath(profile_path.resolve(), output.resolve())).as_posix()
             lines += ["## Compiler evidence", "", "![Profiler-observed CUDA activities](kernel_counts.png)", "",
-                      "The separate profiler capture records fewer CUDA activities for the compiled and explicit fused RMSNorm implementations. Kernel names and counts are retained in the diagnostic JSON. This is evidence about execution structure; timings come from the separate benchmark run.", "",
                       f"[Raw profiler evidence]({profile_link})", ""]
-    lines += ["## Numerical validation", "", "All timed configurations passed both ordinary and captured-graph output checks against a CPU FP64 reference computed from the original seeded FP32 inputs and weights. FP16 error includes input and weight rounding. This is numerical agreement on synthetic tensors, not task accuracy on a dataset.", "",
-              "| Operation | Precision | Maximum relative L2 error across shapes/variants |", "|---|---|---:|"]
+    lines += ["## Numerical error", "", "CPU FP64 reference; ordinary and captured-graph outputs checked.", "",
+              "| Operation | Precision | Max relative L2 error |", "|---|---|---:|"]
     for op, name, _ in OPERATIONS:
         for dtype in ["float16", "float32"]:
             errors = [r["correctness"]["relative_l2_error"] for r in rows if r["case"]["op"] == op and r["dtype"] == dtype]
             if errors:
                 lines.append(f"| {name} | {dtype} | {max(errors):.3e} |")
     lines += ["", "## Raw evidence", "", "- [Flat measurement table](measurements.csv)",
-              f"- [Raw measurement JSON]({Path(os.path.relpath(source.resolve(), output.resolve())).as_posix()}) (raw timing blocks, power samples, environment, checks).",
-              "- `first_call_s` includes initialization, possible cache hits, compilation and execution; it is **not** isolated compiler duration.",
-              "", "## Before drawing hardware conclusions", "",
-              "Repeat whole sessions on AC power with GPU-heavy applications closed and documented power settings to quantify variation. Before any cross-device comparison, verify NPU placement for the same checked workload and reconcile precision and timing boundaries. Keep graph-replay timing separate from AI Hub framework-call timing.", ""]
+              f"- [Raw data and run conditions]({Path(os.path.relpath(source.resolve(), output.resolve())).as_posix()})",
+              f"- Source: `{env['git_commit']}`; dirty: `{env['git_dirty']}`; UTC: {env['timestamp_utc']}.",
+              "- `first_call_s` includes initialization and possible cache hits; not isolated compile time.",
+              "- NPU timing has a different boundary; NPU power is unavailable.", ""]
     failures = [r for r in data["records"] if r["status"] != "ok"]
     if failures:
         lines += ["## Failed configurations", ""] + [f"- {r['case']['id']} / {r['dtype']} / {r['variant']}: {r['status']}" for r in failures]
