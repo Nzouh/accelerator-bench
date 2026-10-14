@@ -8,6 +8,7 @@ from pathlib import Path
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter, LogLocator, NullFormatter
 import numpy as np
 
 from .hub_report import review_profile
@@ -102,6 +103,10 @@ def axes_style(ax, cases, xlabel):
     ticks = sorted({case_size(case) for case in cases})
     ax.set_xticks(ticks, [str(v) for v in ticks])
     ax.set_xlabel(xlabel)
+    if ax.get_yscale() == 'log':
+        ax.yaxis.set_major_locator(LogLocator(base=10, subs=(1, 2, 5)))
+        ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f'{value:g}'))
+        ax.yaxis.set_minor_formatter(NullFormatter())
     ax.grid(alpha=.16)
     ax.spines[['top', 'right']].set_visible(False)
 
@@ -117,7 +122,7 @@ def finish_plot(fig, axes, title, note, output):
     fig.suptitle(title, x=.055, ha='left', fontsize=18, fontweight='bold')
     fig.legend(handles, labels, loc='lower center', bbox_to_anchor=(.5, .065), ncol=3, frameon=False)
     fig.text(.055, .025, note, fontsize=9, color='#475467')
-    fig.tight_layout(rect=[.025, .16, .99, .91])
+    fig.tight_layout(rect=[.025, .16, .99, .99])
     save_figure(fig, output)
     plt.close(fig)
 
@@ -146,7 +151,7 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
         ax.set_yscale('log')
         axes_style(ax, [r['case'] for r in rows], xlabel)
     axes[0].set_ylabel('Latency (µs)')
-    finish_plot(fig, axes, 'RTX 3060 vs Snapdragon 8 Gen 3',
+    finish_plot(fig, axes, 'RTX 3060 Laptop vs Snapdragon 8 Gen 3',
                 'FP16 requested; NPU FP32 I/O. Different timing boundaries. Band: range of NPU job medians.', output / 'latency')
     fig, axes = plt.subplots(1, 3, figsize=(13, 4.8))
     for ax, (op, name, xlabel) in zip(axes, OPS):
@@ -176,7 +181,7 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
         writer.writeheader()
         writer.writerows(table)
     complete = sum(r['complete'] for r in remote['rows'])
-    lines = ['# RTX 3060 vs Snapdragon 8 Gen 3', '',
+    lines = ['# RTX 3060 Laptop vs Snapdragon 8 Gen 3', '',
         f"**{complete}/{len(remote['rows'])} NPU configurations validated**, {remote['metadata']['repeats']} jobs each. Same {len(local)} shapes and input/weight hashes.", '',
         f"GPU: RTX 3060 Laptop, PyTorch compiled FP16. NPU: {remote['metadata']['plan']['device']}, QAIRT {remote['metadata']['plan']['qairt_version']}, O3, requested FP16, FP32 I/O.", '',
         'Timing boundaries differ: CUDA graph, block-timed Python dispatch, and QNN framework call. No chip-only speedup ratio or NPU energy estimate.', '',
@@ -229,7 +234,8 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
         for ax in axes:
             axes_style(ax, [r['nhwc']['case'] for r in layout_rows], 'H = W')
         finish_plot(fig, axes, 'NPU convolution layout',
-                    '3 jobs/layout; band: job-median range. HTP counts: first-repeat diagnostic.', output / 'layout')
+                    f"Jobs/shape: NCHW {remote['metadata']['repeats']}, NHWC {layout['metadata']['repeats']}. "
+                    'Band: job-median range. HTP: repeat 1.', output / 'layout')
         lines += ['## Layout ablation', '', '![Layout](layout.png)', '',
                   'Same convolution and weights; only the I/O layout changes. Input/output reordering is outside timing.', '',
                   '| H=W | NCHW (µs) | NHWC (µs) | Speedup |', '|---:|---:|---:|---:|']

@@ -19,7 +19,7 @@ def report(source, output_dir):
     assert len(rows) == 16 and all(r['correctness']['passed'] and r['graph_correctness']['passed'] for r in rows)
     output.mkdir(parents=True, exist_ok=True)
     plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 10, 'axes.titleweight': 'bold'})
-    fig, axes = plt.subplots(1, 2, figsize=(10, 4.8))
+    fig, axes = plt.subplots(1, 2, figsize=(10, 4.8), sharey=True)
     for ax, dtype in zip(axes, ['float32', 'float16']):
         subset = [r for r in rows if r['dtype'] == dtype]
         for variant, label, color in [('layout_on', 'On', '#667085'), ('layout_off', 'Off', '#087e8b')]:
@@ -32,8 +32,8 @@ def report(source, output_dir):
         ax.set_yscale('log')
         axes_style(ax, [r['case'] for r in subset], 'H = W')
     axes[0].set_ylabel('Latency (µs)')
-    finish_plot(fig, axes, 'GPU layout optimization',
-                'RTX 3060 · CUDA graph replay. Median; band: P10–P90 block means.', output / 'layout')
+    finish_plot(fig, axes, 'Convolution layout optimization',
+                'RTX 3060 Laptop · CUDA graph replay. Median; band: P10–P90 block means.', output / 'layout')
     indexed = {(r['case']['id'], r['dtype'], r['variant']): r for r in rows}
     ratios = {dtype: [r['graph_cuda_ms']['median']/indexed[r['case']['id'], dtype, 'layout_off']['graph_cuda_ms']['median']
                      for r in rows if r['dtype'] == dtype and r['variant'] == 'layout_on'] for dtype in ['float32', 'float16']}
