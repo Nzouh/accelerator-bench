@@ -36,9 +36,24 @@ def collect_inference(job, record, item, manifest_path, root):
     outputs = job.download_output_data()
     if not outputs or len(outputs) != 1 or len(next(iter(outputs.values()))) != 1:
         raise ValueError('Expected one output and one sample')
+    actual = next(iter(outputs.values()))[0]
     with np.load(manifest_path.parent / item['arrays']) as arrays:
-        record['correctness'] = correctness(torch.from_numpy(next(iter(outputs.values()))[0]),
-                                            torch.from_numpy(arrays['reference']), 'float16')
+        reference = arrays['reference']
+        record['correctness'] = correctness(torch.from_numpy(actual),
+                                            torch.from_numpy(reference), 'float16')
+        if item.get('reference_description'):
+            record['correctness']['reference'] = item['reference_description']
+        if item.get('output_kind') == 'classification_logits':
+            expected = reference.argmax(axis=-1).tolist()
+            obtained = actual.argmax(axis=-1).tolist()
+            record['classification'] = {'reference_top1': expected, 'actual_top1': obtained,
+                                        'top1_equal': expected == obtained,
+                                        'scope': 'Single image agreement; not dataset accuracy'}
+            record['correctness']['passed'] &= expected == obtained
+            output_path = root / (record['key'] + '_output.npy')
+            np.save(output_path, actual)
+            record['output_file'] = output_path.name
+            record['output_sha256'] = hashlib.sha256(output_path.read_bytes()).hexdigest()
     record['review'] = review_profile(profile)
     record['execution_summary'] = profile.get('execution_summary', {})
     record['status'] = ('validated' if record['correctness']['passed'] and
