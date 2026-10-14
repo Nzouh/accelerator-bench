@@ -6,7 +6,34 @@ Qualcomm AI Hub integration targets measured Snapdragon Hexagon NPU execution.
 
 The question: **when do compiler optimizations help, and what limits them?**
 
-## First measured report
+## Latest measured report: AC-powered RTX 3060
+
+[Charts and full results](reports/rtx3060-ac/report.md) ·
+[Compiler findings](reports/rtx3060-ac/findings.md) ·
+[Raw measurements](results/rtx3060-ac-2026-10-13.json) ·
+[Host context](results/rtx3060-ac-2026-10-13-host.json)
+
+All **56 configurations passed** both ordinary and CUDA Graph numerical checks,
+with 25 timing blocks per configuration and measured GPU power for every case.
+AC was confirmed before and after; Windows used Balanced mode, with Rainbow Six
+closed and resident desktop apps still present. Clocks were not locked. This is
+one desktop session, not a repeatability study or an isolated hardware comparison.
+
+- **RMSNorm FP16:** `torch.compile` achieved 10.05–10.86× graph-replay speedups
+  across the four tested shapes. At 32×1024, a separate profiler capture shows
+  **9 → 1 CUDA kernel activities per call**.
+- **Convolution + ReLU:** compilation improved FP16 graph timing by 1.26–1.33×,
+  but increased FP32 time by 1.39–1.61×. The FP32 16×16 diagnostic shows **3 → 8
+  kernel activities**, including additional layout conversions.
+- **Matrix multiplication:** compiled graph timing stayed within roughly 3% of
+  eager. Python dispatch overhead made several compiled calls slower overall.
+
+These ratios describe repeated resident-input CUDA Graph execution; they are not
+end-to-end model speedups. The findings include gross GPU energy and its limits.
+
+![Optimization speedups and regressions](reports/rtx3060-ac/speedup.png)
+
+## Earlier exploratory report
 
 [RTX 3060 charts and analysis](reports/rtx3060-exploratory/report.md) ·
 [Raw measurements](results/rtx3060-exploratory-2026-10-12.json) ·
@@ -103,8 +130,9 @@ setup also works in a suitable Linux environment with Python venv and GCC.
 - **Evidence:** JSON contains raw blocks, raw power samples, settings and source
   revision; generated charts and CSVs can be regenerated from it.
 
-The first run is **exploratory**, with other GPU applications present by explicit
-choice. It is not an isolated hardware comparison. No NPU numbers are fabricated.
+The earlier run is **exploratory**, with other GPU applications present by explicit
+choice. The latest AC run has documented before/after host conditions, but still
+needs independent repeats. No NPU numbers are fabricated.
 
 Validation: **23 local tests passed**, including CUDA kernel checks; GitHub Actions
 also runs the CPU/export/orchestration checks (CUDA-only tests skip on CPU runners).

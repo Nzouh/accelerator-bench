@@ -90,6 +90,13 @@ def create_report(source, output_dir, profile=None):
                     ax.set_yscale("log")
                 if oi == 0:
                     ax.set_ylabel(ylabel)
+        if filename == "speedup":
+            # Use a zero baseline and matching precision scales per operation;
+            # autoscaling around 1x would visually inflate tiny matmul changes.
+            for oi in range(len(OPERATIONS)):
+                upper = max(1.5, max(axes[di, oi].get_ylim()[1] for di in range(2)))
+                for di in range(2):
+                    axes[di, oi].set_ylim(0, upper)
         handles, labels = [], []
         for ax in axes.flat:
             h, l = ax.get_legend_handles_labels()
