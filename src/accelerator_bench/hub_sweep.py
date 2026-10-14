@@ -83,7 +83,7 @@ def run_sweep(manifest_path, device, qairt_version, output_dir, repeats=3,
         source_commit = shell_output(['git', 'rev-parse', 'HEAD'])
         source_dirty = bool(shell_output(['git', 'status', '--porcelain']))
         root.mkdir(parents=True)
-        save_result(root / 'export-manifest.json', manifest)
+        (root / 'export-manifest.json').write_bytes(manifest_path.read_bytes())
         rng = random.Random(manifest.get('seed', 1729))
         compilations = [{**spec, 'key': spec['case_id'] + '_' + spec['variant'], 'status': 'planned'}
                         for spec in experiment['jobs']]

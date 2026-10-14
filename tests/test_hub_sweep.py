@@ -51,6 +51,7 @@ def test_sweep_repeats_and_resume_do_not_resubmit(tmp_path, monkeypatch):
     with pytest.raises(ConnectionError):
         run_sweep(path, 'test', '2.50', output, repeats=2, max_active=1, poll_seconds=0)
     saved = json.loads((output / 'results.json').read_text())
+    assert (output / 'export-manifest.json').read_bytes() == path.read_bytes()
     assert sum(c['status'] == 'submitted' for c in saved['compilations']) == 1
     fake.get_job = original_get
     result = run_sweep(path, 'test', '2.50', output, repeats=2, max_active=1, poll_seconds=0, resume=True)
