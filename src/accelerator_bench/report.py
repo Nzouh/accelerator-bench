@@ -23,6 +23,14 @@ def case_x(row):
     return row["case"]["shape"][2 if row["case"]["op"] == "conv_relu" else 0]
 
 
+def save_figure(fig, stem):
+    fig.savefig(stem.with_suffix(".png"), dpi=160)
+    svg = stem.with_suffix(".svg")
+    fig.savefig(svg)
+    # Matplotlib emits trailing spaces in SVG paths; normalize generated text.
+    svg.write_text("\n".join(line.rstrip() for line in svg.read_text().splitlines()) + "\n")
+
+
 def create_report(source, output_dir, profile=None):
     source, output = Path(source), Path(output_dir)
     data = json.loads(source.read_text())
@@ -113,8 +121,7 @@ def create_report(source, output_dir, profile=None):
                 "energy": "Integrated NVML device telemetry / completed operations. Includes baseline and unrelated activity. One sustained window/configuration."}[filename]
         fig.text(.055, .015, note, fontsize=8, color="#667085")
         fig.tight_layout(rect=[.025, .10, .99, .92], h_pad=2, w_pad=2)
-        fig.savefig(output / (filename + ".png"), dpi=160)
-        fig.savefig(output / (filename + ".svg"))
+        save_figure(fig, output / filename)
         plt.close(fig)
         figures.append((filename, title))
     fieldnames = ["case", "dtype", "variant", "graph_median_us", "dispatch_median_us",
@@ -166,8 +173,7 @@ def create_report(source, output_dir, profile=None):
             fig.text(.03, .89, f"{diagnostics['case']['id']} · {diagnostics['dtype']} · {diagnostics['repetitions']} profiled calls", fontsize=9)
             fig.text(.03, .02, "Separate diagnostic capture; counts support graph/kernel analysis, not a latency or energy estimate.", fontsize=9)
             fig.tight_layout(rect=[0, .08, 1, .85])
-            fig.savefig(output / "kernel_counts.png", dpi=160)
-            fig.savefig(output / "kernel_counts.svg")
+            save_figure(fig, output / "kernel_counts")
             plt.close(fig)
             profile_link = Path(os.path.relpath(profile_path.resolve(), output.resolve())).as_posix()
             lines += ["## Compiler evidence", "", "![Profiler-observed CUDA activities](kernel_counts.png)", "",
@@ -188,5 +194,5 @@ def create_report(source, output_dir, profile=None):
     failures = [r for r in data["records"] if r["status"] != "ok"]
     if failures:
         lines += ["## Failed configurations", ""] + [f"- {r['case']['id']} / {r['dtype']} / {r['variant']}: {r['status']}" for r in failures]
-    (output / "report.md").write_text("\n".join(lines) + "\n")
+    (output / "report.md").write_text("\n".join(lines).rstrip() + "\n")
     return output / "report.md"

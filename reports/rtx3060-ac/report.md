@@ -67,4 +67,3 @@ All timed configurations passed both ordinary and captured-graph output checks a
 ## Before drawing hardware conclusions
 
 Repeat whole sessions on AC power with GPU-heavy applications closed and documented power settings to quantify variation. Before any cross-device comparison, verify NPU placement for the same checked workload and reconcile precision and timing boundaries. Keep graph-replay timing separate from AI Hub framework-call timing.
-
