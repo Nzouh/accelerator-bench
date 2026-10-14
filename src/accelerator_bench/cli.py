@@ -38,6 +38,14 @@ def main():
     hub_report = hub_sub.add_parser("report", help="Review saved placement and create separate NPU charts")
     hub_report.add_argument("source_dir")
     hub_report.add_argument("--output-dir", required=True)
+    sweep = hub_sub.add_parser("sweep", help="Run a resumable, repeated NPU sweep")
+    sweep.add_argument("--manifest", dest="manifest_path", default="artifacts/hub/manifest.json")
+    sweep.add_argument("--device", required=True)
+    sweep.add_argument("--qairt-version", required=True)
+    sweep.add_argument("--output-dir", required=True)
+    sweep.add_argument("--repeats", type=int, default=3)
+    sweep.add_argument("--max-active", type=int, default=4)
+    sweep.add_argument("--resume", action="store_true")
     for name in ("plan", "run"):
         p = hub_sub.add_parser(name)
         p.add_argument("--manifest", default="artifacts/hub/manifest.json")
@@ -78,6 +86,12 @@ def main():
         elif action == "report":
             from .hub_report import create_hub_report
             print(create_hub_report(**args))
+        elif action == "sweep":
+            from .hub_sweep import run_sweep
+            result = run_sweep(**args)
+            print(result["status"])
+            if result["status"] != "complete":
+                raise SystemExit(1)
         else:
             manifest_path = args.pop("manifest")
             print(json.dumps((hub.plan if action == "plan" else hub.execute)(manifest_path, **args), indent=2))
