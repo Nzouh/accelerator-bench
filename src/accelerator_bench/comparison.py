@@ -88,6 +88,15 @@ def gpu_matches(gpu, npu_rows):
     return rows
 
 
+def check_layout_settings(base, layout):
+    if (base['device'] != layout['device'] or base['qairt_version'] != layout['qairt_version']):
+        raise ValueError('Layout ablation changed device or runtime')
+    original = {(r['case_id'], r['variant']): r for r in base['jobs']}
+    for spec in layout['jobs']:
+        if spec != original.get((spec['case_id'], spec['variant'])):
+            raise ValueError('Layout ablation changed compiler or inference options')
+
+
 def axes_style(ax, cases, xlabel):
     ax.set_xscale('log', base=2)
     ticks = sorted({case_size(case) for case in cases})
@@ -130,7 +139,7 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
         ax.plot(x, [local[r['case']['id']]['graph_cuda_ms']['median'] * 1000 for r in rows],
                 'o--', color='#667085', label='RTX · CUDA graph')
         ax.plot(x, [local[r['case']['id']]['wall_ms']['median'] * 1000 for r in rows],
-                's-', color='#bd4b22', label='RTX · Python call')
+                's-', color='#bd4b22', label='RTX · Python loop')
         ax.plot(x, [r['median_us'] for r in rows], 'o-', color='#087e8b', label='Snapdragon · QNN call')
         ax.fill_between(x, [r['min_us'] for r in rows], [r['max_us'] for r in rows], color='#087e8b', alpha=.12)
         ax.set_title(name, loc='left')
@@ -168,10 +177,10 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
         writer.writerows(table)
     complete = sum(r['complete'] for r in remote['rows'])
     lines = ['# RTX 3060 vs Snapdragon 8 Gen 3', '',
-        f"**{complete}/{len(remote['rows'])} NPU configurations validated**, {remote['metadata']['repeats']} jobs each. Same 12 shapes and input/weight hashes.", '',
-        'GPU: RTX 3060 Laptop, PyTorch compiled FP16. NPU: Galaxy S24, QAIRT 2.50, O3, requested FP16, FP32 I/O.', '',
-        'Timing boundaries differ: CUDA graph, synchronized Python dispatch, and QNN framework call. No chip-only speedup ratio or NPU energy estimate.', '',
-        '![Latency](latency.png)', '', '| Case | GPU graph (µs) | GPU Python (µs) | NPU QNN (µs) |', '|---|---:|---:|---:|']
+        f"**{complete}/{len(remote['rows'])} NPU configurations validated**, {remote['metadata']['repeats']} jobs each. Same {len(local)} shapes and input/weight hashes.", '',
+        f"GPU: RTX 3060 Laptop, PyTorch compiled FP16. NPU: {remote['metadata']['plan']['device']}, QAIRT {remote['metadata']['plan']['qairt_version']}, O3, requested FP16, FP32 I/O.", '',
+        'Timing boundaries differ: CUDA graph, block-timed Python dispatch, and QNN framework call. No chip-only speedup ratio or NPU energy estimate.', '',
+        '![Latency](latency.png)', '', '| Case | GPU graph (µs) | GPU Python loop (µs) | NPU QNN (µs) |', '|---|---:|---:|---:|']
     for r in table:
         lines.append(f"| {case_label(local[r['case']]['case'])} | {r['gpu_graph_us']:.2f} | {r['gpu_python_us']:.2f} | {r['npu_qnn_us']:.1f} |")
     lines += ['', '## Compiler settings', '', '![Compiler settings](compiler_settings.png)', '',
@@ -179,6 +188,7 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
     layout_rows = []
     if layout_source:
         layout = aggregate_sweep(layout_source)
+        check_layout_settings(remote['metadata']['plan'], layout['metadata']['plan'])
         originals = {r['case']['id']: r for r in baseline}
         fig, axes = plt.subplots(1, 2, figsize=(10, 4.8))
         for row in sorted(layout['rows'], key=lambda r: case_size(r['case'])):

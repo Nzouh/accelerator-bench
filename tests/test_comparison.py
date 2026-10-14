@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from accelerator_bench.comparison import aggregate_sweep, gpu_matches
+from accelerator_bench.comparison import aggregate_sweep, gpu_matches, check_layout_settings
 from accelerator_bench.htp import summarize_htp
 from accelerator_bench.hub_report import review_profile
 
@@ -59,6 +59,21 @@ def test_comparison_rejects_different_input_values(tmp_path):
          'correctness': {'passed': True}, 'graph_correctness': {'passed': True}, 'input_weight_sha256': 'different'}]}
     with pytest.raises(ValueError, match='workload mismatch'):
         gpu_matches(gpu, remote)
+
+
+def test_layout_ablation_rejects_runtime_or_option_changes():
+    import copy
+    base = {'device': 'test', 'qairt_version': '2.50', 'jobs': [
+        {'case_id': 'conv', 'variant': 'optimized', 'compile_options': 'O3', 'inference_options': 'NPU'}]}
+    check_layout_settings(base, copy.deepcopy(base))
+    changed = copy.deepcopy(base)
+    changed['qairt_version'] = '2.51'
+    with pytest.raises(ValueError, match='device or runtime'):
+        check_layout_settings(base, changed)
+    changed = copy.deepcopy(base)
+    changed['jobs'][0]['inference_options'] = 'CPU'
+    with pytest.raises(ValueError, match='compiler or inference'):
+        check_layout_settings(base, changed)
 
 
 def test_invalid_latency_samples_are_excluded():
