@@ -238,6 +238,7 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
                     'Band: job-median range. HTP: repeat 1.', output / 'layout')
         lines += ['## Layout ablation', '', '![Layout](layout.png)', '',
                   'Same convolution and weights; only the I/O layout changes. Input/output reordering is outside timing.', '',
+                  'Separate sweeps; cloud device allocation and execution order were uncontrolled.', '',
                   '| H=W | NCHW (µs) | NHWC (µs) | Speedup |', '|---:|---:|---:|---:|']
         for r in layout_rows:
             lines.append(f"| {r['size']} | {r['nchw']['median_us']:.1f} | {r['nhwc']['median_us']:.1f} | {r['speedup']:.2f}× |")
