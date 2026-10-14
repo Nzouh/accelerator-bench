@@ -78,6 +78,10 @@ new order with `contiguous()` copies values in this example. A compiler may fuse
 or eliminate such a conversion; the source expression alone cannot establish its
 runtime cost.
 
+A kernel expects a particular arrangement of values. Copies or packing needed
+to meet that interface consume time and memory bandwidth without changing the
+mathematical operation. This is the mechanism the device experiment investigates.
+
 PyTorch's `channels_last` retains the **logical NCHW shape** and changes strides.
 An NHWC interface changes the axis order too. These are related but distinct
 representations. [PyTorch memory-format explanation](https://docs.pytorch.org/tutorials/intermediate/memory_format_tutorial.html).
@@ -90,6 +94,10 @@ The deliberately incorrect path below demonstrates why output validation matters
 The measured convolution uses batch 1, 32 input channels, 64 output channels,
 a 3×3 kernel and ReLU. Only the external layout changes. Logical inputs, weights,
 device type, QAIRT version and requested options match.
+
+QNN is the Qualcomm inference runtime whose call we time. HTP diagnostics describe
+execution on the Hexagon NPU. Generated HTP operations are not the same as the
+layers written in the original network.
 
 **Left:** each dot is one AI Hub job's median QNN-call latency. The short central
 mark is the median across three jobs; whiskers show their range.
@@ -142,6 +150,7 @@ The follow-up uses **MobileNetV2 with IMAGENET1K_V2 weights**, batch 1, 224×224
 The image below is the actual center crop used for every case: NASA's photograph
 of Eileen Collins, distributed as the public-domain scikit-image astronaut image.
 It provides a reproducible natural-image input. One image cannot measure model accuracy.
+A logit is one of the classifier's 1,000 output scores before softmax.
 [Image credit](https://scikit-image.org/docs/stable/api/skimage.data.html#skimage.data.astronaut) ·
 [Weight transforms](https://docs.pytorch.org/vision/0.26/models/generated/torchvision.models.mobilenet_v2.html).''')
     code("display(Image(filename=str(ROOT/'research/layout-study/assets/input-crop.png'), width=224))")
@@ -215,7 +224,8 @@ table(['Case', 'Accepted jobs', 'Max relative L2', 'Top-1 agreement'],
       [[r['case_id'], f"{sum(j['status'] == 'validated' for j in r['jobs'])}/{len(r['jobs'])}",
         f"{max(j['relative_l2_error'] for j in r['jobs']):.3%}",
         f"{sum(j['top1_equal'] for j in r['jobs'])}/{len(r['jobs'])}"] for r in validation['cases']])''')
-        md('''The local CPU FP16 path also crosses the fixed tolerance. This shows
+        md('''The three NPU repeats return identical error statistics, so their
+whiskers collapse to points. The local CPU FP16 path also crosses the fixed tolerance. This shows
 that the threshold can reject ordinary reduced-precision execution of the complete
 network; it does not identify a Qualcomm-specific defect. CPU FP16 is not an
 emulator of the NPU's kernels or accumulation strategy.

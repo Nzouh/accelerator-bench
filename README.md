@@ -3,6 +3,11 @@
 Operation and compiler experiments on an **RTX 3060 Laptop GPU** and a
 **Snapdragon 8 Gen 3 NPU**: matmul, convolution + ReLU, and RMSNorm.
 
+[Research notebook](research/layout-study/companion.ipynb): a convolution from
+the definitions, explained figures, and a pretrained MobileNetV2 follow-up.
+Its 12 model jobs preserve top-1 but fail the predeclared logit tolerance;
+their timings remain excluded from validated comparisons.
+
 ## Results
 
 | Experiment | Finding | Evidence |

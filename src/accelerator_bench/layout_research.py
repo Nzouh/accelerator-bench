@@ -206,7 +206,7 @@ def plot_preparation(repo, output):
     axes[0].set_xlabel('QNN latency (µs)')
     axes[1].set_xlabel('HTP nodes')
     fig.suptitle('Preparation: fewer nodes, more time', x=.055, ha='left', fontsize=18, weight='bold')
-    fig.text(.055, .035, 'Galaxy S24 · 16×16 convolution · 3 jobs/setting · HTP: first repeat', fontsize=9)
+    fig.text(.055, .035, 'Galaxy S24 · 16×16 · whiskers: 3 job-median range · HTP: first repeat', fontsize=9)
     fig.tight_layout(rect=[0, .09, 1, .94])
     return finish(fig, output, 'preparation')
 
@@ -339,7 +339,7 @@ def plot_vision_validation(repo, output):
         ax.set_axisbelow(True)
     axes[0].axhline(1, color='#101828', linewidth=1, linestyle='--')
     axes[0].text(2.95, 1.02, 'Acceptance limit', fontsize=8, ha='right')
-    fig.suptitle('MobileNetV2: checking numerical agreement', x=.055, ha='left', fontsize=17, weight='bold')
+    fig.suptitle('MobileNetV2: numerical error', x=.055, ha='left', fontsize=17, weight='bold')
     fig.legend(*axes[0].get_legend_handles_labels(), loc='lower center', bbox_to_anchor=(.5, .075),
                ncol=2, frameon=False)
     fig.text(.055, .025, 'CPU FP64 reference · fixed tolerance · NPU: 3 jobs/case · CPU FP16 is a separate diagnostic', fontsize=9)
