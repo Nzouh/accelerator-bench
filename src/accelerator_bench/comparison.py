@@ -238,14 +238,19 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
     rel = lambda path: Path(os.path.relpath(Path(path).resolve(), output.resolve())).as_posix()
     htp_path = root / 'htp-review.json'
     if htp_path.exists():
-        diagnostics = { (r['case_id'], r['variant']): r
+        diagnostics = {(r['case_id'], r['variant']): r
                        for r in json.loads(htp_path.read_text())['diagnostics'] if r['status'] == 'available'}
-        pairs = [(r, diagnostics.get((case_id, 'no_conv_relu_fold')))
-                 for (case_id, variant), r in diagnostics.items() if variant == 'optimized'
-                 and (case_id, 'no_conv_relu_fold') in diagnostics]
-        if pairs:
-            unchanged = sum(a['implementation_signature'] == b['implementation_signature'] for a, b in pairs)
-            lines += ['', f'**Folding check:** O3 and O3/no-fold have identical HTP op-type counts in {unchanged}/{len(pairs)} convolution shapes. This does not establish identical binaries or fusion.']
+        matches = []
+        for other, label in [('prepare_fast', 'O3/O1'), ('no_conv_relu_fold', 'O3/no-fold')]:
+            pairs = [(r, diagnostics[(case_id, other)])
+                     for (case_id, variant), r in diagnostics.items() if variant == 'optimized'
+                     and (case_id, other) in diagnostics]
+            if pairs:
+                unchanged = sum(a['implementation_signature'] == b['implementation_signature'] for a, b in pairs)
+                matches.append(f'{label}: {unchanged}/{len(pairs)} shapes')
+        if matches:
+            lines += ['', '**Identical HTP op-type counts:** ' + '; '.join(matches) +
+                      '. Counts alone do not establish identical binaries or fusion.']
     lines += ['', '## Evidence', '', '- [Comparison table](comparison.csv)',
               '- [Reviewed measurements](review.json)', f'- [Raw NPU jobs]({rel(root / "results.json")})',
               f'- [GPU measurements]({rel(gpu_source)})',

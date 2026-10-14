@@ -88,6 +88,17 @@ hold the graph and device fixed, verify correctness and inspect the generated
 profile. Requested flags do not prove that an optimization occurred. An unchanged
 graph or performance result is a valid outcome.
 
+The repeated sweep uses three separate AI Hub jobs per configuration. Submission
+order is shuffled within each repeat; cloud scheduling and physical unit assignment
+are uncontrolled. Points are medians of job medians; bands span those job medians.
+Samples within a job are not treated as independent job repeats. Rejected jobs
+remain in the record; incomplete configurations are excluded from plots.
+
+The NHWC ablation changes convolution I/O layout while preserving logical inputs
+and weights. Reordering occurs outside measured inference, so any benefit assumes
+the surrounding pipeline can supply and consume NHWC. QHAS comes from repeat 1;
+its instrumented timings are separate from the framework-call measurements.
+
 Do not estimate NPU energy from TOPS, chip TDP, or a speed ratio. Do not mix GPU
 device power with phone wall power on an unlabeled chart. Leave NPU power absent
 until compatible measured data is available. Published third-party results belong
