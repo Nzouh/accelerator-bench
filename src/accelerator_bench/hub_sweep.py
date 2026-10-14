@@ -48,14 +48,14 @@ def collect_inference(job, record, item, manifest_path, root):
 
 
 def run_sweep(manifest_path, device, qairt_version, output_dir, repeats=3,
-              max_active=4, poll_seconds=15, resume=False, variants=None):
+              max_active=4, poll_seconds=15, resume=False, variants=None, prepare_at_inference=False):
     import qai_hub as hub
     if repeats < 1 or max_active < 1 or poll_seconds < 0:
         raise ValueError('Invalid sweep counts')
     manifest_path, root = Path(manifest_path), Path(output_dir)
     manifest = json.loads(manifest_path.read_text())
     validate_artifacts(manifest_path, manifest)
-    experiment = plan(manifest_path, device, qairt_version)
+    experiment = plan(manifest_path, device, qairt_version, prepare_at_inference=prepare_at_inference)
     if variants:
         allowed = {j['variant'] for j in experiment['jobs']}
         if not set(variants) <= allowed:

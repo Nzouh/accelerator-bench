@@ -71,8 +71,7 @@ def export(config_path, output_dir, case_filter=None, io_layout="nchw"):
     return manifest
 
 
-def compile_options(variant):
-    common = "--target_runtime qnn_dlc --compute_unit npu --qnn_options "
+def qnn_preparation_options(variant):
     options = ["default_graph_htp_precision=FLOAT16", "default_graph_htp_optimizations=O=3"]
     if variant == "no_conv_relu_fold":
         options.append("default_graph_htp_disable_fold_relu_activation_into_conv=true")
@@ -80,10 +79,14 @@ def compile_options(variant):
         options[1] = "default_graph_htp_optimizations=O=1"
     elif variant != "optimized":
         raise ValueError(variant)
-    return common + ";".join(options)
+    return ";".join(options)
 
 
-def plan(manifest_path, device, qairt_version, case_filter=None):
+def compile_options(variant):
+    return "--target_runtime qnn_dlc --compute_unit npu --qnn_options " + qnn_preparation_options(variant)
+
+
+def plan(manifest_path, device, qairt_version, case_filter=None, prepare_at_inference=False):
     manifest = json.loads(Path(manifest_path).read_text())
     jobs = []
     for item in manifest["cases"]:
@@ -93,9 +96,12 @@ def plan(manifest_path, device, qairt_version, case_filter=None):
         if item["case"]["op"] == "conv_relu":
             variants.append("no_conv_relu_fold")
         for variant in variants:
+            inference_qnn = "context_htp_performance_mode=SUSTAINED_HIGH_PERFORMANCE"
+            if prepare_at_inference:
+                inference_qnn = qnn_preparation_options(variant) + ";" + inference_qnn
             jobs.append({"case_id": item["case"]["id"], "variant": variant,
                          "compile_options": compile_options(variant) + f" --qairt_version {qairt_version}",
-                         "inference_options": f"--compute_unit npu --qairt_version {qairt_version} --qnn_options context_htp_performance_mode=SUSTAINED_HIGH_PERFORMANCE"})
+                         "inference_options": f"--compute_unit npu --qairt_version {qairt_version} --qnn_options {inference_qnn}"})
     if not jobs:
         raise ValueError("No matching cases")
     return {"device": device, "qairt_version": qairt_version, "jobs": jobs,

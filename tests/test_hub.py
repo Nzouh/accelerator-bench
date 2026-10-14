@@ -10,6 +10,20 @@ def test_folding_ablation_changes_only_one_option():
     assert "O=1" in compile_options("prepare_fast")
 
 
+def test_explicit_inference_preparation_flags(tmp_path):
+    path = tmp_path / 'manifest.json'
+    path.write_text(json.dumps({'cases': [{'case': {'id': 'conv', 'op': 'conv_relu'}}]}))
+    original = plan(path, 'test', '2.50')
+    explicit = plan(path, 'test', '2.50', prepare_at_inference=True)
+    for before, after in zip(original['jobs'], explicit['jobs']):
+        assert before['compile_options'] == after['compile_options']
+        assert 'default_graph_htp_' not in before['inference_options']
+        assert 'default_graph_htp_precision=FLOAT16' in after['inference_options']
+        level = 'O=1' if after['variant'] == 'prepare_fast' else 'O=3'
+        assert level in after['inference_options']
+        assert ('disable_fold_relu_activation_into_conv=true' in after['inference_options']) == (after['variant'] == 'no_conv_relu_fold')
+
+
 def test_hub_export_preserves_weights_and_checks_onnx(tmp_path):
     pytest.importorskip("onnx")
     pytest.importorskip("onnxruntime")
