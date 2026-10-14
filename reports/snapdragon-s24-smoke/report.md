@@ -4,7 +4,7 @@ Device: **Samsung Galaxy S24**. Requested QAIRT: **2.50**.
 
 Case: `conv_b1_c32_h32_o64`. FP32 I/O, requested FP16 execution, sustained high performance.
 
-One job per setting. Power unavailable; fusion changes unverified.
+One job per compile request. HTP flags were not explicitly supplied at device preparation; their application is unverified. Power unavailable.
 
 | Requested setting | AI Hub estimate (µs) | Median of returned samples (µs) | P10–P90 (µs) | Numerical check | Reported placement |
 |---|---:|---:|---:|---|---|

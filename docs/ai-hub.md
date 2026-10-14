@@ -125,6 +125,17 @@ accelerator-bench hub htp results/local/s24-sweep
 Resume reuses recorded jobs. An uncertain submission stops for reconciliation
 by saved job name; it is never silently resubmitted.
 
+### Preparation flags
+
+For DLCs, HTP preparation happens on-device. The current runner supplies HTP
+options explicitly to inference jobs as well as compile jobs. See the
+[preparation stages](https://workbench.aihub.qualcomm.com/docs/hub/api.html#qualcomm-r-ai-engine-direct-options).
+
+The October 13 sweeps supplied these flags only at DLC conversion. Their effective
+device-side values were not verified, so those runs do not establish O3/O1 or
+folding effects. Their device/layout timings remain recorded. The dated scripts
+use `--compile-options-only` to reproduce or resume that original plan.
+
 ## Layout ablation
 
 NHWC export preserves the original convolution, weights and logical inputs.

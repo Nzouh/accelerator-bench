@@ -47,8 +47,10 @@ def main():
     sweep.add_argument("--repeats", type=int, default=3)
     sweep.add_argument("--max-active", type=int, default=4)
     sweep.add_argument("--resume", action="store_true")
-    sweep.add_argument("--prepare-at-inference", action="store_true",
+    sweep.add_argument("--prepare-at-inference", action="store_true", default=True,
                        help="Explicitly pass HTP preparation flags to on-device graph preparation")
+    sweep.add_argument("--compile-options-only", action="store_false", dest="prepare_at_inference",
+                       help="Reproduce the original compile-stage-only requests; not a verified HTP flag ablation")
     sweep.add_argument("--variants", nargs="+", choices=["optimized", "prepare_fast", "no_conv_relu_fold"])
     htp = hub_sub.add_parser("htp", help="Download first-repeat QHAS diagnostics")
     htp.add_argument("source_dir")

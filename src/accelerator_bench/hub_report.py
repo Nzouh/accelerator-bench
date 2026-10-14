@@ -54,10 +54,14 @@ def create_hub_report(source_dir, output_dir):
                 "qairt_version": data["plan"]["qairt_version"], "reviews": reviews,
                 "scope": "One job per requested setting; smoke experiment, not a repeated performance study"})
     valid = [r for r in reviews if r["all_reported_entries_on_npu"] and r["sample_count"]]
+    jobs = data['plan'].get('jobs', [])
+    explicit_preparation = bool(jobs) and all('default_graph_htp_optimizations=' in j['inference_options'] for j in jobs)
+    scope = ('One job per setting. Power unavailable; physical fusion changes unverified.' if explicit_preparation else
+             'One job per compile request. HTP flags were not explicitly supplied at device preparation; their application is unverified. Power unavailable.')
     lines = ["# NPU pilot run", "",
              f"Device: **{data['plan']['device']}**. Requested QAIRT: **{data['plan']['qairt_version']}**.", "",
              f"Case: `{case_ids[0]}`. FP32 I/O, requested FP16 execution, sustained high performance.", "",
-             "One job per setting. Power unavailable; fusion changes unverified.", "",
+             scope, "",
              "| Requested setting | AI Hub estimate (µs) | Median of returned samples (µs) | P10–P90 (µs) | Numerical check | Reported placement |",
              "|---|---:|---:|---:|---|---|"]
     for r in reviews:
@@ -75,9 +79,10 @@ def create_hub_report(source_dir, output_dir):
         ax.set_xlim(left=0)
         ax.invert_yaxis()
         ax.spines[["top", "right"]].set_visible(False)
-        fig.suptitle("NPU compiler settings", x=.03, y=.98, ha="left", fontsize=16, fontweight="bold")
+        fig.suptitle("NPU compiler settings" if explicit_preparation else "NPU compile requests", x=.03, y=.98, ha="left", fontsize=16, fontweight="bold")
         fig.text(.03, .865, f"{data['plan']['device']} · QAIRT {data['plan']['qairt_version']}", fontsize=10)
-        fig.text(.03, .025, "Median; whiskers: P10–P90. One job/setting.", fontsize=9)
+        note = '' if explicit_preparation else 'Unverified HTP settings. '
+        fig.text(.03, .025, note + "Median; whiskers: P10–P90. One job/request.", fontsize=9)
         fig.tight_layout(rect=[0, .08, 1, .83])
         from .report import save_figure
         save_figure(fig, output / "npu-ablation")

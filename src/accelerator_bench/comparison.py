@@ -130,6 +130,8 @@ def finish_plot(fig, axes, title, note, output):
 def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
     root, output = Path(source_dir), Path(output_dir)
     remote = aggregate_sweep(root)
+    explicit_preparation = all('default_graph_htp_optimizations=' in job['inference_options']
+                               for job in remote['metadata']['plan']['jobs'])
     gpu = json.loads(Path(gpu_source).read_text())
     local = gpu_matches(gpu, remote['rows'])
     output.mkdir(parents=True, exist_ok=True)
@@ -167,8 +169,8 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
         ax.set_yscale('log')
         axes_style(ax, [r['case'] for r in subset], xlabel)
     axes[0].set_ylabel('Latency (µs)')
-    finish_plot(fig, axes, 'NPU compiler settings',
-                f"Galaxy S24 · QAIRT {remote['metadata']['plan']['qairt_version']} · {remote['metadata']['repeats']} jobs/setting; band: job-median range.", output / 'compiler_settings')
+    finish_plot(fig, axes, 'NPU compiler settings' if explicit_preparation else 'Compile requests · unverified HTP settings',
+                f"Galaxy S24 · QAIRT {remote['metadata']['plan']['qairt_version']} · {remote['metadata']['repeats']} jobs/request; band: job-median range.", output / 'compiler_settings')
     table = []
     for row in baseline:
         r = local[row['case']['id']]
@@ -180,16 +182,18 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
             'npu_min_job_median_us', 'npu_max_job_median_us', 'npu_jobs'])
         writer.writeheader()
         writer.writerows(table)
-    complete = sum(r['complete'] for r in remote['rows'])
     lines = ['# RTX 3060 Laptop vs Snapdragon 8 Gen 3', '',
-        f"**{complete}/{len(remote['rows'])} NPU configurations validated**, {remote['metadata']['repeats']} jobs each. Same {len(local)} shapes and input/weight hashes.", '',
-        f"GPU: RTX 3060 Laptop, PyTorch compiled FP16. NPU: {remote['metadata']['plan']['device']}, QAIRT {remote['metadata']['plan']['qairt_version']}, O3, requested FP16, FP32 I/O.", '',
+        f"**{sum(r['n'] for r in remote['rows'])}/{len(remote['metadata']['records'])} NPU jobs validated**, {remote['metadata']['repeats']} jobs per compile request. Same {len(local)} shapes and input/weight hashes.", '',
+        f"GPU: RTX 3060 Laptop, PyTorch compiled FP16. NPU: {remote['metadata']['plan']['device']}, QAIRT {remote['metadata']['plan']['qairt_version']}, compile request O3, requested FP16, FP32 I/O.", '',
         'Timing boundaries differ: CUDA graph, block-timed Python dispatch, and QNN framework call. No chip-only speedup ratio or NPU energy estimate.', '',
         '![Latency](latency.png)', '', '| Case | GPU graph (µs) | GPU Python loop (µs) | NPU QNN (µs) |', '|---|---:|---:|---:|']
     for r in table:
         lines.append(f"| {case_label(local[r['case']]['case'])} | {r['gpu_graph_us']:.2f} | {r['gpu_python_us']:.2f} | {r['npu_qnn_us']:.1f} |")
-    lines += ['', '## Compiler settings', '', '![Compiler settings](compiler_settings.png)', '',
-              'NPU points: median of job medians. Bands: minimum–maximum job medians, not confidence intervals. Internal fusion must be checked separately.', '']
+    lines += ['', 'NPU points: median of job medians. Bands: minimum–maximum job medians, not confidence intervals.', '']
+    if explicit_preparation:
+        lines += ['## Compiler settings', '', '![Compiler settings](compiler_settings.png)', '']
+    else:
+        lines += ['HTP preparation flags were supplied only at DLC conversion. Their device-side application was not verified; this run does not establish O3/O1 or folding effects. [Archived request comparison](compiler_settings.png).', '']
     lines += ['## Numerical error', '', '| Operation | GPU max relative L2 | NPU max relative L2 |', '|---|---:|---:|']
     for op, name, _ in OPS:
         gpu_errors = [r[field]['relative_l2_error'] for r in local.values()
@@ -197,7 +201,7 @@ def create_comparison(source_dir, gpu_source, output_dir, layout_source=None):
         npu_errors = [j['relative_l2_error'] for r in baseline if r['case']['op'] == op for j in r['jobs']]
         if gpu_errors and npu_errors:
             lines.append(f"| {name} | {max(gpu_errors):.3e} | {max(npu_errors):.3e} |")
-    lines += ['', 'CPU FP64 reference; NPU O3 and GPU compiled FP16.', '']
+    lines += ['', 'CPU FP64 reference; NPU baseline and GPU compiled FP16.', '']
     layout_rows = []
     if layout_source:
         layout = aggregate_sweep(layout_source)

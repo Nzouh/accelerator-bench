@@ -13,7 +13,7 @@ Operation and compiler experiments on an **RTX 3060 Laptop GPU** and a
 
 ![GPU layout ablation](reports/gpu-layout/layout.png)
 
-The repeated NPU sweep covers 28 compiler configurations, three jobs each.
+The repeated NPU sweep covers 28 compile requests, three jobs each.
 A separate NHWC ablation tests four convolution shapes. Reports are generated
 only after their jobs finish.
 

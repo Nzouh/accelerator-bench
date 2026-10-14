@@ -13,7 +13,7 @@ def test_folding_ablation_changes_only_one_option():
 def test_explicit_inference_preparation_flags(tmp_path):
     path = tmp_path / 'manifest.json'
     path.write_text(json.dumps({'cases': [{'case': {'id': 'conv', 'op': 'conv_relu'}}]}))
-    original = plan(path, 'test', '2.50')
+    original = plan(path, 'test', '2.50', prepare_at_inference=False)
     explicit = plan(path, 'test', '2.50', prepare_at_inference=True)
     for before, after in zip(original['jobs'], explicit['jobs']):
         assert before['compile_options'] == after['compile_options']

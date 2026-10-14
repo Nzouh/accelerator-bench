@@ -62,6 +62,8 @@ def test_sweep_repeats_and_resume_do_not_resubmit(tmp_path, monkeypatch):
     assert len(calls) == 6
     with pytest.raises(ValueError, match='Resume configuration'):
         run_sweep(path, 'test', '2.51', output, repeats=2, resume=True)
+    with pytest.raises(ValueError, match='Resume configuration'):
+        run_sweep(path, 'test', '2.50', output, repeats=2, resume=True, prepare_at_inference=False)
 
 
 def test_sweep_stops_after_uncertain_submission(tmp_path, monkeypatch):

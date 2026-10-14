@@ -48,7 +48,7 @@ def collect_inference(job, record, item, manifest_path, root):
 
 
 def run_sweep(manifest_path, device, qairt_version, output_dir, repeats=3,
-              max_active=4, poll_seconds=15, resume=False, variants=None, prepare_at_inference=False):
+              max_active=4, poll_seconds=15, resume=False, variants=None, prepare_at_inference=True):
     import qai_hub as hub
     if repeats < 1 or max_active < 1 or poll_seconds < 0:
         raise ValueError('Invalid sweep counts')

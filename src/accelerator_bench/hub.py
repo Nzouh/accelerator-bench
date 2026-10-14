@@ -86,7 +86,7 @@ def compile_options(variant):
     return "--target_runtime qnn_dlc --compute_unit npu --qnn_options " + qnn_preparation_options(variant)
 
 
-def plan(manifest_path, device, qairt_version, case_filter=None, prepare_at_inference=False):
+def plan(manifest_path, device, qairt_version, case_filter=None, prepare_at_inference=True):
     manifest = json.loads(Path(manifest_path).read_text())
     jobs = []
     for item in manifest["cases"]:
