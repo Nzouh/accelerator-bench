@@ -1,0 +1,890 @@
+{
+  "execution_summary": {
+    "estimated_inference_time": 814,
+    "estimated_inference_peak_memory": 199352320,
+    "first_load_time": 641210,
+    "first_load_peak_memory": 188997632,
+    "warm_load_time": 150292,
+    "warm_load_peak_memory": 201334784,
+    "compile_time": 0,
+    "compile_peak_memory": 0,
+    "compile_memory_increase_range": [
+      0,
+      0
+    ],
+    "compile_memory_peak_range": [
+      0,
+      0
+    ],
+    "first_load_memory_increase_range": [
+      97726192,
+      104789744
+    ],
+    "first_load_memory_peak_range": [
+      106135552,
+      113199104
+    ],
+    "warm_load_memory_increase_range": [
+      0,
+      1435584
+    ],
+    "warm_load_memory_peak_range": [
+      385024,
+      58866432
+    ],
+    "inference_memory_increase_range": [
+      0,
+      16512
+    ],
+    "inference_memory_peak_range": [
+      12288,
+      56645952
+    ],
+    "all_compile_times": [],
+    "all_first_load_times": [
+      641210
+    ],
+    "all_warm_load_times": [
+      150292
+    ],
+    "all_inference_times": [
+      1465,
+      873,
+      833,
+      826,
+      822,
+      816,
+      823,
+      826,
+      825,
+      815,
+      816,
+      1049,
+      847,
+      825,
+      826,
+      822,
+      819,
+      821,
+      828,
+      832,
+      826,
+      827,
+      830,
+      828,
+      823,
+      826,
+      828,
+      821,
+      824,
+      826,
+      826,
+      833,
+      824,
+      819,
+      831,
+      825,
+      833,
+      819,
+      824,
+      823,
+      823,
+      824,
+      818,
+      816,
+      817,
+      818,
+      819,
+      820,
+      856,
+      821,
+      816,
+      816,
+      818,
+      815,
+      815,
+      817,
+      817,
+      816,
+      817,
+      816,
+      928,
+      826,
+      814,
+      815,
+      818,
+      817,
+      816,
+      819,
+      814,
+      819,
+      817,
+      815,
+      817,
+      815,
+      815,
+      817,
+      818,
+      814,
+      818,
+      817,
+      819,
+      818,
+      815,
+      818,
+      815,
+      817,
+      817,
+      818,
+      817,
+      818,
+      818,
+      815,
+      815,
+      817,
+      817,
+      820,
+      816,
+      818,
+      817,
+      903
+    ]
+  },
+  "execution_detail": [
+    {
+      "name": "Input",
+      "type": "Input",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 24184
+    },
+    {
+      "name": "node_Mul_1",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 789219
+    },
+    {
+      "name": "/Sub",
+      "type": "/Sub",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1156211
+    },
+    {
+      "name": "node_Mul_3",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 941673
+    },
+    {
+      "name": "/model/features/features.0/features.0.0/Conv",
+      "type": "/model/features/features.0/features.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.0/features.0.2/Clip",
+      "type": "/model/features/features.0/features.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 341050
+    },
+    {
+      "name": "/model/features/features.1/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.1/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.1/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.1/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 27623
+    },
+    {
+      "name": "/model/features/features.1/conv/conv.1/Conv",
+      "type": "/model/features/features.1/conv/conv.1/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 9758
+    },
+    {
+      "name": "/model/features/features.2/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.2/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.2/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.2/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 36536
+    },
+    {
+      "name": "/model/features/features.2/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.2/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.2/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.2/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 236270
+    },
+    {
+      "name": "/model/features/features.2/conv/conv.2/Conv",
+      "type": "/model/features/features.2/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4427
+    },
+    {
+      "name": "/model/features/features.3/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.3/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.3/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.3/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 14649
+    },
+    {
+      "name": "/model/features/features.3/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.3/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.3/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.3/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 29866
+    },
+    {
+      "name": "/model/features/features.3/conv/conv.2/Conv",
+      "type": "/model/features/features.3/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4897
+    },
+    {
+      "name": "/model/features/features.3/Add",
+      "type": "/model/features/features.3/Add",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4450
+    },
+    {
+      "name": "/model/features/features.4/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.4/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.4/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.4/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 14645
+    },
+    {
+      "name": "/model/features/features.4/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.4/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.4/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.4/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 117487
+    },
+    {
+      "name": "/model/features/features.4/conv/conv.2/Conv",
+      "type": "/model/features/features.4/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1811
+    },
+    {
+      "name": "/model/features/features.5/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.5/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.5/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.5/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 5033
+    },
+    {
+      "name": "/model/features/features.5/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.5/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.5/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.5/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 12341
+    },
+    {
+      "name": "/model/features/features.5/conv/conv.2/Conv",
+      "type": "/model/features/features.5/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1992
+    },
+    {
+      "name": "/model/features/features.5/Add",
+      "type": "/model/features/features.5/Add",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1222
+    },
+    {
+      "name": "/model/features/features.6/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.6/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.6/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.6/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4923
+    },
+    {
+      "name": "/model/features/features.6/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.6/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.6/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.6/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 11755
+    },
+    {
+      "name": "/model/features/features.6/conv/conv.2/Conv",
+      "type": "/model/features/features.6/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2297
+    },
+    {
+      "name": "/model/features/features.6/Add",
+      "type": "/model/features/features.6/Add",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 824
+    },
+    {
+      "name": "/model/features/features.7/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.7/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.7/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.7/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4980
+    },
+    {
+      "name": "/model/features/features.7/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.7/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.7/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.7/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 45184
+    },
+    {
+      "name": "/model/features/features.7/conv/conv.2/Conv",
+      "type": "/model/features/features.7/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1348
+    },
+    {
+      "name": "/model/features/features.8/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.8/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.8/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.8/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4045
+    },
+    {
+      "name": "/model/features/features.8/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.8/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.8/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.8/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 9047
+    },
+    {
+      "name": "/model/features/features.8/conv/conv.2/Conv",
+      "type": "/model/features/features.8/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1951
+    },
+    {
+      "name": "/model/features/features.8/Add",
+      "type": "/model/features/features.8/Add",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 564
+    },
+    {
+      "name": "/model/features/features.9/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.9/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.9/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.9/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3496
+    },
+    {
+      "name": "/model/features/features.9/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.9/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.9/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.9/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 8723
+    },
+    {
+      "name": "/model/features/features.9/conv/conv.2/Conv",
+      "type": "/model/features/features.9/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1967
+    },
+    {
+      "name": "/model/features/features.9/Add",
+      "type": "/model/features/features.9/Add",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 603
+    },
+    {
+      "name": "/model/features/features.10/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.10/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.10/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.10/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3395
+    },
+    {
+      "name": "/model/features/features.10/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.10/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.10/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.10/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 8685
+    },
+    {
+      "name": "/model/features/features.10/conv/conv.2/Conv",
+      "type": "/model/features/features.10/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1977
+    },
+    {
+      "name": "/model/features/features.10/Add",
+      "type": "/model/features/features.10/Add",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 558
+    },
+    {
+      "name": "/model/features/features.11/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.11/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.11/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.11/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3586
+    },
+    {
+      "name": "/model/features/features.11/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.11/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.11/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.11/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 8789
+    },
+    {
+      "name": "/model/features/features.11/conv/conv.2/Conv",
+      "type": "/model/features/features.11/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2812
+    },
+    {
+      "name": "/model/features/features.12/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.12/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.12/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.12/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7169
+    },
+    {
+      "name": "/model/features/features.12/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.12/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.12/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.12/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 12821
+    },
+    {
+      "name": "/model/features/features.12/conv/conv.2/Conv",
+      "type": "/model/features/features.12/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3941
+    },
+    {
+      "name": "/model/features/features.12/Add",
+      "type": "/model/features/features.12/Add",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 824
+    },
+    {
+      "name": "/model/features/features.13/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.13/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.13/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.13/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7223
+    },
+    {
+      "name": "/model/features/features.13/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.13/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.13/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.13/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 13368
+    },
+    {
+      "name": "/model/features/features.13/conv/conv.2/Conv",
+      "type": "/model/features/features.13/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3995
+    },
+    {
+      "name": "/model/features/features.13/Add",
+      "type": "/model/features/features.13/Add",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 867
+    },
+    {
+      "name": "/model/features/features.14/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.14/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.14/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.14/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7279
+    },
+    {
+      "name": "/model/features/features.14/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.14/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.14/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.14/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 52003
+    },
+    {
+      "name": "/model/features/features.14/conv/conv.2/Conv",
+      "type": "/model/features/features.14/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1949
+    },
+    {
+      "name": "/model/features/features.15/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.15/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.15/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.15/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 5413
+    },
+    {
+      "name": "/model/features/features.15/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.15/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.15/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.15/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7390
+    },
+    {
+      "name": "/model/features/features.15/conv/conv.2/Conv",
+      "type": "/model/features/features.15/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2762
+    },
+    {
+      "name": "/model/features/features.15/Add",
+      "type": "/model/features/features.15/Add",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 574
+    },
+    {
+      "name": "/model/features/features.16/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.16/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.16/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.16/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 5742
+    },
+    {
+      "name": "/model/features/features.16/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.16/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.16/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.16/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7501
+    },
+    {
+      "name": "/model/features/features.16/conv/conv.2/Conv",
+      "type": "/model/features/features.16/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2788
+    },
+    {
+      "name": "/model/features/features.16/Add",
+      "type": "/model/features/features.16/Add",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 559
+    },
+    {
+      "name": "/model/features/features.17/conv/conv.0/conv.0.0/Conv",
+      "type": "/model/features/features.17/conv/conv.0/conv.0.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.17/conv/conv.0/conv.0.2/Clip",
+      "type": "/model/features/features.17/conv/conv.0/conv.0.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 5491
+    },
+    {
+      "name": "/model/features/features.17/conv/conv.1/conv.1.0/Conv",
+      "type": "/model/features/features.17/conv/conv.1/conv.1.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.17/conv/conv.1/conv.1.2/Clip",
+      "type": "/model/features/features.17/conv/conv.1/conv.1.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7246
+    },
+    {
+      "name": "/model/features/features.17/conv/conv.2/Conv",
+      "type": "/model/features/features.17/conv/conv.2/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 5536
+    },
+    {
+      "name": "/model/features/features.18/features.18.0/Conv",
+      "type": "/model/features/features.18/features.18.0/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/features/features.18/features.18.2/Clip",
+      "type": "/model/features/features.18/features.18.2/Clip",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 10719
+    },
+    {
+      "name": "/model/GlobalAveragePool",
+      "type": "/model/GlobalAveragePool",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 46559
+    },
+    {
+      "name": "/model/GlobalAveragePool_output_0_0123",
+      "type": "/model/GlobalAveragePool",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/model/classifier/classifier.1/Gemm",
+      "type": "/model/classifier/classifier.1/Gemm",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 16299
+    },
+    {
+      "name": "Output",
+      "type": "Output",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 5261
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "source": "post_run_precision_diagnostic",
+  "run_status": "complete_with_failures",
+  "results_sha256": "e5a8cd90c4e43cbdfc9680c575b516a22690f2f9d58cdd0b088b9891f7bf3d5e",
+  "export_manifest_sha256": "baff0a0e8dfe31be0700ad5a97f3af574948cc474fbb99f3072a1cbcaf725d3d",
+  "torch_version": "2.11.0+cu128",
+  "device": "CPU",
+  "cases": [
+    {
+      "case_id": "model_nchw",
+      "cpu_fp16": {
+        "max_tolerance_ratio": 1.659210647157247,
+        "logits_outside_tolerance": 10,
+        "logit_count": 1000,
+        "passed": false,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.020720714093091175,
+        "relative_l2_error": 0.006712154241077161,
+        "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights"
+      },
+      "jobs": [
+        {
+          "job_id": "jgzzn72zg",
+          "repeat": 1,
+          "status": "rejected",
+          "top1_equal": true,
+          "all_reported_entries_on_npu": true,
+          "max_tolerance_ratio": 1.6905819041024417,
+          "logits_outside_tolerance": 23,
+          "logit_count": 1000,
+          "passed": false,
+          "finite": true,
+          "atol": 0.01,
+          "rtol": 0.01,
+          "max_abs_error": 0.024821119953048587,
+          "relative_l2_error": 0.007996402025358737,
+          "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights",
+          "relative_l2_to_cpu_fp16": 0.009849288945024926
+        },
+        {
+          "job_id": "jprxwy8vp",
+          "repeat": 2,
+          "status": "rejected",
+          "top1_equal": true,
+          "all_reported_entries_on_npu": true,
+          "max_tolerance_ratio": 1.6905819041024417,
+          "logits_outside_tolerance": 23,
+          "logit_count": 1000,
+          "passed": false,
+          "finite": true,
+          "atol": 0.01,
+          "rtol": 0.01,
+          "max_abs_error": 0.024821119953048587,
+          "relative_l2_error": 0.007996402025358737,
+          "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights",
+          "relative_l2_to_cpu_fp16": 0.009849288945024926
+        },
+        {
+          "job_id": "j5q4v2e7g",
+          "repeat": 3,
+          "status": "rejected",
+          "top1_equal": true,
+          "all_reported_entries_on_npu": true,
+          "max_tolerance_ratio": 1.6905819041024417,
+          "logits_outside_tolerance": 23,
+          "logit_count": 1000,
+          "passed": false,
+          "finite": true,
+          "atol": 0.01,
+          "rtol": 0.01,
+          "max_abs_error": 0.024821119953048587,
+          "relative_l2_error": 0.007996402025358737,
+          "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights",
+          "relative_l2_to_cpu_fp16": 0.009849288945024926
+        }
+      ],
+      "files_sha256": {
+        "precision/model_nchw_fp64.npy": "1b3f4229e953358d68d822800ffbeb19beb6397ea7dcb6014fd8eb4094b1d309",
+        "precision/model_nchw_cpu_fp16.npy": "3c9405f9af6b55bf9890d9ec608558eb4fed9c0c019e7c2edd7fea659f607596"
+      }
+    },
+    {
+      "case_id": "model_nhwc",
+      "cpu_fp16": {
+        "max_tolerance_ratio": 1.8311864740079002,
+        "logits_outside_tolerance": 13,
+        "logit_count": 1000,
+        "passed": false,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.0226738390930894,
+        "relative_l2_error": 0.006873222859249103,
+        "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights"
+      },
+      "jobs": [
+        {
+          "job_id": "jg9od40qg",
+          "repeat": 1,
+          "status": "rejected",
+          "top1_equal": true,
+          "all_reported_entries_on_npu": true,
+          "max_tolerance_ratio": 1.737644600437256,
+          "logits_outside_tolerance": 20,
+          "logit_count": 1000,
+          "passed": false,
+          "finite": true,
+          "atol": 0.01,
+          "rtol": 0.01,
+          "max_abs_error": 0.02607817341491714,
+          "relative_l2_error": 0.007985475573464896,
+          "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights",
+          "relative_l2_to_cpu_fp16": 0.010225111911210444
+        },
+        {
+          "job_id": "jp4e3wnqg",
+          "repeat": 2,
+          "status": "rejected",
+          "top1_equal": true,
+          "all_reported_entries_on_npu": true,
+          "max_tolerance_ratio": 1.737644600437256,
+          "logits_outside_tolerance": 20,
+          "logit_count": 1000,
+          "passed": false,
+          "finite": true,
+          "atol": 0.01,
+          "rtol": 0.01,
+          "max_abs_error": 0.02607817341491714,
+          "relative_l2_error": 0.007985475573464896,
+          "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights",
+          "relative_l2_to_cpu_fp16": 0.010225111911210444
+        },
+        {
+          "job_id": "jgod8vk45",
+          "repeat": 3,
+          "status": "rejected",
+          "top1_equal": true,
+          "all_reported_entries_on_npu": true,
+          "max_tolerance_ratio": 1.737644600437256,
+          "logits_outside_tolerance": 20,
+          "logit_count": 1000,
+          "passed": false,
+          "finite": true,
+          "atol": 0.01,
+          "rtol": 0.01,
+          "max_abs_error": 0.02607817341491714,
+          "relative_l2_error": 0.007985475573464896,
+          "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights",
+          "relative_l2_to_cpu_fp16": 0.010225111911210444
+        }
+      ],
+      "files_sha256": {
+        "precision/model_nhwc_fp64.npy": "1076c5750c68504c7fd33aa6f6c75ef265c474401f8b09b50a4102d70409fd44",
+        "precision/model_nhwc_cpu_fp16.npy": "7461c5b2d73e38fb61ec209dd754b32760c45fd1f83201d0fbb29618b3f4dfa3"
+      }
+    },
+    {
+      "case_id": "image_nchw_first",
+      "cpu_fp16": {
+        "max_tolerance_ratio": 1.5786454883201708,
+        "logits_outside_tolerance": 13,
+        "logit_count": 1000,
+        "passed": false,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.019534267003484096,
+        "relative_l2_error": 0.006247391348675276,
+        "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights"
+      },
+      "jobs": [
+        {
+          "job_id": "jp1o682k5",
+          "repeat": 1,
+          "status": "rejected",
+          "top1_equal": true,
+          "all_reported_entries_on_npu": true,
+          "max_tolerance_ratio": 2.209773447775327,
+          "logits_outside_tolerance": 51,
+          "logit_count": 1000,
+          "passed": false,
+          "finite": true,
+          "atol": 0.01,
+          "rtol": 0.01,
+          "max_abs_error": 0.03458652913392868,
+          "relative_l2_error": 0.009703633316905535,
+          "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights",
+          "relative_l2_to_cpu_fp16": 0.01034261844153974
+        },
+        {
+          "job_id": "jpy8mdrrg",
+          "repeat": 2,
+          "status": "rejected",
+          "top1_equal": true,
+          "all_reported_entries_on_npu": true,
+          "max_tolerance_ratio": 2.209773447775327,
+          "logits_outside_tolerance": 51,
+          "logit_count": 1000,
+          "passed": false,
+          "finite": true,
+          "atol": 0.01,
+          "rtol": 0.01,
+          "max_abs_error": 0.03458652913392868,
+          "relative_l2_error": 0.009703633316905535,
+          "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights",
+          "relative_l2_to_cpu_fp16": 0.01034261844153974
+        },
+        {
+          "job_id": "jgk68y7y5",
+          "repeat": 3,
+          "status": "rejected",
+          "top1_equal": true,
+          "all_reported_entries_on_npu": true,
+          "max_tolerance_ratio": 2.209773447775327,
+          "logits_outside_tolerance": 51,
+          "logit_count": 1000,
+          "passed": false,
+          "finite": true,
+          "atol": 0.01,
+          "rtol": 0.01,
+          "max_abs_error": 0.03458652913392868,
+          "relative_l2_error": 0.009703633316905535,
+          "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights",
+          "relative_l2_to_cpu_fp16": 0.01034261844153974
+        }
+      ],
+      "files_sha256": {
+        "precision/image_nchw_first_fp64.npy": "5e8018b254d29abeb22e0ea32ba353db1dc544172d4e3db3aa2398a5e4064d32",
+        "precision/image_nchw_first_cpu_fp16.npy": "77af628ea0b4099c2cb56ba3f1c39d4af9d5cca9b5636475c797a35ee2ec0c82"
+      }
+    },
+    {
+      "case_id": "image_nhwc_first",
+      "cpu_fp16": {
+        "max_tolerance_ratio": 1.5786454883201708,
+        "logits_outside_tolerance": 13,
+        "logit_count": 1000,
+        "passed": false,
+        "finite": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "max_abs_error": 0.019534267003484096,
+        "relative_l2_error": 0.006247391348675276,
+        "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights"
+      },
+      "jobs": [
+        {
+          "job_id": "j5wy49wzg",
+          "repeat": 1,
+          "status": "rejected",
+          "top1_equal": true,
+          "all_reported_entries_on_npu": true,
+          "max_tolerance_ratio": 2.209773447775327,
+          "logits_outside_tolerance": 51,
+          "logit_count": 1000,
+          "passed": false,
+          "finite": true,
+          "atol": 0.01,
+          "rtol": 0.01,
+          "max_abs_error": 0.03458652913392868,
+          "relative_l2_error": 0.009703633316905535,
+          "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights",
+          "relative_l2_to_cpu_fp16": 0.01034261844153974
+        },
+        {
+          "job_id": "j57o9d2qg",
+          "repeat": 2,
+          "status": "rejected",
+          "top1_equal": true,
+          "all_reported_entries_on_npu": true,
+          "max_tolerance_ratio": 2.209773447775327,
+          "logits_outside_tolerance": 51,
+          "logit_count": 1000,
+          "passed": false,
+          "finite": true,
+          "atol": 0.01,
+          "rtol": 0.01,
+          "max_abs_error": 0.03458652913392868,
+          "relative_l2_error": 0.009703633316905535,
+          "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights",
+          "relative_l2_to_cpu_fp16": 0.01034261844153974
+        },
+        {
+          "job_id": "jglwlk6ep",
+          "repeat": 3,
+          "status": "rejected",
+          "top1_equal": true,
+          "all_reported_entries_on_npu": true,
+          "max_tolerance_ratio": 2.209773447775327,
+          "logits_outside_tolerance": 51,
+          "logit_count": 1000,
+          "passed": false,
+          "finite": true,
+          "atol": 0.01,
+          "rtol": 0.01,
+          "max_abs_error": 0.03458652913392868,
+          "relative_l2_error": 0.009703633316905535,
+          "reference": "Saved CPU FP64 evaluation of the case on original FP32 tensors and pretrained weights",
+          "relative_l2_to_cpu_fp16": 0.01034261844153974
+        }
+      ],
+      "files_sha256": {
+        "precision/image_nhwc_first_fp64.npy": "5e8018b254d29abeb22e0ea32ba353db1dc544172d4e3db3aa2398a5e4064d32",
+        "precision/image_nhwc_first_cpu_fp16.npy": "77af628ea0b4099c2cb56ba3f1c39d4af9d5cca9b5636475c797a35ee2ec0c82"
+      }
+    }
+  ],
+  "acceptance_changed": false,
+  "scope": "CPU FP16 is an independent rounding baseline, not an emulator of HTP arithmetic. No new remote jobs."
+}

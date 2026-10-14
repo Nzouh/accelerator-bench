@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "seed": 1729,
+  "cases": [
+    {
+      "case": {
+        "id": "model_nchw",
+        "op": "image_classification",
+        "shape": [
+          1,
+          3,
+          224,
+          224
+        ]
+      },
+      "model": "model_nchw.onnx",
+      "arrays": "model_nchw.npz",
+      "input_weight_sha256": "f55cb65d65e43a5871d32ef2aaf9514d1004a2cbc25f94d18de3dcb30e9b4120",
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "io_layout": "nchw",
+      "input_domain": "normalized",
+      "output_kind": "classification_logits",
+      "reference_description": "CPU FP64 evaluation of this wrapper on original FP32 tensors and pretrained weights",
+      "reference_top1": 862,
+      "reference_label": "torch",
+      "onnx_sha256": "2c62a6db40886336d44346125e19d0905f3388e430f4de66739bc5960c619739",
+      "arrays_sha256": "2e14f512446858e5e94c2d54884b1b7ad853f3bff8e3647debc32e3ef17ebd05",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 4.5804085311296205e-06,
+        "relative_l2_error": 1.2282258089546385e-06,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "onnx_op_counts": {
+        "Add": 10,
+        "Clip": 35,
+        "Constant": 70,
+        "Conv": 52,
+        "Flatten": 1,
+        "Gemm": 1,
+        "GlobalAveragePool": 1
+      }
+    },
+    {
+      "case": {
+        "id": "model_nhwc",
+        "op": "image_classification",
+        "shape": [
+          1,
+          224,
+          224,
+          3
+        ]
+      },
+      "model": "model_nhwc.onnx",
+      "arrays": "model_nhwc.npz",
+      "input_weight_sha256": "f55cb65d65e43a5871d32ef2aaf9514d1004a2cbc25f94d18de3dcb30e9b4120",
+      "input_shape": [
+        1,
+        224,
+        224,
+        3
+      ],
+      "io_layout": "nhwc",
+      "input_domain": "normalized",
+      "output_kind": "classification_logits",
+      "reference_description": "CPU FP64 evaluation of this wrapper on original FP32 tensors and pretrained weights",
+      "reference_top1": 862,
+      "reference_label": "torch",
+      "onnx_sha256": "8dc6ed179f9ab16a78326bdebddbb53c8289c0ef82bc48e307f7f64f58ad9a73",
+      "arrays_sha256": "a6ac57545ede4999df8b58498b0b75d8f40502b4e5d485ca9f08c26a3aed3496",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 4.580408535570513e-06,
+        "relative_l2_error": 1.228225808771248e-06,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "onnx_op_counts": {
+        "Add": 10,
+        "Clip": 35,
+        "Constant": 70,
+        "Conv": 52,
+        "Flatten": 1,
+        "Gemm": 1,
+        "GlobalAveragePool": 1,
+        "Transpose": 1
+      }
+    },
+    {
+      "case": {
+        "id": "image_nchw_first",
+        "op": "image_classification",
+        "shape": [
+          1,
+          224,
+          224,
+          3
+        ]
+      },
+      "model": "image_nchw_first.onnx",
+      "arrays": "image_nchw_first.npz",
+      "input_weight_sha256": "f55cb65d65e43a5871d32ef2aaf9514d1004a2cbc25f94d18de3dcb30e9b4120",
+      "input_shape": [
+        1,
+        224,
+        224,
+        3
+      ],
+      "io_layout": "nhwc",
+      "input_domain": "rgb_0_255",
+      "output_kind": "classification_logits",
+      "reference_description": "CPU FP64 evaluation of this wrapper on original FP32 tensors and pretrained weights",
+      "reference_top1": 862,
+      "reference_label": "torch",
+      "onnx_sha256": "84b1fc25a71d8f15dc629ca4b87c168ce46c45946f6e2d18fb6d26ab13ea498f",
+      "arrays_sha256": "79508e498b83d3d48e24fde761a0351b96f1081900ff21d4fdb2184b1112d64a",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 5.001834461726418e-06,
+        "relative_l2_error": 1.2871039261745197e-06,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "onnx_op_counts": {
+        "Add": 10,
+        "Clip": 35,
+        "Constant": 71,
+        "Conv": 52,
+        "Div": 2,
+        "Flatten": 1,
+        "Gemm": 1,
+        "GlobalAveragePool": 1,
+        "Sub": 1,
+        "Transpose": 1
+      }
+    },
+    {
+      "case": {
+        "id": "image_nhwc_first",
+        "op": "image_classification",
+        "shape": [
+          1,
+          224,
+          224,
+          3
+        ]
+      },
+      "model": "image_nhwc_first.onnx",
+      "arrays": "image_nhwc_first.npz",
+      "input_weight_sha256": "f55cb65d65e43a5871d32ef2aaf9514d1004a2cbc25f94d18de3dcb30e9b4120",
+      "input_shape": [
+        1,
+        224,
+        224,
+        3
+      ],
+      "io_layout": "nhwc",
+      "input_domain": "rgb_0_255",
+      "output_kind": "classification_logits",
+      "reference_description": "CPU FP64 evaluation of this wrapper on original FP32 tensors and pretrained weights",
+      "reference_top1": 862,
+      "reference_label": "torch",
+      "onnx_sha256": "8b9ed55e7229c78e259578a8cf17b2a8029e6091168f814ed285350084928617",
+      "arrays_sha256": "79508e498b83d3d48e24fde761a0351b96f1081900ff21d4fdb2184b1112d64a",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 5.001834461726418e-06,
+        "relative_l2_error": 1.2871039261745197e-06,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      },
+      "onnx_op_counts": {
+        "Add": 10,
+        "Clip": 35,
+        "Constant": 71,
+        "Conv": 52,
+        "Div": 2,
+        "Flatten": 1,
+        "Gemm": 1,
+        "GlobalAveragePool": 1,
+        "Sub": 1,
+        "Transpose": 1
+      }
+    }
+  ],
+  "source": "pretrained_vision_layout",
+  "model": "torchvision.mobilenet_v2",
+  "weights": "IMAGENET1K_V2",
+  "weights_url": "https://download.pytorch.org/models/mobilenet_v2-7ebf99e0.pth",
+  "state_sha256": "4bdcaa7fe69c74ffb6e385286d7132d9fe5252a151db8cdfa37320a385de06fd",
+  "torch_version": "2.11.0+cu128",
+  "torchvision_version": "0.26.0+cu128",
+  "image": {
+    "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.25.2/skimage/data/astronaut.png",
+    "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5",
+    "credit": "NASA / Eileen Collins; public domain, distributed by scikit-image",
+    "crop_sha256": "4f12f6620520e784edecde6b348eda6f78e42f6836c3c00fe6b30799c408c8b5"
+  },
+  "preprocessing": {
+    "resize": 232,
+    "crop": [
+      224,
+      224
+    ],
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "interpolation": "PIL bilinear"
+  },
+  "source_precision": "float32",
+  "requested_execution_precision": "float16",
+  "excluded": [
+    "decode",
+    "resize/crop",
+    "host uint8-to-float32 cast",
+    "upload",
+    "camera"
+  ],
+  "hypothesis_plan": "research/layout-study/PLAN.md"
+}
