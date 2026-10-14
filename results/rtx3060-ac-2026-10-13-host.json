@@ -1,0 +1,204 @@
+{
+  "before": {
+    "timestamp_utc": "2026-10-14T00:43:11.3122843Z",
+    "battery": [
+      {
+        "PowerOnline": true,
+        "Charging": true,
+        "Discharging": false
+      }
+    ],
+    "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+    "gpu_sample_csv_fields": [
+      "name",
+      "pstate",
+      "power_w",
+      "temperature_c",
+      "utilization_percent",
+      "memory_mib",
+      "graphics_clock_mhz",
+      "memory_clock_mhz"
+    ],
+    "gpu_samples": [
+      {
+        "timestamp_utc": "2026-10-14T00:43:01.4827063Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P0, 21.10, 51, 3, 197, 1425, 7001"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T00:43:02.5871919Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 15.69, 51, 0, 196, 307, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T00:43:03.6911942Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 12.57, 50, 0, 196, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T00:43:04.7603376Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 12.52, 50, 0, 211, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T00:43:05.8227821Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 13.34, 50, 17, 189, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T00:43:06.9204737Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 12.72, 50, 0, 189, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T00:43:07.9990887Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 12.56, 50, 0, 189, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T00:43:09.0865917Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 12.81, 50, 24, 189, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T00:43:10.1612835Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 13.05, 50, 0, 188, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T00:43:11.2382981Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 12.53, 50, 0, 188, 210, 405"
+        ]
+      }
+    ],
+    "reported_gpu_process_names": [
+      "BlueStacksServices.exe",
+      "ChatGPT.exe",
+      "codex-computer-use-swift.exe",
+      "CrossDeviceResume.exe",
+      "Discord.exe",
+      "EdgeGameAssist.exe",
+      "LockApp.exe",
+      "msedgewebview2.exe",
+      "PhoneExperienceHost.exe",
+      "PSExpressCore.exe",
+      "SearchHost.exe",
+      "StartMenuExperienceHost.exe",
+      "TextInputHost.exe",
+      "UplayWebCore.exe"
+    ],
+    "note": "Snapshot only; process presence does not establish GPU load. Not continuous monitoring. No power settings changed."
+  },
+  "after": {
+    "timestamp_utc": "2026-10-14T01:53:28.7119890Z",
+    "battery": [
+      {
+        "PowerOnline": true,
+        "Charging": true,
+        "Discharging": false
+      }
+    ],
+    "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+    "gpu_sample_csv_fields": [
+      "name",
+      "pstate",
+      "power_w",
+      "temperature_c",
+      "utilization_percent",
+      "memory_mib",
+      "graphics_clock_mhz",
+      "memory_clock_mhz"
+    ],
+    "gpu_samples": [
+      {
+        "timestamp_utc": "2026-10-14T01:53:18.8191013Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 14.00, 65, 1, 270, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T01:53:19.9207615Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 13.13, 64, 0, 270, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T01:53:20.9919339Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 12.85, 63, 0, 270, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T01:53:22.0916064Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 12.93, 63, 0, 270, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T01:53:23.1921330Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 11.70, 62, 0, 270, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T01:53:24.2782941Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 13.08, 62, 0, 270, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T01:53:25.3870453Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 13.07, 62, 0, 270, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T01:53:26.4530230Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 11.54, 61, 0, 270, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T01:53:27.5341687Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 11.59, 61, 0, 270, 210, 405"
+        ]
+      },
+      {
+        "timestamp_utc": "2026-10-14T01:53:28.6327467Z",
+        "csv": [
+          "NVIDIA GeForce RTX 3060 Laptop GPU, P8, 12.85, 60, 0, 270, 210, 405"
+        ]
+      }
+    ],
+    "reported_gpu_process_names": [
+      "BlueStacksServices.exe",
+      "ChatGPT.exe",
+      "codex-computer-use-swift.exe",
+      "CrossDeviceResume.exe",
+      "Discord.exe",
+      "EdgeGameAssist.exe",
+      "LockApp.exe",
+      "msedgewebview2.exe",
+      "PhoneExperienceHost.exe",
+      "PSExpressCore.exe",
+      "SearchHost.exe",
+      "StartMenuExperienceHost.exe",
+      "TextInputHost.exe",
+      "UplayWebCore.exe"
+    ],
+    "note": "Snapshot only; process presence does not establish GPU load. Not continuous monitoring. No power settings changed."
+  },
+  "benchmark": "rtx3060-ac-2026-10-13.json",
+  "controls": "AC verified before and after; Windows Balanced; no clock or power changes; vendor fan mode not recorded; background desktop apps remain. No claim of isolation or continuous AC monitoring."
+}
