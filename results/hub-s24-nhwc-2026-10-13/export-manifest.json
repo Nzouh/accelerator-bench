@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "seed": 1729,
+  "cases": [
+    {
+      "case": {
+        "id": "conv_b1_c32_h16_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          16,
+          16,
+          64,
+          3
+        ]
+      },
+      "model": "conv_b1_c32_h16_o64.onnx",
+      "arrays": "conv_b1_c32_h16_o64.npz",
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "input_shape": [
+        1,
+        16,
+        16,
+        32
+      ],
+      "io_layout": "nhwc",
+      "onnx_sha256": "395d8204a5cb67f485d6a5f74a90434c491433df0373cfcdac40b3df78e46117",
+      "arrays_sha256": "a0bb682235e73ec155bde7f2f2afbf3e6bc6dd7b9e65376fe46e4637990e1c34",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.33784468193366e-07,
+        "relative_l2_error": 1.530867143114567e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h32_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          32,
+          32,
+          64,
+          3
+        ]
+      },
+      "model": "conv_b1_c32_h32_o64.onnx",
+      "arrays": "conv_b1_c32_h32_o64.npz",
+      "input_weight_sha256": "1099469861b1e4946460a643b0161ae3e2985209e07537bba999121a59caf79c",
+      "input_shape": [
+        1,
+        32,
+        32,
+        32
+      ],
+      "io_layout": "nhwc",
+      "onnx_sha256": "60efd0fa6a518cd0daae2236c49c7d9a70e917db6e7e8f7846ecda25b24aa00e",
+      "arrays_sha256": "01d4cc0b38656a78557ded2d63bdb5a9c7c789b0d10652c44f721197035b78c8",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.145563049095529e-07,
+        "relative_l2_error": 1.557295879488408e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h64_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          64,
+          64,
+          64,
+          3
+        ]
+      },
+      "model": "conv_b1_c32_h64_o64.onnx",
+      "arrays": "conv_b1_c32_h64_o64.npz",
+      "input_weight_sha256": "132bc8e637807eb740347dcb47c33daa5019aebc066629b1ec49a67b5d740960",
+      "input_shape": [
+        1,
+        64,
+        64,
+        32
+      ],
+      "io_layout": "nhwc",
+      "onnx_sha256": "fee38d88986c6887cdfe79d0bfeed86c8018cdf0e6de3f5bfd02ea1363f52363",
+      "arrays_sha256": "63cd0f10edb0df853de6f6cfd20193cf823fa8cb9aabd7fbe71c2f795d830e1f",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.662074949012833e-07,
+        "relative_l2_error": 1.5731208204064366e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h128_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          128,
+          128,
+          64,
+          3
+        ]
+      },
+      "model": "conv_b1_c32_h128_o64.onnx",
+      "arrays": "conv_b1_c32_h128_o64.npz",
+      "input_weight_sha256": "3cd91f9daad4482e1971b1e3f42123a9a613f0a661845fb28af44e727c9849f8",
+      "input_shape": [
+        1,
+        128,
+        128,
+        32
+      ],
+      "io_layout": "nhwc",
+      "onnx_sha256": "6be59bff149c7a6908e861152cfd55ae139bee6d4bff60d5159048e3e3ed0e25",
+      "arrays_sha256": "825bc8d88f378cddeb16bdac7cfa90e83d67a8737e680a91b2f803084faf4009",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 1.2582433335239784e-06,
+        "relative_l2_error": 1.568253129585011e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    }
+  ],
+  "io_layout": "nhwc",
+  "source_precision": "float32",
+  "requested_execution_precision": "float16",
+  "note": "FP32 IO with explicitly requested NPU FP16 execution; inspect device profile for actual placement and precision"
+}
