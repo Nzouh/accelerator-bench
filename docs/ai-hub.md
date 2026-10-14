@@ -129,7 +129,7 @@ by saved job name; it is never silently resubmitted.
 
 For DLCs, HTP preparation happens on-device. The current runner supplies HTP
 options explicitly to inference jobs as well as compile jobs. See the
-[preparation stages](https://workbench.aihub.qualcomm.com/docs/hub/api.html#qualcomm-r-ai-engine-direct-options).
+[preparation stages](https://workbench.aihub.qualcomm.com/docs/hub/api.html).
 
 The October 13 sweeps supplied these flags only at DLC conversion. Their effective
 device-side values were not verified, so those runs do not establish O3/O1 or
