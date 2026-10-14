@@ -1,0 +1,197 @@
+{
+  "execution_summary": {
+    "estimated_inference_time": 476,
+    "estimated_inference_peak_memory": 130351104,
+    "first_load_time": 482448,
+    "first_load_peak_memory": 107507712,
+    "warm_load_time": 146684,
+    "warm_load_peak_memory": 129773568,
+    "compile_time": 0,
+    "compile_peak_memory": 0,
+    "compile_memory_increase_range": [
+      0,
+      0
+    ],
+    "compile_memory_peak_range": [
+      0,
+      0
+    ],
+    "first_load_memory_increase_range": [
+      36731920,
+      43680800
+    ],
+    "first_load_memory_peak_range": [
+      22315008,
+      29263888
+    ],
+    "warm_load_memory_increase_range": [
+      0,
+      1518080
+    ],
+    "warm_load_memory_peak_range": [
+      487424,
+      31934768
+    ],
+    "inference_memory_increase_range": [
+      0,
+      20608
+    ],
+    "inference_memory_peak_range": [
+      16384,
+      30149536
+    ],
+    "all_compile_times": [],
+    "all_first_load_times": [
+      482448
+    ],
+    "all_warm_load_times": [
+      146684
+    ],
+    "all_inference_times": [
+      1503,
+      700,
+      640,
+      641,
+      638,
+      632,
+      641,
+      661,
+      600,
+      573,
+      532,
+      903,
+      721,
+      680,
+      682,
+      694,
+      730,
+      615,
+      576,
+      563,
+      569,
+      569,
+      566,
+      574,
+      568,
+      577,
+      574,
+      589,
+      561,
+      554,
+      601,
+      533,
+      531,
+      519,
+      535,
+      531,
+      529,
+      556,
+      615,
+      543,
+      511,
+      504,
+      501,
+      502,
+      501,
+      518,
+      516,
+      512,
+      520,
+      516,
+      519,
+      519,
+      517,
+      517,
+      522,
+      527,
+      516,
+      513,
+      512,
+      524,
+      519,
+      516,
+      487,
+      487,
+      482,
+      488,
+      476,
+      482,
+      480,
+      482,
+      485,
+      478,
+      479,
+      479,
+      480,
+      476,
+      488,
+      500,
+      493,
+      484,
+      484,
+      484,
+      1300,
+      483,
+      487,
+      487,
+      484,
+      481,
+      477,
+      478,
+      485,
+      478,
+      489,
+      490,
+      489,
+      484,
+      481,
+      480,
+      478,
+      476
+    ]
+  },
+  "execution_detail": [
+    {
+      "name": "Input",
+      "type": "Input",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 55331
+    },
+    {
+      "name": "x_0231",
+      "type": "x",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 241134
+    },
+    {
+      "name": "/Conv",
+      "type": "/Conv",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "/Relu",
+      "type": "/Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 93068
+    },
+    {
+      "name": "output_0_0231",
+      "type": "output",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 496301
+    },
+    {
+      "name": "Output",
+      "type": "Output",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 152014
+    }
+  ]
+}

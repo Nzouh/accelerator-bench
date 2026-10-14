@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "seed": 1729,
+  "cases": [
+    {
+      "case": {
+        "id": "matmul_m1_k1024_n1024",
+        "op": "matmul",
+        "shape": [
+          1,
+          1024,
+          1024
+        ]
+      },
+      "model": "matmul_m1_k1024_n1024.onnx",
+      "arrays": "matmul_m1_k1024_n1024.npz",
+      "input_weight_sha256": "7d451e88c33dd42328ed6a9fef3d9264202df221fc01e2f314dd2084994af6a6",
+      "onnx_sha256": "70e819905052bdc29d4a977383d155aad99bbadf8b811586a56a71cf007219cc",
+      "arrays_sha256": "fc5de42dc9ec44fe797740d479323823f56a252bf0b65f411b0c6adcc76ee681",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 1.2834138560791075e-06,
+        "relative_l2_error": 3.040948512161187e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "matmul_m32_k1024_n1024",
+        "op": "matmul",
+        "shape": [
+          32,
+          1024,
+          1024
+        ]
+      },
+      "model": "matmul_m32_k1024_n1024.onnx",
+      "arrays": "matmul_m32_k1024_n1024.npz",
+      "input_weight_sha256": "167bee39cd8274182a9669836dafe72991620343c5ea57e0423b8b8eda81b3a3",
+      "onnx_sha256": "9e7400089d6f8cab742b71a076475f140760660f979b7e0e6872f1adf9ef8946",
+      "arrays_sha256": "813d02a3018a382f8847b02ae93c86b65d41f0208b976169fb4cbeea63b82221",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 1.5565094223513043e-06,
+        "relative_l2_error": 2.902026751462601e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "matmul_m256_k1024_n1024",
+        "op": "matmul",
+        "shape": [
+          256,
+          1024,
+          1024
+        ]
+      },
+      "model": "matmul_m256_k1024_n1024.onnx",
+      "arrays": "matmul_m256_k1024_n1024.npz",
+      "input_weight_sha256": "73edac85ac131a85a3410f282325fba96c087e126181ae267f9f42a75cd90a93",
+      "onnx_sha256": "84ee391f5c4a843ce0cea843fa9f22e78813051befe5243d45a19baaa0af0bb6",
+      "arrays_sha256": "f2e2aaef4fc4980dd38d55a87a57299ae8bf23ff9e94f388e403bed91ad2dcf7",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 2.0102519335818414e-06,
+        "relative_l2_error": 2.8979614994960453e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "matmul_m1024_k1024_n1024",
+        "op": "matmul",
+        "shape": [
+          1024,
+          1024,
+          1024
+        ]
+      },
+      "model": "matmul_m1024_k1024_n1024.onnx",
+      "arrays": "matmul_m1024_k1024_n1024.npz",
+      "input_weight_sha256": "f84b4419bceedce2114a87f9bd85a332d21938096be32580f189c38299cd51fd",
+      "onnx_sha256": "89506bb4c5c45adac1cde84cf2805a8feefc0a280b0c1a228e643045d88a284a",
+      "arrays_sha256": "a9f4f3c511030af522932e37c744e5d18139bf64f71fc15a6d72438133d18b7d",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 2.5738325204471835e-06,
+        "relative_l2_error": 2.8982783555271036e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h16_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          16,
+          16,
+          64,
+          3
+        ]
+      },
+      "model": "conv_b1_c32_h16_o64.onnx",
+      "arrays": "conv_b1_c32_h16_o64.npz",
+      "input_weight_sha256": "f54b63c013e52242c4ff606f669a08f77367193c518fce45ddc76a42503aedb8",
+      "onnx_sha256": "e76c0391381e8d5b512391de24d7c27632067ccdd0a38d4a8d7b07f293449641",
+      "arrays_sha256": "91fdccac21d8afdd59e3ef11c2672320eba3dae7bbe373becf42dd190129b6df",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.33784468193366e-07,
+        "relative_l2_error": 1.530867143114567e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h32_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          32,
+          32,
+          64,
+          3
+        ]
+      },
+      "model": "conv_b1_c32_h32_o64.onnx",
+      "arrays": "conv_b1_c32_h32_o64.npz",
+      "input_weight_sha256": "1099469861b1e4946460a643b0161ae3e2985209e07537bba999121a59caf79c",
+      "onnx_sha256": "60fa85f2eacb36dca3ff4441cc9c673ffe8978aa7e58ad2b5e11262d98e80dd9",
+      "arrays_sha256": "9336092b6269bc3b69639eaf1b4c99b3f3df3fbc87a604c128c47a41a9e21226",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.145563049095529e-07,
+        "relative_l2_error": 1.5572958794884084e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h64_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          64,
+          64,
+          64,
+          3
+        ]
+      },
+      "model": "conv_b1_c32_h64_o64.onnx",
+      "arrays": "conv_b1_c32_h64_o64.npz",
+      "input_weight_sha256": "132bc8e637807eb740347dcb47c33daa5019aebc066629b1ec49a67b5d740960",
+      "onnx_sha256": "5963e8d61b2d9ed59f7455700d19ff01e9bcd391c63a2a6e813849f01f78cc82",
+      "arrays_sha256": "31c6130a9a46dd7c62329f6f1ad15e7bd7fdad0ee2c5d8be652670fb6807b598",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 9.662074949012833e-07,
+        "relative_l2_error": 1.5731208204064303e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "conv_b1_c32_h128_o64",
+        "op": "conv_relu",
+        "shape": [
+          1,
+          32,
+          128,
+          128,
+          64,
+          3
+        ]
+      },
+      "model": "conv_b1_c32_h128_o64.onnx",
+      "arrays": "conv_b1_c32_h128_o64.npz",
+      "input_weight_sha256": "3cd91f9daad4482e1971b1e3f42123a9a613f0a661845fb28af44e727c9849f8",
+      "onnx_sha256": "b36ea54f506299548b171f03efcec27e1ab76272da19f06ac9f7b74fe3267c08",
+      "arrays_sha256": "473afc5aa2d4e96dc1b2f236ffc14bec0e12e2506276fe655d0976f49a5a3e6d",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 1.2582433335239784e-06,
+        "relative_l2_error": 1.5682531295850063e-07,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "rmsnorm_r1_d1024",
+        "op": "rmsnorm",
+        "shape": [
+          1,
+          1024
+        ]
+      },
+      "model": "rmsnorm_r1_d1024.onnx",
+      "arrays": "rmsnorm_r1_d1024.npz",
+      "input_weight_sha256": "337153446c120cb45789b218d91eaa5441986ea986c2ef19bc93dd7ad15518d4",
+      "onnx_sha256": "ed84d37bee38e9b893bfe57c4bc9ac2447ead377c2071a876e06f84d596638f8",
+      "arrays_sha256": "a47b26fcd4e799898363388d75f0a57e5866e3fd71bcc8db986db959eacbcd79",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 2.6528507701684134e-07,
+        "relative_l2_error": 4.808544292926719e-08,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "rmsnorm_r32_d1024",
+        "op": "rmsnorm",
+        "shape": [
+          32,
+          1024
+        ]
+      },
+      "model": "rmsnorm_r32_d1024.onnx",
+      "arrays": "rmsnorm_r32_d1024.npz",
+      "input_weight_sha256": "9602f5e93fd28d1d5c6cdbc0c052d5492e268a983d3083f3bb92dda012882a5a",
+      "onnx_sha256": "6c8662f6ffda62a1d5e4e31e60d8e56c8568c5b3ac9abb4cd20adb87c51c85f1",
+      "arrays_sha256": "8abd0ed107626553728888002a03532cbe3944db7749db12d0091f13a44a79d8",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 6.480749088488835e-07,
+        "relative_l2_error": 5.508411874969705e-08,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "rmsnorm_r256_d1024",
+        "op": "rmsnorm",
+        "shape": [
+          256,
+          1024
+        ]
+      },
+      "model": "rmsnorm_r256_d1024.onnx",
+      "arrays": "rmsnorm_r256_d1024.npz",
+      "input_weight_sha256": "9a5368e472c1184949dc26c9aa11e2af42ab1c9149351ff60dd80467c28f56ce",
+      "onnx_sha256": "4749d6de9fc57ee8a58919e3fb0701a2597609597af78d4cadbb8756f3410fa8",
+      "arrays_sha256": "823adf184d3210586358d68719c6689351da9797ba77a9586246fb6cd4bb46a9",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 5.862839156378641e-07,
+        "relative_l2_error": 5.904998085722619e-08,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    },
+    {
+      "case": {
+        "id": "rmsnorm_r1024_d1024",
+        "op": "rmsnorm",
+        "shape": [
+          1024,
+          1024
+        ]
+      },
+      "model": "rmsnorm_r1024_d1024.onnx",
+      "arrays": "rmsnorm_r1024_d1024.npz",
+      "input_weight_sha256": "4cafd50d0b85fc834e72470f79b1998f0d657105c5711c44e368a772172c8b5a",
+      "onnx_sha256": "2816d225cb4b9652bb5f3d46f4a25c0971d4da7da643c5754e7a30a94e5c3483",
+      "arrays_sha256": "3c5d1078f2814dd49fbd815790d8cbc284d4dcddeda84f89a91789e793284dfe",
+      "onnx_cpu_correctness": {
+        "passed": true,
+        "finite": true,
+        "atol": 2e-05,
+        "rtol": 0.0002,
+        "max_abs_error": 7.619781197121256e-07,
+        "relative_l2_error": 6.020035781812285e-08,
+        "reference": "CPU float64 on original seeded float32 inputs and weights"
+      }
+    }
+  ],
+  "source_precision": "float32",
+  "requested_execution_precision": "float16",
+  "note": "FP32 IO with explicitly requested NPU FP16 execution; inspect device profile for actual placement and precision"
+}

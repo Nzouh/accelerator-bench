@@ -1,0 +1,176 @@
+{
+  "execution_summary": {
+    "estimated_inference_time": 756,
+    "estimated_inference_peak_memory": 140234752,
+    "first_load_time": 551233,
+    "first_load_peak_memory": 260268032,
+    "warm_load_time": 147435,
+    "warm_load_peak_memory": 258469888,
+    "compile_time": 0,
+    "compile_peak_memory": 0,
+    "compile_memory_increase_range": [
+      0,
+      0
+    ],
+    "compile_memory_peak_range": [
+      0,
+      0
+    ],
+    "first_load_memory_increase_range": [
+      39567520,
+      46779632
+    ],
+    "first_load_memory_peak_range": [
+      162562048,
+      169774160
+    ],
+    "warm_load_memory_increase_range": [
+      0,
+      1477680
+    ],
+    "warm_load_memory_peak_range": [
+      0,
+      147010816
+    ],
+    "inference_memory_increase_range": [
+      18446744073563336576,
+      24704
+    ],
+    "inference_memory_peak_range": [
+      16384,
+      146256128
+    ],
+    "all_compile_times": [],
+    "all_first_load_times": [
+      551233
+    ],
+    "all_warm_load_times": [
+      147435
+    ],
+    "all_inference_times": [
+      2290,
+      1082,
+      1046,
+      982,
+      982,
+      964,
+      953,
+      968,
+      912,
+      902,
+      919,
+      1356,
+      1161,
+      1251,
+      1142,
+      1128,
+      1036,
+      883,
+      862,
+      871,
+      851,
+      935,
+      840,
+      840,
+      831,
+      845,
+      827,
+      828,
+      817,
+      830,
+      815,
+      811,
+      790,
+      787,
+      785,
+      801,
+      814,
+      806,
+      809,
+      821,
+      815,
+      813,
+      810,
+      809,
+      805,
+      781,
+      761,
+      759,
+      762,
+      761,
+      760,
+      758,
+      758,
+      760,
+      759,
+      784,
+      764,
+      760,
+      761,
+      761,
+      758,
+      760,
+      759,
+      760,
+      767,
+      758,
+      764,
+      760,
+      760,
+      759,
+      760,
+      762,
+      760,
+      763,
+      756,
+      761,
+      783,
+      791,
+      774,
+      773,
+      768,
+      769,
+      810,
+      771,
+      768,
+      766,
+      764,
+      763,
+      762,
+      762,
+      759,
+      761,
+      761,
+      765,
+      760,
+      760,
+      758,
+      781,
+      763,
+      759
+    ]
+  },
+  "execution_detail": [
+    {
+      "name": "Input",
+      "type": "Input",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 492296
+    },
+    {
+      "name": "/MatMul",
+      "type": "/MatMul",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1360640
+    },
+    {
+      "name": "Output",
+      "type": "Output",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 129030
+    }
+  ]
+}
